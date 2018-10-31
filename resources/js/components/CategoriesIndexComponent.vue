@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <button class="btn btn-outline-secondary"@click="getCategories(3)">per 3</button>
-        <button class="btn btn-outline-secondary"@click="getCategories(5)">per 5</button>
-        <button class="btn btn-outline-secondary" @click="getCategories(10)">per 10</button><br><hr>
+        <!--<button class="btn btn-outline-secondary"@click="getCategories(3)">per 3</button>-->
+        <!--<button class="btn btn-outline-secondary"@click="getCategories(5)">per 5</button>-->
+        <!--<button class="btn btn-outline-secondary" @click="getCategories(10)">per 10</button><br><hr>-->
         <!--Loaded-->
 
         <div>{{parent_id}}</div>
@@ -25,7 +25,7 @@
                                 <div >
                                     <i v-bind:id="'i'+category.id"  class="fa fa-plus-circle" ></i>
                                     <button class="btn btn-sm" @click="showSubCategories(category.id)" href="#">{{ category.title }}</button>
-                                    <a @click="getParentId(category.id)" class="btn btn-sm"  data-toggle="modal" data-target="#SubCategory">
+                                    <a @click="getParent(category.id, category.title)" class="btn btn-sm"  data-toggle="modal" data-target="#SubCategory">
                                         Add subcategory
                                     </a>
                                 </div>
@@ -45,23 +45,23 @@
         </div>
 
 
-        <div class="pagination">
-            <button class="page-item btn btn-secondary btn-sm"
-                    v-on:click="fetchPaginateCategories(pagination.prev_page_url, items_per_page)"
-                    :disabled="!pagination.prev_page_url"
-            >
-                Prev
-            </button>
-            <span  class="page-item btn btn-outline-secondary btn-sm disabled">
-                        page {{pagination.current_page}} of {{pagination.last_page}}
-                    </span>
-            <button class="page-item btn btn-secondary btn-sm"
-                    v-on:click="fetchPaginateCategories(pagination.next_page_url, items_per_page)"
-                    :disabled="!pagination.next_page_url"
-            >
-                Next
-            </button>
-        </div>
+        <!--<div class="pagination">-->
+            <!--<button class="page-item btn btn-secondary btn-sm"-->
+                    <!--v-on:click="fetchPaginateCategories(pagination.prev_page_url, items_per_page)"-->
+                    <!--:disabled="!pagination.prev_page_url"-->
+            <!--&gt;-->
+                <!--Prev-->
+            <!--</button>-->
+            <!--<span  class="page-item btn btn-outline-secondary btn-sm disabled">-->
+                        <!--page {{pagination.current_page}} of {{pagination.last_page}}-->
+                    <!--</span>-->
+            <!--<button class="page-item btn btn-secondary btn-sm"-->
+                    <!--v-on:click="fetchPaginateCategories(pagination.next_page_url, items_per_page)"-->
+                    <!--:disabled="!pagination.next_page_url"-->
+            <!--&gt;-->
+                <!--Next-->
+            <!--</button>-->
+        <!--</div>-->
 
         <!-- Modal Create SubCategory -->
         <div id="SubCategory" class="modal fade" role="dialog">
@@ -77,7 +77,8 @@
                         <category-create v-bind:parent_id="parent_id"></category-create>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button @click="createCategoryClick()" type="submit" class="btn btn-info">Create</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
 
@@ -95,7 +96,7 @@
 
     import CreateCategoryComponent from './CreateCategoryComponent.vue';
     export default {
-        props: ['parent_id','parent_title'],
+        // props: ['parent_id','parent_title'],
         name: "CategoriesIndexComponent",
         components: {
             "category-create": CreateCategoryComponent,
@@ -108,6 +109,7 @@
                 url: '/categories',
                 items_per_page: '',
                 parent_id: '',
+                parent_title: '',
             }
         },
         mounted(){
@@ -117,68 +119,89 @@
             bus.$on('changeParentId', (data) => {
                 this.parent_id = data;
             });
+            bus.$on('changeParentTitle', (data) => {
+                this.parent_title = data;
+            });
             bus.$on('createNewCategory', (data) => {
                 this.getCategories();
             });
         },
         methods: {
-            getCategories(items = 5){
-                this.loading = true;
+            // getCategories(items = 100){
+            //     this.loading = true;
+            //
+            //     window.axios.get('/categories', {
+            //         params: {
+            //             pagination: items
+            //         }
+            //     })
+            //         .then(response => {
+            //            // console.log();
+            //             this.categories = response.data.data;
+            //             this.makePagination(response.data);
+            //             this.loading = false;
+            //             this.items_per_page = items;
+            //         })
+            //         .catch(error => {
+            //            // console.log(error.data);
+            //             this.loading = false;
+            //         })
+            // },
+            // getPart(url, items){
+            //     this.loading = true;
+            //     window.axios.get(url, {
+            //         params: {
+            //             pagination: items
+            //         }
+            //     })
+            //         .then(response => {
+            //             //console.log(response);
+            //             this.categories = response.data.data;
+            //             this.makePagination(response.data);
+            //             this.loading = false;
+            //         })
+            //         .catch(error => {
+            //             console.log(error.data);
+            //             this.loading = false;
+            //         })
+            // },
+            // makePagination(data) {
+            //     var pagination = {
+            //         current_page: data.current_page,
+            //         last_page: data.last_page,
+            //         next_page_url: data.next_page_url,
+            //         prev_page_url: data.prev_page_url,
+            //     };
+            //     this.pagination = pagination
+            // },
+            // fetchPaginateCategories(url,items) {
+            //     this.getPart(url,items);
+            // },
+            getCategories(){
+                window.axios.get('/categories')
+                            .then(response => {
+                                console.log(response);
+                                this.categories = response.data;
+                                this.loading = false;
+                            })
+                            .catch(error => {
+                                console.log(error.data);
+                                this.loading = false;
+                            })
 
-                window.axios.get('/categories', {
-                    params: {
-                        pagination: items
-                    }
-                })
-                    .then(response => {
-                       // console.log();
-                        this.categories = response.data.data;
-                        this.makePagination(response.data);
-                        this.loading = false;
-                        this.items_per_page = items;
-                    })
-                    .catch(error => {
-                       // console.log(error.data);
-                        this.loading = false;
-                    })
-            },
-            getPart(url, items){
-                this.loading = true;
-                window.axios.get(url, {
-                    params: {
-                        pagination: items
-                    }
-                })
-                    .then(response => {
-                        //console.log(response);
-                        this.categories = response.data.data;
-                        this.makePagination(response.data);
-                        this.loading = false;
-                    })
-                    .catch(error => {
-                        console.log(error.data);
-                        this.loading = false;
-                    })
-            },
-            makePagination(data) {
-                var pagination = {
-                    current_page: data.current_page,
-                    last_page: data.last_page,
-                    next_page_url: data.next_page_url,
-                    prev_page_url: data.prev_page_url,
-                };
-                this.pagination = pagination
-            },
-            fetchPaginateCategories(url,items) {
-                this.getPart(url,items);
             },
             showSubCategories(target){
                 $("#sub_"+target+"").toggle();
                 $("#i"+target+"").toggleClass('fa-minus-circle');
 
             },
-            getParentId(target) {
-                bus.$emit('changeParentId', target)
+            getParent(id, title) {
+                bus.$emit('changeParentId', id);
+                bus.$emit('changeParentTitle', title);
+
+            },
+            createCategoryClick() {
+                $('#create_category').click();
             }
         }
     }

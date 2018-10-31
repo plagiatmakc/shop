@@ -5,14 +5,14 @@
             <input type="text" name="title" v-model="title"><br>
             <label>Description</label><br>
             <input type="text" name="description" v-model="description"><br>
-            <label>Parent Category</label><br>
-            <input  name="parent_id" v-bind:value="parent_id">
+            <label v-if="parent_id != undefined">Parent Category</label><br>
+            <input  name="parent_id" v-bind:value="parent_id" v-if="parent_id != undefined">
             <!--<select name="parent_id"  v-model="parent_id">-->
                 <!--<option value="" selected>Hasn't parent category</option>-->
                 <!--<option v-for="category in categories" v-bind:value="category.id">{{category.title}}</option>-->
             <!--</select>-->
-            <br>
-            <button type="submit" class="btn btn-info">Create</button>
+            <p></p>
+            <button id="create_category" type="submit" class="btn btn-info" v-show="parent_id == undefined">Create</button>
         </form>
     </div>
 

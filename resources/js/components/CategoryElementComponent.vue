@@ -7,7 +7,7 @@
                     <button class="btn btn-sm" @click="showSubCategories(category.id)" href="#">
                         {{ category.title }}
                     </button>
-                    <a @click="getParentId(category.id)" class="btn btn-sm" data-toggle="modal" data-target="#SubCategory">
+                    <a @click="getParent(category.id, category.title)" class="btn btn-sm" data-toggle="modal" data-target="#SubCategory">
                         Add subcategory
                     </a>
                 </div>
@@ -23,11 +23,12 @@
 <script>
     import {bus} from '../app';
     export default {
-        props:['categories', 'parent_id'],
+        props:['categories', 'parent_id', 'parent_title'],
         name: "CategoryElementComponent",
         data() {
             return{
-                parent_id: '',
+                // parent_id: '',
+                // parent_title: '',
             }
         },
         methods: {
@@ -35,8 +36,10 @@
                 $("#sub_"+target+"").toggle();
                 $("#i"+target+"").toggleClass('fa-minus-circle');
             },
-            getParentId(target) {
-                bus.$emit('changeParentId', target)
+            getParent(id, title) {
+                bus.$emit('changeParentId', id);
+                bus.$emit('changeParentTitle', title);
+
             }
         }
     }

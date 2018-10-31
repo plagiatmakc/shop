@@ -14,13 +14,13 @@ class CategoryRepository
         return $categories;
     }
 
-    public function allWithRelations($items = 5)
+    public function allWithRelations($items = null)
     {
         if ($items) {
             return Category::with('categoriesRecursive')->whereNull('parent_id')->paginate($items);
         }
 
-        return Category::with('categoriesRecursive')->whereNull('parent_id');
+        return Category::with('categoriesRecursive')->whereNull('parent_id')->get();
     }
 
     public function getById($category)

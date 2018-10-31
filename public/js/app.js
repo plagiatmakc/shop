@@ -48167,7 +48167,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48273,12 +48273,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['parent_id', 'parent_title'],
+    // props: ['parent_id','parent_title'],
     name: "CategoriesIndexComponent",
     components: {
         "category-create": __WEBPACK_IMPORTED_MODULE_1__CreateCategoryComponent_vue___default.a
@@ -48290,7 +48291,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             loading: false,
             url: '/categories',
             items_per_page: '',
-            parent_id: ''
+            parent_id: '',
+            parent_title: ''
         };
     },
     mounted: function mounted() {
@@ -48302,70 +48304,87 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$on('changeParentId', function (data) {
             _this.parent_id = data;
         });
+        __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$on('changeParentTitle', function (data) {
+            _this.parent_title = data;
+        });
         __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$on('createNewCategory', function (data) {
             _this.getCategories();
         });
     },
 
     methods: {
+        // getCategories(items = 100){
+        //     this.loading = true;
+        //
+        //     window.axios.get('/categories', {
+        //         params: {
+        //             pagination: items
+        //         }
+        //     })
+        //         .then(response => {
+        //            // console.log();
+        //             this.categories = response.data.data;
+        //             this.makePagination(response.data);
+        //             this.loading = false;
+        //             this.items_per_page = items;
+        //         })
+        //         .catch(error => {
+        //            // console.log(error.data);
+        //             this.loading = false;
+        //         })
+        // },
+        // getPart(url, items){
+        //     this.loading = true;
+        //     window.axios.get(url, {
+        //         params: {
+        //             pagination: items
+        //         }
+        //     })
+        //         .then(response => {
+        //             //console.log(response);
+        //             this.categories = response.data.data;
+        //             this.makePagination(response.data);
+        //             this.loading = false;
+        //         })
+        //         .catch(error => {
+        //             console.log(error.data);
+        //             this.loading = false;
+        //         })
+        // },
+        // makePagination(data) {
+        //     var pagination = {
+        //         current_page: data.current_page,
+        //         last_page: data.last_page,
+        //         next_page_url: data.next_page_url,
+        //         prev_page_url: data.prev_page_url,
+        //     };
+        //     this.pagination = pagination
+        // },
+        // fetchPaginateCategories(url,items) {
+        //     this.getPart(url,items);
+        // },
         getCategories: function getCategories() {
             var _this2 = this;
 
-            var items = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 5;
-
-            this.loading = true;
-
-            window.axios.get('/categories', {
-                params: {
-                    pagination: items
-                }
-            }).then(function (response) {
-                // console.log();
-                _this2.categories = response.data.data;
-                _this2.makePagination(response.data);
+            window.axios.get('/categories').then(function (response) {
+                console.log(response);
+                _this2.categories = response.data;
                 _this2.loading = false;
-                _this2.items_per_page = items;
-            }).catch(function (error) {
-                // console.log(error.data);
-                _this2.loading = false;
-            });
-        },
-        getPart: function getPart(url, items) {
-            var _this3 = this;
-
-            this.loading = true;
-            window.axios.get(url, {
-                params: {
-                    pagination: items
-                }
-            }).then(function (response) {
-                //console.log(response);
-                _this3.categories = response.data.data;
-                _this3.makePagination(response.data);
-                _this3.loading = false;
             }).catch(function (error) {
                 console.log(error.data);
-                _this3.loading = false;
+                _this2.loading = false;
             });
-        },
-        makePagination: function makePagination(data) {
-            var pagination = {
-                current_page: data.current_page,
-                last_page: data.last_page,
-                next_page_url: data.next_page_url,
-                prev_page_url: data.prev_page_url
-            };
-            this.pagination = pagination;
-        },
-        fetchPaginateCategories: function fetchPaginateCategories(url, items) {
-            this.getPart(url, items);
         },
         showSubCategories: function showSubCategories(target) {
             $("#sub_" + target + "").toggle();
             $("#i" + target + "").toggleClass('fa-minus-circle');
         },
-        getParentId: function getParentId(target) {
-            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', target);
+        getParent: function getParent(id, title) {
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentTitle', title);
+        },
+        createCategoryClick: function createCategoryClick() {
+            $('#create_category').click();
         }
     }
 });
@@ -48543,19 +48562,34 @@ var render = function() {
         }),
         _c("br"),
         _vm._v(" "),
-        _c("label", [_vm._v("Parent Category")]),
+        _vm.parent_id != undefined
+          ? _c("label", [_vm._v("Parent Category")])
+          : _vm._e(),
         _c("br"),
         _vm._v(" "),
-        _c("input", {
-          attrs: { name: "parent_id" },
-          domProps: { value: _vm.parent_id }
-        }),
+        _vm.parent_id != undefined
+          ? _c("input", {
+              attrs: { name: "parent_id" },
+              domProps: { value: _vm.parent_id }
+            })
+          : _vm._e(),
         _vm._v(" "),
-        _c("br"),
+        _c("p"),
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "btn btn-info", attrs: { type: "submit" } },
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.parent_id == undefined,
+                expression: "parent_id == undefined"
+              }
+            ],
+            staticClass: "btn btn-info",
+            attrs: { id: "create_category", type: "submit" }
+          },
           [_vm._v("Create")]
         )
       ]
@@ -48581,47 +48615,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-secondary",
-        on: {
-          click: function($event) {
-            _vm.getCategories(3)
-          }
-        }
-      },
-      [_vm._v("per 3")]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-secondary",
-        on: {
-          click: function($event) {
-            _vm.getCategories(5)
-          }
-        }
-      },
-      [_vm._v("per 5")]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-secondary",
-        on: {
-          click: function($event) {
-            _vm.getCategories(10)
-          }
-        }
-      },
-      [_vm._v("per 10")]
-    ),
-    _c("br"),
-    _c("hr"),
-    _vm._v(" "),
     _c("div", [_vm._v(_vm._s(_vm.parent_id))]),
     _vm._v(" "),
     _c("div", { staticClass: "panel panel-primary" }, [
@@ -48670,7 +48663,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            _vm.getParentId(category.id)
+                            _vm.getParent(category.id, category.title)
                           }
                         }
                       },
@@ -48708,56 +48701,6 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "pagination" }, [
-      _c(
-        "button",
-        {
-          staticClass: "page-item btn btn-secondary btn-sm",
-          attrs: { disabled: !_vm.pagination.prev_page_url },
-          on: {
-            click: function($event) {
-              _vm.fetchPaginateCategories(
-                _vm.pagination.prev_page_url,
-                _vm.items_per_page
-              )
-            }
-          }
-        },
-        [_vm._v("\n            Prev\n        ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "span",
-        { staticClass: "page-item btn btn-outline-secondary btn-sm disabled" },
-        [
-          _vm._v(
-            "\n                    page " +
-              _vm._s(_vm.pagination.current_page) +
-              " of " +
-              _vm._s(_vm.pagination.last_page) +
-              "\n                "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "page-item btn btn-secondary btn-sm",
-          attrs: { disabled: !_vm.pagination.next_page_url },
-          on: {
-            click: function($event) {
-              _vm.fetchPaginateCategories(
-                _vm.pagination.next_page_url,
-                _vm.items_per_page
-              )
-            }
-          }
-        },
-        [_vm._v("\n            Next\n        ")]
-      )
-    ]),
-    _vm._v(" "),
     _c(
       "div",
       {
@@ -48789,30 +48732,37 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _vm._m(0)
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info",
+                  attrs: { type: "submit" },
+                  on: {
+                    click: function($event) {
+                      _vm.createCategoryClick()
+                    }
+                  }
+                },
+                [_vm._v("Create")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Cancel")]
+              )
+            ])
           ])
         ])
       ]
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -49130,7 +49080,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49167,11 +49117,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['categories', 'parent_id'],
+    props: ['categories', 'parent_id', 'parent_title'],
     name: "CategoryElementComponent",
     data: function data() {
         return {
-            parent_id: ''
+            // parent_id: '',
+            // parent_title: '',
         };
     },
 
@@ -49180,8 +49131,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             $("#sub_" + target + "").toggle();
             $("#i" + target + "").toggleClass('fa-minus-circle');
         },
-        getParentId: function getParentId(target) {
-            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', target);
+        getParent: function getParent(id, title) {
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentTitle', title);
         }
     }
 });
@@ -49236,7 +49188,7 @@ var render = function() {
                 },
                 on: {
                   click: function($event) {
-                    _vm.getParentId(category.id)
+                    _vm.getParent(category.id, category.title)
                   }
                 }
               },

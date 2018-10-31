@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index(PaginationRequest $request)
     {
         $categories = new CategoryRepository;
-        $response = $categories->allWithRelations($request->pagination);
+        $response = $categories->allWithRelations();
         return response()->json($response);//view('layouts.category.index', ['categories' => $response]);
     }
 
