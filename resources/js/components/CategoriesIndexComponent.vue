@@ -14,7 +14,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-6">
+                    <div class="col-md-10">
 
                         <h3>Category List</h3>
 
@@ -25,7 +25,7 @@
                                 <div >
                                     <i v-bind:id="'i'+category.id"  class="fa fa-plus-circle" ></i>
                                     <button class="btn btn-sm" @click="showSubCategories(category.id)" href="#">{{ category.title }}</button>
-                                    <a @click="getParent(category.id, category.title)" class="btn btn-sm"  data-toggle="modal" data-target="#SubCategory">
+                                   <a @click="getParent(category.id, category.title)" class="btn btn-sm" data-toggle="modal" data-target="#SubCategory">
                                         Add subcategory
                                     </a>
                                 </div>
@@ -43,7 +43,11 @@
             </div>
 
         </div>
-
+        <!--<modal v-bind:parent_id="parent_id"-->
+               <!--v-bind:parent_title="parent_title"-->
+               <!--v-show="isModalVisible"-->
+               <!--@close="closeModal"-->
+        <!--/>-->
 
         <!--<div class="pagination">-->
             <!--<button class="page-item btn btn-secondary btn-sm"-->
@@ -64,26 +68,35 @@
         <!--</div>-->
 
         <!-- Modal Create SubCategory -->
-        <div id="SubCategory" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Create subcategory of {{parent_title}}</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <!--<div id="SubCategory" class="modal fade" role="dialog">-->
+            <!--<div class="modal-dialog">-->
+                <!--&lt;!&ndash; Modal content&ndash;&gt;-->
+                <!--<div class="modal-content">-->
+                    <!--<div class="modal-header">-->
+                        <!--<h4 class="modal-title">Create subcategory of {{parent_title}}</h4>-->
+                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
 
-                    </div>
-                    <div class="modal-body">
-                        <category-create v-bind:parent_id="parent_id"></category-create>
-                    </div>
-                    <div class="modal-footer">
-                        <button @click="createCategoryClick()" type="submit" class="btn btn-info">Create</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
+                    <!--</div>-->
+                    <!--<div class="modal-body">-->
+                        <!--<category-create v-bind:parent_id="parent_id"></category-create>-->
+                    <!--</div>-->
+                    <!--<div class="modal-footer">-->
+                        <!--&lt;!&ndash;<button @click="createCategoryClick()" type="submit" class="btn btn-info">Create</button>&ndash;&gt;-->
+                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-            </div>
-        </div>
+            <!--</div>-->
+        <!--</div>-->
+
+    <modal id="modal"
+        v-bind:parent_id="parent_id"
+        v-bind:parent_title="parent_title"
+        v-show="isModalVisible"
+        @close="closeModal"
+    />
+
+
 
     </div>
 
@@ -95,11 +108,13 @@
     import {bus} from '../app';
 
     import CreateCategoryComponent from './CreateCategoryComponent.vue';
+    import ModalCreateCategory from './ModalCreateCategory.vue';
     export default {
         // props: ['parent_id','parent_title'],
         name: "CategoriesIndexComponent",
         components: {
-            "category-create": CreateCategoryComponent,
+           // "category-create": CreateCategoryComponent,
+            "modal": ModalCreateCategory,
         },
         data(){
             return {
@@ -110,6 +125,7 @@
                 items_per_page: '',
                 parent_id: '',
                 parent_title: '',
+                isModalVisible: false,
             }
         },
         mounted(){
@@ -121,9 +137,11 @@
             });
             bus.$on('changeParentTitle', (data) => {
                 this.parent_title = data;
+                this.isModalVisible = true;
             });
             bus.$on('createNewCategory', (data) => {
                 this.getCategories();
+                this.isModalVisible = false;
             });
         },
         methods: {
@@ -198,10 +216,17 @@
             getParent(id, title) {
                 bus.$emit('changeParentId', id);
                 bus.$emit('changeParentTitle', title);
-
+                this.showModal();
             },
             createCategoryClick() {
                 $('#create_category').click();
+            },
+            showModal() {
+                bus.$emit('openModal');
+                this.isModalVisible = true;
+            },
+            closeModal() {
+                this.isModalVisible = false;
             }
         }
     }

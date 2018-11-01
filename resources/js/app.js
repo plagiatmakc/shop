@@ -23,6 +23,9 @@ Vue.component('category-create', require('./components/CreateCategoryComponent.v
 Vue.component('modal-category-create', require('./components/ModalCreateCategory.vue'));
 Vue.component('dashboard', require('./components/DashboardComponent.vue'));
 
+
+
+
 export const bus = new Vue();
 
 const app = new Vue({

@@ -16,15 +16,18 @@
                 </ul>
             </li>
         </ul>
-
     </div>
 </template>
 
 <script>
     import {bus} from '../app';
+    import ModalCreateCategory from './ModalCreateCategory.vue';
     export default {
         props:['categories', 'parent_id', 'parent_title'],
         name: "CategoryElementComponent",
+        components: {
+            "modal": ModalCreateCategory,
+        },
         data() {
             return{
                 // parent_id: '',
@@ -39,6 +42,7 @@
             getParent(id, title) {
                 bus.$emit('changeParentId', id);
                 bus.$emit('changeParentTitle', title);
+                bus.$emit('openModal');
 
             }
         }
