@@ -38,11 +38,10 @@
             //this.getAllCategories();
         },
         created() {
-            bus.$on
-            bus.$on('openModal', (data) => {
-                this.title = '';
-                this.description = '';
-            });
+            // bus.$on('openModal', () => {
+            //     this.title = '';
+            //     this.description = '';
+            // });
         },
         // watch: {
         //   parent_id: function() {
@@ -59,7 +58,7 @@
                 })
                     .then(function (response) {
                         console.log(response.statusText);
-                        bus.$emit('createNewCategory');
+                        bus.$emit('refreshPage');
                         $(".close").click();
                         // $('form :input').val('');
                     })

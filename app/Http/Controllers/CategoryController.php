@@ -34,22 +34,22 @@ class CategoryController extends Controller
         return response()->json($result);//view('layouts.category.create');
     }
 
+    public function edit($category, CategoryRepository $categoryRepository)
+    {
+        $category_for_edit = $categoryRepository->getById($category);
+        return response()->json($category_for_edit);//view('layouts.category.edit', ['category' => $result]);
+    }
+
     public function update($category, CategoryRequest $request, CategoryRepository $categoryRepository)
     {
-        $categoryRepository->update($request->all(), $category);
-        return $this->index();//response()->json($catrepo);
+        $result = $categoryRepository->update($request->all(), $category);
+        return response()->json($result);
     }
 
     public function destroy($category, CategoryRepository $categoryRepository)
     {
        $categoryRepository->delete($category);
         return response()->json();//$this->index();//response()->json($catrepo);
-    }
-
-    public function edit($category, CategoryRepository $categoryRepository)
-    {
-        $result = $categoryRepository->getById($category);
-        return view('layouts.category.edit', ['category' => $result]);
     }
 
     public function allCategories(CategoryRepository $categoryRepository)

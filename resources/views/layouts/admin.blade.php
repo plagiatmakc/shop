@@ -1,4 +1,4 @@
-@extends('layouts.app')<div class="container">
+@extends('layouts.app')
 {{--@extends('layouts.sidebar')--}}
 
 @section('content')

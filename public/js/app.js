@@ -847,8 +847,10 @@ Vue.component('example', __webpack_require__(46));
 Vue.component('admin-component', __webpack_require__(49));
 Vue.component('categories-index', __webpack_require__(17));
 Vue.component('category-element', __webpack_require__(71));
-Vue.component('category-create', __webpack_require__(7));
-Vue.component('modal-category-create', __webpack_require__(8));
+Vue.component('category-create', __webpack_require__(6));
+Vue.component('category-update', __webpack_require__(80));
+Vue.component('modal-category-create', __webpack_require__(85));
+// Vue.component('modal-category-update', require('./components/ModalUpdateCategory.vue'));
 Vue.component('dashboard', __webpack_require__(18));
 
 var bus = new Vue();
@@ -924,6 +926,57 @@ $(document).ready(function () {
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(57)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(59)
+/* template */
+var __vue_template__ = __webpack_require__(60)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-c324ac30"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/CreateCategoryComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c324ac30", Component.options)
+  } else {
+    hotAPI.reload("data-v-c324ac30", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1027,108 +1080,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(57)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(59)
-/* template */
-var __vue_template__ = __webpack_require__(60)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-c324ac30"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/CreateCategoryComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c324ac30", Component.options)
-  } else {
-    hotAPI.reload("data-v-c324ac30", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(61)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(63)
-/* template */
-var __vue_template__ = __webpack_require__(64)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-9945e6e8"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/ModalCreateCategory.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-9945e6e8", Component.options)
-  } else {
-    hotAPI.reload("data-v-9945e6e8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
+/* 8 */,
 /* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -35778,7 +35730,7 @@ module.exports = __webpack_require__(25);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(11);
 var Axios = __webpack_require__(27);
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 
 /**
  * Create an instance of Axios
@@ -35861,7 +35813,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(36);
 var dispatchRequest = __webpack_require__(37);
@@ -36400,7 +36352,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(38);
 var isCancel = __webpack_require__(15);
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 var isAbsoluteURL = __webpack_require__(39);
 var combineURLs = __webpack_require__(40);
 
@@ -48130,7 +48082,7 @@ module.exports = function listToStyles (parentId, list) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CategoriesIndexComponent_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CategoriesIndexComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CategoriesIndexComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateCategoryComponent_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateCategoryComponent_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateCategoryComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__CreateCategoryComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DashboardComponent_vue__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DashboardComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__DashboardComponent_vue__);
@@ -48218,7 +48170,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48230,10 +48182,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateCategoryComponent_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateCategoryComponent_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateCategoryComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__CreateCategoryComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ModalCreateCategory_vue__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ModalCreateCategory_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ModalCreateCategory_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ModalCRUDCategory_vue__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ModalCRUDCategory_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ModalCRUDCategory_vue__);
 //
 //
 //
@@ -48340,6 +48292,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -48350,7 +48313,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: "CategoriesIndexComponent",
     components: {
         // "category-create": CreateCategoryComponent,
-        "modal": __WEBPACK_IMPORTED_MODULE_2__ModalCreateCategory_vue___default.a
+        "modalCRUDCategories": __WEBPACK_IMPORTED_MODULE_2__ModalCRUDCategory_vue___default.a
     },
     data: function data() {
         return {
@@ -48361,7 +48324,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             items_per_page: '',
             parent_id: '',
             parent_title: '',
-            isModalVisible: false
+            isModalVisible: false,
+            paramCRUD: ''
         };
     },
     mounted: function mounted() {
@@ -48377,7 +48341,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.parent_title = data;
             _this.isModalVisible = true;
         });
-        __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$on('createNewCategory', function (data) {
+        __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$on('changeParamCRUD', function (data) {
+            _this.paramCRUD = data;
+            _this.isModalVisible = true;
+        });
+        __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$on('refreshPage', function () {
             _this.getCategories();
             _this.isModalVisible = false;
         });
@@ -48453,17 +48421,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getParent: function getParent(id, title) {
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentTitle', title);
+            this.paramCRUD = 'addSubCategory';
             this.showModal();
         },
         createCategoryClick: function createCategoryClick() {
             $('#create_category').click();
         },
         showModal: function showModal() {
-            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('openModal');
+            // bus.$emit('openModal');
             this.isModalVisible = true;
         },
         closeModal: function closeModal() {
             this.isModalVisible = false;
+        },
+        editCategory: function editCategory(id) {
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
+            this.paramCRUD = 'editCategory';
+            this.showModal();
         }
     }
 });
@@ -48503,7 +48477,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48555,13 +48529,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //this.getAllCategories();
     },
     created: function created() {
-        var _this = this;
-
-        __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$on;
-        __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$on('openModal', function (data) {
-            _this.title = '';
-            _this.description = '';
-        });
+        // bus.$on('openModal', () => {
+        //     this.title = '';
+        //     this.description = '';
+        // });
     },
 
     // watch: {
@@ -48578,7 +48549,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 parent_id: this.parent_id
             }).then(function (response) {
                 console.log(response.statusText);
-                __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('createNewCategory');
+                __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('refreshPage');
                 $(".close").click();
                 // $('form :input').val('');
             }).catch(function (error) {
@@ -48704,265 +48675,10 @@ if (false) {
 }
 
 /***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(62);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("49ac2876", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-9945e6e8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ModalCreateCategory.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-9945e6e8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ModalCreateCategory.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.modal-backdrop[data-v-9945e6e8] {\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    background-color: rgba(0, 0, 0, 0.3);\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.modal[data-v-9945e6e8] {\n    top: auto;\n    bottom: auto;\n    left: auto;\n    right: auto;\n    background: #FFFFFF;\n    -webkit-box-shadow: 2px 2px 20px 1px;\n            box-shadow: 2px 2px 20px 1px;\n    overflow-x: auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n}\n.modal-header[data-v-9945e6e8] {\n    border-bottom: 1px solid #eeeeee;\n    color: #121212;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    padding-bottom: 0px;\n    padding-top: 5px;\n}\n.modal-footer[data-v-9945e6e8] {\n    padding: 15px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    border-top: 1px solid #eeeeee;\n    -webkit-box-pack: end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n}\n.modal-body[data-v-9945e6e8] {\n    position: relative;\n    padding: 20px 10px;\n}\n.btn-close[data-v-9945e6e8] {\n\n    border: none;\n    font-size: 20px;\n    padding: 0px;\n    cursor: pointer;\n    font-weight: bold;\n    color: #121212;\n    background: transparent;\n}\n.btn-green[data-v-9945e6e8] {\n    color: white;\n    background: #4AAE9B;\n    border: 1px solid #4AAE9B;\n    border-radius: 2px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 63 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['parent_id', 'parent_title'],
-    name: "ModalCreateCategory",
-    components: {
-        CreateCategoryComponent: __WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue___default.a
-    },
-    create: function create() {},
-
-    methods: {
-        close: function close() {
-            this.$emit('close');
-        },
-        createCategoryClick: function createCategoryClick() {
-            $('#create_category').click();
-        }
-    }
-});
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticStyle: { width: "200px" } },
-    [
-      _c("transition", { attrs: { name: "modal-fade" } }, [
-        _c("div", { staticClass: "modal-backdrop" }, [
-          _c(
-            "div",
-            {
-              staticClass: "modal",
-              attrs: {
-                role: "dialog",
-                "aria-labelledby": "modalTitle",
-                "aria-describedby": "modalDescription"
-              }
-            },
-            [
-              _c(
-                "header",
-                {
-                  staticClass: "modal-header d-inline-flex",
-                  attrs: { id: "modalTitle" }
-                },
-                [
-                  _vm._t("header", [
-                    _c(
-                      "h4",
-                      {
-                        staticStyle: {
-                          "margin-top": "10px",
-                          "padding-right": "10px",
-                          "padding-top": "30px"
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "Create subcategory of " + _vm._s(_vm.parent_title)
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn-close",
-                        attrs: { "aria-label": "Close modal" },
-                        on: { click: _vm.close }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            x\n                        "
-                        )
-                      ]
-                    )
-                  ])
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "section",
-                {
-                  staticClass: "modal-body",
-                  attrs: { id: "modalDescription" }
-                },
-                [
-                  _vm._t("body", [
-                    _c("CreateCategoryComponent", {
-                      attrs: { parent_id: _vm.parent_id }
-                    })
-                  ])
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "footer",
-                { staticClass: "modal-footer" },
-                [
-                  _vm._t("footer", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn-green",
-                        attrs: { type: "submit" },
-                        on: {
-                          click: function($event) {
-                            _vm.createCategoryClick()
-                          }
-                        }
-                      },
-                      [_vm._v("Create")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn-green",
-                        attrs: { type: "button", "aria-label": "Close modal" },
-                        on: { click: _vm.close }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Close\n                        "
-                        )
-                      ]
-                    )
-                  ])
-                ],
-                2
-              )
-            ]
-          )
-        ])
-      ])
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-9945e6e8", module.exports)
-  }
-}
-
-/***/ }),
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49009,7 +48725,13 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v(_vm._s(category.title))]
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(category.title) +
+                              "\n                                "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -49029,6 +48751,23 @@ var render = function() {
                         [
                           _vm._v(
                             "\n                                    Add subcategory\n                                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-sm",
+                          on: {
+                            click: function($event) {
+                              _vm.editCategory(category.id)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Edit\n                                "
                           )
                         ]
                       )
@@ -49060,22 +48799,17 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("modal", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.isModalVisible,
-            expression: "isModalVisible"
-          }
-        ],
-        attrs: {
-          id: "modal",
-          parent_id: _vm.parent_id,
-          parent_title: _vm.parent_title
-        },
-        on: { close: _vm.closeModal }
-      })
+      _vm.isModalVisible
+        ? _c("modalCRUDCategories", {
+            attrs: {
+              id: "modalCreate",
+              paramCRUD: _vm.paramCRUD,
+              parent_id: _vm.parent_id,
+              parent_title: _vm.parent_title
+            },
+            on: { close: _vm.closeModal }
+          })
+        : _vm._e()
     ],
     1
   )
@@ -49398,7 +49132,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49410,8 +49144,11 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModalCreateCategory_vue__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModalCreateCategory_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ModalCreateCategory_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModalCRUDCategory_vue__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModalCRUDCategory_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ModalCRUDCategory_vue__);
+//
+//
+//
 //
 //
 //
@@ -49440,7 +49177,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['categories', 'parent_id', 'parent_title'],
     name: "CategoryElementComponent",
     components: {
-        "modal": __WEBPACK_IMPORTED_MODULE_1__ModalCreateCategory_vue___default.a
+        "modal": __WEBPACK_IMPORTED_MODULE_1__ModalCRUDCategory_vue___default.a
     },
     data: function data() {
         return {
@@ -49458,6 +49195,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentTitle', title);
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('openModal');
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParamCRUD', 'addSubCategory');
+        },
+        editCategory: function editCategory(id) {
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('openModal');
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParamCRUD', 'editCategory');
         }
     }
 });
@@ -49521,6 +49264,19 @@ var render = function() {
                   "\n                    Add subcategory\n                "
                 )
               ]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-sm",
+                on: {
+                  click: function($event) {
+                    _vm.editCategory(category.id)
+                  }
+                }
+              },
+              [_vm._v("\n                    Edit\n                ")]
             )
           ]),
           _vm._v(" "),
@@ -49562,6 +49318,696 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(81)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(83)
+/* template */
+var __vue_template__ = __webpack_require__(84)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-1e3de43b"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/UpdateCategoryComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1e3de43b", Component.options)
+  } else {
+    hotAPI.reload("data-v-1e3de43b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(82);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("39915bf6", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1e3de43b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UpdateCategoryComponent.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1e3de43b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UpdateCategoryComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app__ = __webpack_require__(5);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "UpdateCategoryComponent",
+    props: ['category_id'],
+    data: function data() {
+        return {
+            title: '',
+            description: '',
+            categories: [],
+            parent_id: ''
+        };
+    },
+    mounted: function mounted() {
+        this.getCategoryForEdit(this.category_id);
+        this.getAllCategories();
+    },
+
+    methods: {
+        getCategoryForEdit: function getCategoryForEdit(category_id) {
+            var _this = this;
+
+            window.axios.get('/categories/' + category_id + '/edit').then(function (response) {
+                console.log(response.statusText);
+                _this.title = response.data.title;
+                _this.description = response.data.description;
+                _this.parent_id = response.data.parent_id;
+            }).catch(function (error) {
+                console.log(error.statusText);
+            });
+        },
+        updateCategory: function updateCategory(id) {
+            window.axios.post('/categories/' + id, {
+                "_method": 'PUT',
+                title: this.title,
+                description: this.description,
+                parent_id: this.parent_id
+            }).then(function (response) {
+                console.log(response.statusText);
+                __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('refreshPage');
+                $(".close").click();
+                // $('form :input').val('');
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
+        getAllCategories: function getAllCategories() {
+            var _this2 = this;
+
+            window.axios.get('/all-categories').then(function (response) {
+                console.log(response.data);
+                _this2.categories = response.data;
+            }).catch(function (error) {
+                console.log(error.statusText);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "form",
+      {
+        attrs: { method: "POST", action: "/categories" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.updateCategory(_vm.category_id)
+          }
+        }
+      },
+      [
+        _c("label", [_vm._v("Title")]),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.title,
+              expression: "title"
+            }
+          ],
+          attrs: { id: "category_title_id", type: "text", name: "title" },
+          domProps: { value: _vm.title },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.title = $event.target.value
+            }
+          }
+        }),
+        _c("br"),
+        _vm._v(" "),
+        _c("label", [_vm._v("Description")]),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.description,
+              expression: "description"
+            }
+          ],
+          attrs: {
+            id: "category_description_id",
+            type: "text",
+            name: "description"
+          },
+          domProps: { value: _vm.description },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.description = $event.target.value
+            }
+          }
+        }),
+        _c("br"),
+        _vm._v(" "),
+        _c("label", [_vm._v("Parent category:")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.parent_id,
+                expression: "parent_id"
+              }
+            ],
+            attrs: { name: "parent_id" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.parent_id = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "" } }, [
+              _vm._v("Hasn't parent category")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.categories, function(category) {
+              return _c("option", { domProps: { value: category.id } }, [
+                _vm._v(_vm._s(category.title))
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("p"),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.parent_id == undefined,
+              expression: "parent_id == undefined"
+            }
+          ],
+          staticClass: "btn btn-info",
+          attrs: { id: "create_category", type: "submit", value: "update" }
+        })
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1e3de43b", module.exports)
+  }
+}
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(86)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(88)
+/* template */
+var __vue_template__ = __webpack_require__(89)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-512c13a4"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/ModalCRUDCategory.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-512c13a4", Component.options)
+  } else {
+    hotAPI.reload("data-v-512c13a4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(87);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("0ac85506", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-512c13a4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ModalCRUDCategory.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-512c13a4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ModalCRUDCategory.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal-backdrop[data-v-512c13a4] {\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    background-color: rgba(0, 0, 0, 0.3);\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.modal[data-v-512c13a4] {\n    top: auto;\n    bottom: auto;\n    left: auto;\n    right: auto;\n    background: #FFFFFF;\n    -webkit-box-shadow: 2px 2px 20px 1px;\n            box-shadow: 2px 2px 20px 1px;\n    overflow-x: auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n}\n.modal-header[data-v-512c13a4] {\n    border-bottom: 1px solid #eeeeee;\n    color: #121212;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    padding-bottom: 0px;\n    padding-top: 5px;\n}\n.modal-footer[data-v-512c13a4] {\n    padding: 15px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    border-top: 1px solid #eeeeee;\n    -webkit-box-pack: end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n}\n.modal-body[data-v-512c13a4] {\n    position: relative;\n    padding: 20px 10px;\n}\n.btn-close[data-v-512c13a4] {\n\n    border: none;\n    font-size: 20px;\n    padding: 0px;\n    cursor: pointer;\n    font-weight: bold;\n    color: #121212;\n    background: transparent;\n}\n.btn-green[data-v-512c13a4] {\n    color: white;\n    background: #4AAE9B;\n    border: 1px solid #4AAE9B;\n    border-radius: 2px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UpdateCategoryComponent_vue__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UpdateCategoryComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__UpdateCategoryComponent_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['parent_id', 'parent_title', 'paramCRUD'],
+    name: "ModalCRUDCategory",
+    components: {
+        CreateCategoryComponent: __WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue___default.a,
+        UpdateCategoryComponent: __WEBPACK_IMPORTED_MODULE_1__UpdateCategoryComponent_vue___default.a
+    },
+    create: function create() {},
+
+    methods: {
+        close: function close() {
+            this.$emit('close');
+        },
+        createCategoryClick: function createCategoryClick() {
+            $('#create_category').click();
+        }
+    }
+});
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticStyle: { width: "200px" } },
+    [
+      _c("transition", { attrs: { name: "modal-fade" } }, [
+        _c("div", { staticClass: "modal-backdrop" }, [
+          _c(
+            "div",
+            {
+              staticClass: "modal",
+              attrs: {
+                role: "dialog",
+                "aria-labelledby": "modalTitle",
+                "aria-describedby": "modalDescription"
+              }
+            },
+            [
+              _c(
+                "header",
+                {
+                  staticClass: "modal-header d-inline-flex",
+                  attrs: { id: "modalTitle" }
+                },
+                [
+                  _vm._t("header", [
+                    _vm.paramCRUD == "addSubCategory"
+                      ? _c(
+                          "h4",
+                          {
+                            staticStyle: {
+                              "margin-top": "10px",
+                              "padding-right": "10px",
+                              "padding-top": "30px"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "Create subcategory of " +
+                                _vm._s(_vm.parent_title)
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.paramCRUD == "editCategory"
+                      ? _c(
+                          "h4",
+                          {
+                            staticStyle: {
+                              "margin-top": "10px",
+                              "padding-right": "10px",
+                              "padding-top": "30px"
+                            }
+                          },
+                          [_vm._v("Edit category")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-close",
+                        attrs: { "aria-label": "Close modal" },
+                        on: { click: _vm.close }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            x\n                        "
+                        )
+                      ]
+                    )
+                  ])
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "section",
+                {
+                  staticClass: "modal-body",
+                  attrs: { id: "modalDescription" }
+                },
+                [
+                  _vm._t("body", [
+                    _vm.paramCRUD == "addSubCategory"
+                      ? _c("CreateCategoryComponent", {
+                          attrs: { parent_id: _vm.parent_id }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.paramCRUD == "editCategory"
+                      ? _c("UpdateCategoryComponent", {
+                          attrs: { category_id: _vm.parent_id }
+                        })
+                      : _vm._e()
+                  ])
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "footer",
+                { staticClass: "modal-footer" },
+                [
+                  _vm._t("footer", [
+                    _vm.paramCRUD == "addSubCategory"
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn-green",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                _vm.createCategoryClick()
+                              }
+                            }
+                          },
+                          [_vm._v("Create")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.paramCRUD == "editCategory"
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn-green",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                _vm.createCategoryClick()
+                              }
+                            }
+                          },
+                          [_vm._v("Update")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-green",
+                        attrs: { type: "button", "aria-label": "Close modal" },
+                        on: { click: _vm.close }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            Close\n                        "
+                        )
+                      ]
+                    )
+                  ])
+                ],
+                2
+              )
+            ]
+          )
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-512c13a4", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

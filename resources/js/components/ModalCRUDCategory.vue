@@ -13,7 +13,8 @@
                         id="modalTitle"
                     >
                         <slot name="header">
-                           <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px">Create subcategory of {{parent_title}}</h4>
+                           <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px" v-if="paramCRUD == 'addSubCategory'">Create subcategory of {{parent_title}}</h4>
+                           <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px" v-if="paramCRUD == 'editCategory'">Edit category</h4>
                             <button
                                 class="btn-close"
                                 @click="close"
@@ -28,12 +29,14 @@
                         id="modalDescription"
                     >
                         <slot name="body">
-                            <CreateCategoryComponent v-bind:parent_id="parent_id"></CreateCategoryComponent>
+                            <CreateCategoryComponent v-if="paramCRUD == 'addSubCategory'" v-bind:parent_id="parent_id"></CreateCategoryComponent>
+                            <UpdateCategoryComponent v-if="paramCRUD == 'editCategory'" v-bind:category_id="parent_id"></UpdateCategoryComponent>
                         </slot>
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
-                            <button @click="createCategoryClick()" type="submit" class="btn-green">Create</button>
+                            <button @click="createCategoryClick()" type="submit" class="btn-green" v-if="paramCRUD == 'addSubCategory'">Create</button>
+                            <button @click="createCategoryClick()" type="submit" class="btn-green" v-if="paramCRUD == 'editCategory'" >Update</button>
                             <button
                                 type="button"
                                 class="btn-green"
@@ -54,11 +57,13 @@
 
 <script>
     import CreateCategoryComponent from './CreateCategoryComponent.vue'
+    import UpdateCategoryComponent from './UpdateCategoryComponent.vue'
     export default {
-        props:['parent_id', 'parent_title'],
-        name: "ModalCreateCategory",
+        props:['parent_id', 'parent_title','paramCRUD'],
+        name: "ModalCRUDCategory",
         components: {
             CreateCategoryComponent,
+            UpdateCategoryComponent,
         },
         create() {
 

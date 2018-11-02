@@ -20,7 +20,9 @@ Vue.component('admin-component', require('./components/AdminComponent.vue'));
 Vue.component('categories-index', require('./components/CategoriesIndexComponent.vue'));
 Vue.component('category-element', require('./components/CategoryElementComponent.vue'));
 Vue.component('category-create', require('./components/CreateCategoryComponent.vue'));
-Vue.component('modal-category-create', require('./components/ModalCreateCategory.vue'));
+Vue.component('category-update', require('./components/UpdateCategoryComponent.vue'));
+Vue.component('modal-category-create', require('./components/ModalCRUDCategory.vue'));
+// Vue.component('modal-category-update', require('./components/ModalUpdateCategory.vue'));
 Vue.component('dashboard', require('./components/DashboardComponent.vue'));
 
 
