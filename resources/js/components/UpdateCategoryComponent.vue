@@ -55,6 +55,7 @@
             updateCategory(id) {
                 window.axios.post('/categories/'+id, {
                     "_method": 'PUT',
+                    id: id,
                     title: this.title,
                     description: this.description,
                     parent_id: this.parent_id

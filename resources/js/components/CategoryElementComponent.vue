@@ -13,6 +13,11 @@
                     <a @click="editCategory(category.id)" class="btn btn-sm">
                         Edit
                     </a>
+                    <a @click="deleteCategory(category.id)"
+                       class="btn btn-sm"
+                    >
+                        Delete
+                    </a>
                 </div>
                 <ul v-bind:id="'sub_'+ category.id" v-if="category.categories_recursive" style="display:none;">
                     <category-element v-bind:parent_id="category.id" v-bind:categories="category.categories_recursive"></category-element>
@@ -54,11 +59,29 @@
                 bus.$emit('openModal');
                 bus.$emit('changeParamCRUD', 'editCategory');
 
+            },
+            deleteCategory(id) {
+                if(confirm("Delete with subcategories?")){
+                    window.axios.post('/categories/'+id, {
+                        "_method": 'DELETE',
+                    })
+                        .then(response => {
+                            console.log(response);
+                            bus.$emit('refreshPage');
+                            this.loading = false;
+                        })
+                        .catch(error => {
+                            console.log(error.statusText);
+                            this.loading = false;
+                        })
+                }
             }
         }
     }
 </script>
 
 <style scoped>
-
+    a.btn-sm:hover {
+        color: #227dc7;
+    }
 </style>

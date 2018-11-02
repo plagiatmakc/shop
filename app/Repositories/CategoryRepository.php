@@ -53,11 +53,44 @@ class CategoryRepository
     public function delete($id)
     {
         try {
-            Category::findOrFail($id)->delete();
+            if(Category::findOrFail($id)->categories){
+               $result =  $this->deleteRecursive($id);//Category::where('parent_id', $id)->get();
+            }else {
+               $result = Category::findOrFail($id)->delete();
+            }
+            return $result;
+
         } catch (Exception $e) {
             report($e);
             return false;
         }
 
+    }
+
+    public function deleteRecursive($id)
+    {
+        if(Category::findOrFail($id)->categories){
+            $sub_categories = Category::where('parent_id', $id)->get();
+            foreach($sub_categories as $sub_category){
+                if($sub_category->categories){
+                    $this->deleteRecursive($sub_category->id);
+                }else{
+                    try {
+                        $result = Category::findOrFail($sub_category->id)->delete();
+                        return $result;
+                    } catch (Exception $e) {
+                        report($e);
+                        return false;
+                    }
+                }
+            }
+        }
+        try {
+            $result = Category::findOrFail($id)->delete();
+            return $result;
+        } catch (Exception $e) {
+            report($e);
+            return false;
+        }
     }
 }
