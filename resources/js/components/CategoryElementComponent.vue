@@ -7,20 +7,21 @@
                     <button class="btn btn-sm" @click="showSubCategories(category.id)" href="#">
                         {{ category.title }}
                     </button>
-                    <a @click="getParent(category.id, category.title)" class="btn btn-sm" data-toggle="modal" data-target="#SubCategory">
+                    <a @click="getParent(category.id, category.title)" class="btn btn-sm">
                         Add subcategory
                     </a>
                     <a @click="editCategory(category.id)" class="btn btn-sm">
                         Edit
                     </a>
-                    <a @click="deleteCategory(category.id)"
+                    <a @click="deleteCategory(category.id, category.title)"
                        class="btn btn-sm"
                     >
                         Delete
                     </a>
                 </div>
                 <ul v-bind:id="'sub_'+ category.id" v-if="category.categories_recursive" style="display:none;">
-                    <category-element v-bind:parent_id="category.id" v-bind:categories="category.categories_recursive"></category-element>
+                    <category-element v-bind:parent_id="category.id" v-bind:categories="category.categories_recursive">
+                    </category-element>
                 </ul>
             </li>
         </ul>
@@ -50,31 +51,32 @@
             getParent(id, title) {
                 bus.$emit('changeParentId', id);
                 bus.$emit('changeParentTitle', title);
-                bus.$emit('openModal');
                 bus.$emit('changeParamCRUD', 'addSubCategory')
 
             },
             editCategory(id) {
                 bus.$emit('changeParentId', id);
-                bus.$emit('openModal');
                 bus.$emit('changeParamCRUD', 'editCategory');
 
             },
-            deleteCategory(id) {
-                if(confirm("Delete with subcategories?")){
-                    window.axios.post('/categories/'+id, {
-                        "_method": 'DELETE',
-                    })
-                        .then(response => {
-                            console.log(response);
-                            bus.$emit('refreshPage');
-                            this.loading = false;
-                        })
-                        .catch(error => {
-                            console.log(error.statusText);
-                            this.loading = false;
-                        })
-                }
+            deleteCategory(id, title) {
+                bus.$emit('changeParentId', id);
+                bus.$emit('changeParentTitle', title);
+                bus.$emit('changeParamCRUD','deleteCategory');
+                // if(confirm("Delete with subcategories?")){
+                //     window.axios.post('/categories/'+id, {
+                //         "_method": 'DELETE',
+                //     })
+                //         .then(response => {
+                //             console.log(response);
+                //             bus.$emit('refreshPage');
+                //             this.loading = false;
+                //         })
+                //         .catch(error => {
+                //             console.log(error.statusText);
+                //             this.loading = false;
+                //         })
+                // }
             }
         }
     }

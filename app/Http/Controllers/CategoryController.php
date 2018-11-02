@@ -49,7 +49,7 @@ class CategoryController extends Controller
     public function destroy($category, CategoryRepository $categoryRepository)
     {
         $result = $categoryRepository->delete($category);
-        return response()->json($result);//$this->index();//response()->json($catrepo);
+        return response()->json($result);
     }
 
     public function allCategories(CategoryRepository $categoryRepository)

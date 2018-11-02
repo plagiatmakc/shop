@@ -48529,10 +48529,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getParent: function getParent(id, title) {
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentTitle', title);
-            this.paramCRUD = 'addSubCategory';
-            this.showModal();
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParamCRUD', 'addSubCategory');
         },
-        createCategoryClick: function createCategoryClick() {
+        clickSubmitButton: function clickSubmitButton() {
             $('#create_category').click();
         },
         showModal: function showModal() {
@@ -48544,24 +48543,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         editCategory: function editCategory(id) {
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
-            this.paramCRUD = 'editCategory';
-            this.showModal();
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParamCRUD', 'editCategory');
         },
-        deleteCategory: function deleteCategory(id) {
-            var _this3 = this;
-
-            if (confirm("Delete with subcategories?")) {
-                window.axios.post('/categories/' + id, {
-                    "_method": 'DELETE'
-                }).then(function (response) {
-                    console.log(response);
-                    __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('refreshPage');
-                    _this3.loading = false;
-                }).catch(function (error) {
-                    console.log(error.statusText);
-                    _this3.loading = false;
-                });
-            }
+        deleteCategory: function deleteCategory(id, title) {
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentTitle', title);
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParamCRUD', 'deleteCategory');
+            // if(confirm("A you sure?")){
+            //     window.axios.post('/categories/'+id, {
+            //         "_method": 'DELETE',
+            //     })
+            //         .then(response => {
+            //             console.log(response);
+            //             bus.$emit('refreshPage');
+            //             this.loading = false;
+            //         })
+            //         .catch(error => {
+            //             console.log(error.statusText);
+            //             this.loading = false;
+            //         })
+            // }
         }
     }
 });
@@ -48848,6 +48849,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CreateCategoryComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UpdateCategoryComponent_vue__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UpdateCategoryComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__UpdateCategoryComponent_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app__ = __webpack_require__(4);
 //
 //
 //
@@ -48905,6 +48907,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -48921,8 +48942,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         close: function close() {
             this.$emit('close');
         },
-        createCategoryClick: function createCategoryClick() {
+        clickSubmitButton: function clickSubmitButton() {
             $('#create_category').click();
+        },
+        deleteCategoryClick: function deleteCategoryClick(id) {
+            var _this = this;
+
+            if (confirm("A you sure?")) {
+                window.axios.post('/categories/' + id, {
+                    "_method": 'DELETE'
+                }).then(function (response) {
+                    console.log(response);
+                    __WEBPACK_IMPORTED_MODULE_2__app__["bus"].$emit('refreshPage');
+                    _this.close();
+                    _this.loading = false;
+                }).catch(function (error) {
+                    console.log(error.statusText);
+                    _this.loading = false;
+                });
+            }
         }
     }
 });
@@ -49270,6 +49308,24 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
+                    _vm.paramCRUD == "deleteCategory"
+                      ? _c(
+                          "h4",
+                          {
+                            staticStyle: {
+                              "margin-top": "10px",
+                              "padding-top": "20px"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            Delete " +
+                                _vm._s(_vm.parent_title)
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c(
                       "button",
                       {
@@ -49306,6 +49362,17 @@ var render = function() {
                       ? _c("UpdateCategoryComponent", {
                           attrs: { category_id: _vm.parent_id }
                         })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.paramCRUD == "deleteCategory"
+                      ? _c("div", { attrs: { category_id: _vm.parent_id } }, [
+                          _c("span", { staticClass: "text-danger" }, [
+                            _vm._v("Warning! ")
+                          ]),
+                          _vm._v(
+                            " If subcategory exist, they will be\n                            destroyed!!!\n                        "
+                          )
+                        ])
                       : _vm._e()
                   ])
                 ],
@@ -49325,11 +49392,11 @@ var render = function() {
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
-                                _vm.createCategoryClick()
+                                _vm.clickSubmitButton()
                               }
                             }
                           },
-                          [_vm._v("Create")]
+                          [_vm._v("Create\n                        ")]
                         )
                       : _vm._e(),
                     _vm._v(" "),
@@ -49341,11 +49408,27 @@ var render = function() {
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
-                                _vm.createCategoryClick()
+                                _vm.clickSubmitButton()
                               }
                             }
                           },
-                          [_vm._v("Update")]
+                          [_vm._v("Update\n                        ")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.paramCRUD == "deleteCategory"
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn-green",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                _vm.deleteCategoryClick(_vm.parent_id)
+                              }
+                            }
+                          },
+                          [_vm._v("Delete\n                        ")]
                         )
                       : _vm._e(),
                     _vm._v(" "),
@@ -49480,7 +49563,7 @@ var render = function() {
                           staticClass: "btn btn-sm",
                           on: {
                             click: function($event) {
-                              _vm.deleteCategory(category.id)
+                              _vm.deleteCategory(category.id, category.title)
                             }
                           }
                         },
@@ -49894,6 +49977,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -49918,29 +50002,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getParent: function getParent(id, title) {
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentTitle', title);
-            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('openModal');
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParamCRUD', 'addSubCategory');
         },
         editCategory: function editCategory(id) {
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
-            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('openModal');
             __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParamCRUD', 'editCategory');
         },
-        deleteCategory: function deleteCategory(id) {
-            var _this = this;
-
-            if (confirm("Delete with subcategories?")) {
-                window.axios.post('/categories/' + id, {
-                    "_method": 'DELETE'
-                }).then(function (response) {
-                    console.log(response);
-                    __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('refreshPage');
-                    _this.loading = false;
-                }).catch(function (error) {
-                    console.log(error.statusText);
-                    _this.loading = false;
-                });
-            }
+        deleteCategory: function deleteCategory(id, title) {
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentId', id);
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParentTitle', title);
+            __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('changeParamCRUD', 'deleteCategory');
+            // if(confirm("Delete with subcategories?")){
+            //     window.axios.post('/categories/'+id, {
+            //         "_method": 'DELETE',
+            //     })
+            //         .then(response => {
+            //             console.log(response);
+            //             bus.$emit('refreshPage');
+            //             this.loading = false;
+            //         })
+            //         .catch(error => {
+            //             console.log(error.statusText);
+            //             this.loading = false;
+            //         })
+            // }
         }
     }
 });
@@ -49989,10 +50074,6 @@ var render = function() {
               "a",
               {
                 staticClass: "btn btn-sm",
-                attrs: {
-                  "data-toggle": "modal",
-                  "data-target": "#SubCategory"
-                },
                 on: {
                   click: function($event) {
                     _vm.getParent(category.id, category.title)
@@ -50025,7 +50106,7 @@ var render = function() {
                 staticClass: "btn btn-sm",
                 on: {
                   click: function($event) {
-                    _vm.deleteCategory(category.id)
+                    _vm.deleteCategory(category.id, category.title)
                   }
                 }
               },

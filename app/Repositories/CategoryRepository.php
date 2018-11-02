@@ -10,17 +10,21 @@ class CategoryRepository
 {
 
     public function allCategories()
-    {   $categories = Category::all();
-        return $categories;
+    {
+        return Category::all();
     }
 
     public function allWithRelations($items = null)
     {
         if ($items) {
-            return Category::with('categoriesRecursive')->whereNull('parent_id')->paginate($items);
+            return Category::with('categoriesRecursive')
+                ->whereNull('parent_id')
+                ->paginate($items);
         }
 
-        return Category::with('categoriesRecursive')->whereNull('parent_id')->get();
+        return Category::with('categoriesRecursive')
+            ->whereNull('parent_id')
+            ->get();
     }
 
     public function getById($category)
@@ -53,10 +57,10 @@ class CategoryRepository
     public function delete($id)
     {
         try {
-            if(Category::findOrFail($id)->categories){
-               $result =  $this->deleteRecursive($id);//Category::where('parent_id', $id)->get();
-            }else {
-               $result = Category::findOrFail($id)->delete();
+            if (Category::findOrFail($id)->categories) {
+                $result = $this->deleteRecursive($id);
+            } else {
+                $result = Category::findOrFail($id)->delete();
             }
             return $result;
 
@@ -69,12 +73,12 @@ class CategoryRepository
 
     public function deleteRecursive($id)
     {
-        if(Category::findOrFail($id)->categories){
+        if (Category::findOrFail($id)->categories) {
             $sub_categories = Category::where('parent_id', $id)->get();
-            foreach($sub_categories as $sub_category){
-                if($sub_category->categories){
+            foreach ($sub_categories as $sub_category) {
+                if ($sub_category->categories) {
                     $this->deleteRecursive($sub_category->id);
-                }else{
+                } else {
                     try {
                         $result = Category::findOrFail($sub_category->id)->delete();
                         return $result;

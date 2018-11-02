@@ -13,8 +13,12 @@
                         id="modalTitle"
                     >
                         <slot name="header">
-                           <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px" v-if="paramCRUD == 'addSubCategory'">Create subcategory of {{parent_title}}</h4>
-                           <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px" v-if="paramCRUD == 'editCategory'">Edit category</h4>
+                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
+                                v-if="paramCRUD == 'addSubCategory'">Create subcategory of {{parent_title}}</h4>
+                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
+                                v-if="paramCRUD == 'editCategory'">Edit category</h4>
+                            <h4 style="margin-top: 10px; padding-top: 20px; " v-if="paramCRUD == 'deleteCategory'">
+                                Delete {{parent_title}}</h4>
                             <button
                                 class="btn-close"
                                 @click="close"
@@ -29,14 +33,27 @@
                         id="modalDescription"
                     >
                         <slot name="body">
-                            <CreateCategoryComponent v-if="paramCRUD == 'addSubCategory'" v-bind:parent_id="parent_id"></CreateCategoryComponent>
-                            <UpdateCategoryComponent v-if="paramCRUD == 'editCategory'" v-bind:category_id="parent_id"></UpdateCategoryComponent>
+                            <CreateCategoryComponent v-if="paramCRUD == 'addSubCategory'" v-bind:parent_id="parent_id">
+                            </CreateCategoryComponent>
+                            <UpdateCategoryComponent v-if="paramCRUD == 'editCategory'" v-bind:category_id="parent_id">
+                            </UpdateCategoryComponent>
+                            <div v-if="paramCRUD == 'deleteCategory'" v-bind:category_id="parent_id">
+                                <span class="text-danger">Warning! </span> If subcategory exist, they will be
+                                destroyed!!!
+                            </div>
                         </slot>
                     </section>
                     <footer class="modal-footer">
                         <slot name="footer">
-                            <button @click="createCategoryClick()" type="submit" class="btn-green" v-if="paramCRUD == 'addSubCategory'">Create</button>
-                            <button @click="createCategoryClick()" type="submit" class="btn-green" v-if="paramCRUD == 'editCategory'" >Update</button>
+                            <button @click="clickSubmitButton()" type="submit" class="btn-green"
+                                    v-if="paramCRUD == 'addSubCategory'">Create
+                            </button>
+                            <button @click="clickSubmitButton()" type="submit" class="btn-green"
+                                    v-if="paramCRUD == 'editCategory'">Update
+                            </button>
+                            <button @click="deleteCategoryClick(parent_id)" type="submit" class="btn-green"
+                                    v-if="paramCRUD == 'deleteCategory'">Delete
+                            </button>
                             <button
                                 type="button"
                                 class="btn-green"
@@ -58,8 +75,10 @@
 <script>
     import CreateCategoryComponent from './CreateCategoryComponent.vue'
     import UpdateCategoryComponent from './UpdateCategoryComponent.vue'
+    import {bus} from '../app';
+
     export default {
-        props:['parent_id', 'parent_title','paramCRUD'],
+        props: ['parent_id', 'parent_title', 'paramCRUD'],
         name: "ModalCRUDCategory",
         components: {
             CreateCategoryComponent,
@@ -72,9 +91,26 @@
             close() {
                 this.$emit('close');
             },
-            createCategoryClick() {
+            clickSubmitButton() {
                 $('#create_category').click();
             },
+            deleteCategoryClick(id) {
+                if (confirm("A you sure?")) {
+                    window.axios.post('/categories/' + id, {
+                        "_method": 'DELETE',
+                    })
+                        .then(response => {
+                            console.log(response);
+                            bus.$emit('refreshPage');
+                            this.close();
+                            this.loading = false;
+                        })
+                        .catch(error => {
+                            console.log(error.statusText);
+                            this.loading = false;
+                        })
+                }
+            }
         },
     }
 </script>

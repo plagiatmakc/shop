@@ -37,7 +37,7 @@
                                     >
                                         Edit
                                     </a>
-                                    <a @click="deleteCategory(category.id)"
+                                    <a @click="deleteCategory(category.id, category.title)"
                                        class="btn btn-sm"
                                     >
                                         Delete
@@ -99,7 +99,7 @@
         <!--<category-create v-bind:parent_id="parent_id"></category-create>-->
         <!--</div>-->
         <!--<div class="modal-footer">-->
-        <!--&lt;!&ndash;<button @click="createCategoryClick()" type="submit" class="btn btn-info">Create</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button @click="clickSubmitButton()" type="submit" class="btn btn-info">Create</button>&ndash;&gt;-->
         <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
         <!--</div>-->
         <!--</div>-->
@@ -239,10 +239,9 @@
             getParent(id, title) {
                 bus.$emit('changeParentId', id);
                 bus.$emit('changeParentTitle', title);
-                this.paramCRUD = 'addSubCategory';
-                this.showModal();
+                bus.$emit('changeParamCRUD', 'addSubCategory')
             },
-            createCategoryClick() {
+            clickSubmitButton() {
                 $('#create_category').click();
             },
             showModal() {
@@ -254,24 +253,26 @@
             },
             editCategory(id) {
                 bus.$emit('changeParentId', id);
-                this.paramCRUD = 'editCategory';
-                this.showModal();
+                bus.$emit('changeParamCRUD', 'editCategory');
             },
-            deleteCategory(id) {
-                if(confirm("Delete with subcategories?")){
-                    window.axios.post('/categories/'+id, {
-                        "_method": 'DELETE',
-                    })
-                        .then(response => {
-                            console.log(response);
-                            bus.$emit('refreshPage');
-                            this.loading = false;
-                        })
-                        .catch(error => {
-                            console.log(error.statusText);
-                            this.loading = false;
-                        })
-                }
+            deleteCategory(id, title) {
+                bus.$emit('changeParentId', id);
+                bus.$emit('changeParentTitle', title);
+                bus.$emit('changeParamCRUD','deleteCategory');
+                // if(confirm("A you sure?")){
+                //     window.axios.post('/categories/'+id, {
+                //         "_method": 'DELETE',
+                //     })
+                //         .then(response => {
+                //             console.log(response);
+                //             bus.$emit('refreshPage');
+                //             this.loading = false;
+                //         })
+                //         .catch(error => {
+                //             console.log(error.statusText);
+                //             this.loading = false;
+                //         })
+                // }
 
             }
         }
