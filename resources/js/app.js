@@ -19,18 +19,24 @@ Vue.component('example', require('./components/ExampleComponent.vue'));
 Vue.component('admin-component', require('./components/AdminComponent.vue'));
 Vue.component('categories-index', require('./components/CategoriesIndexComponent.vue'));
 Vue.component('category-element', require('./components/CategoryElementComponent.vue'));
-Vue.component('category-create', require('./components/CreateCategoryComponent.vue'));
-Vue.component('category-update', require('./components/UpdateCategoryComponent.vue'));
+Vue.component('category-create', require('./components/CategoryCreateComponent.vue'));
+Vue.component('category-update', require('./components/CategoryUpdateComponent.vue'));
 Vue.component('modal-category-create', require('./components/ModalCRUDCategory.vue'));
-// Vue.component('modal-category-update', require('./components/ModalUpdateCategory.vue'));
+Vue.component('products-index', require('./components/ProductsIndexComponent.vue'));
+Vue.component('product-create', require('./components/ProductCreateComponent.vue'));
+Vue.component('product-update', require('./components/ProductUpdateComponent.vue'));
 Vue.component('dashboard', require('./components/DashboardComponent.vue'));
+
+Vue.component('categories-checkbox', require('./components/CategoriesCheckBox.vue'));
 
 
 
 
 export const bus = new Vue();
 
+import router from './router';
 const app = new Vue({
+    router,
     el: '#app'
 });
 

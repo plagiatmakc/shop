@@ -3,14 +3,18 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class PaginationRequest extends FormRequest
+class PaginationAndCurrencyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
+
+    protected $type_of_currency = ['usd', 'eur', 'uah'];
+
     public function authorize()
     {
         return true;
@@ -24,7 +28,12 @@ class PaginationRequest extends FormRequest
     public function rules()
     {
         return [
-            'pagination' => 'integer|min:1',
+            'pagination' => 'integer|min:1|nullable',
+            'type' => [
+                'string',
+                Rule::in($this->type_of_currency),
+                'nullable',
+            ],
         ];
     }
 }

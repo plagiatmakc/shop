@@ -11,6 +11,9 @@ use Exception;
 class ProductRepository{
 
     public function getProducts($items = 5){
+        if ($items == null){
+            return Product::paginate(10);
+        }
        return Product::paginate($items);
     }
 
@@ -22,7 +25,7 @@ class ProductRepository{
     }
 
     public function getById($product){
-        return Product::findOrFail($product);
+        return Product::with('categories')->findOrFail($product);
     }
 
     public function createRecord($request){
@@ -56,7 +59,15 @@ class ProductRepository{
             report($e);
             return false;
         }
-        Product::findOrFail($product)->delete();
+        $result = Product::findOrFail($product);
+        try{
+            $result->categories()->detach();
+            $result->delete();
+        }catch (Exeption $e) {
+            report($e);
+            return false;
+        }
+
     }
 
     public function convert_to($type, $products){

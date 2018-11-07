@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+        <ul v-if="errors != null">
+            <li v-for="error in errors" class="alert-danger"> {{error.toString()}}</li>
+        </ul>
+        <p v-if="message != '' && title ==''" class="alert-success">{{message}}</p>
         <form method="POST" action="/categories" @submit.prevent="updateCategory(category_id)">
             <label>Title</label><br>
             <input id="category_title_id" type="text" name="title" v-model="title"><br>
@@ -32,6 +36,8 @@
                 description: '',
                 categories: [],
                 parent_id: '',
+                errors: [],
+                message: '',
             }
         },
         mounted() {
@@ -46,7 +52,6 @@
                       this.title = response.data.title;
                       this.description = response.data.description;
                       this.parent_id = response.data.parent_id;
-
                   })
                   .catch(error => {
                       console.log(error.statusText)
@@ -60,13 +65,16 @@
                     description: this.description,
                     parent_id: this.parent_id
                 })
-                    .then(function (response) {
+                    .then(response => {
                         console.log(response.statusText);
                         bus.$emit('refreshPage');
                         $(".close").click();
+                        this.errors = [];
+                        this.message = 'Category was added to database.';
                         // $('form :input').val('');
                     })
-                    .catch(function (error) {
+                    .catch(error => {
+                        this.errors = error.response.data.errors;
                         console.log(error.response);
                     });
             },

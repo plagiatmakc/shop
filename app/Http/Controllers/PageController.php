@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CartImplementation;
 use App\Category;
-use App\Facades\ProdRepo;
+use App\Facades\ProductsRepository;
 use App\Product;
 use App\ProductAttributes;
 use App\Repositories\CategoryRepository;
@@ -16,9 +16,9 @@ class PageController extends Controller
 {
     public function index(Request $request, CategoryRepository $categoryRepository, CartImplementation $cart)
     {
-        $response = ProdRepo::getProductsByCategory($request->category ?? "all", $request->pagination ?? 5);
+        $response = ProductsRepository::getProductsByCategory($request->category ?? "all", $request->pagination ?? 5);
         if ($request->type != null) {
-            $response = ProdRepo::convert_to($request->type, $response);
+            $response = ProductsRepository::convert_to($request->type, $response);
         }
         return view('welcome', [
             'products' => $response,
@@ -30,7 +30,7 @@ class PageController extends Controller
     public function showProduct($id, $sku)
     {
 
-        $product = ProdRepo::getById($id);
+        $product = ProductsRepository::getById($id);
         $attr = $product->product_attributes()
             ->where('sku', $sku)
             ->first();

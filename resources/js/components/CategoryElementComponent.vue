@@ -19,8 +19,15 @@
                         Delete
                     </a>
                 </div>
-                <ul v-bind:id="'sub_'+ category.id" v-if="category.categories_recursive" style="display:none;">
-                    <category-element v-bind:parent_id="category.id" v-bind:categories="category.categories_recursive">
+                <ul
+                    v-bind:id="'sub_'+ category.id"
+                    v-if="category.categories_recursive"
+                    style="display:none;"
+                >
+                    <category-element
+                        v-bind:parent_id="category.id"
+                        v-bind:categories="category.categories_recursive"
+                    >
                     </category-element>
                 </ul>
             </li>
@@ -37,12 +44,6 @@
         components: {
             "modal": ModalCreateCategory,
         },
-        data() {
-            return{
-                // parent_id: '',
-                // parent_title: '',
-            }
-        },
         methods: {
             showSubCategories(target){
                 $("#sub_"+target+"").toggle();
@@ -52,31 +53,15 @@
                 bus.$emit('changeParentId', id);
                 bus.$emit('changeParentTitle', title);
                 bus.$emit('changeParamCRUD', 'addSubCategory')
-
             },
             editCategory(id) {
                 bus.$emit('changeParentId', id);
                 bus.$emit('changeParamCRUD', 'editCategory');
-
             },
             deleteCategory(id, title) {
                 bus.$emit('changeParentId', id);
                 bus.$emit('changeParentTitle', title);
                 bus.$emit('changeParamCRUD','deleteCategory');
-                // if(confirm("Delete with subcategories?")){
-                //     window.axios.post('/categories/'+id, {
-                //         "_method": 'DELETE',
-                //     })
-                //         .then(response => {
-                //             console.log(response);
-                //             bus.$emit('refreshPage');
-                //             this.loading = false;
-                //         })
-                //         .catch(error => {
-                //             console.log(error.statusText);
-                //             this.loading = false;
-                //         })
-                // }
             }
         }
     }

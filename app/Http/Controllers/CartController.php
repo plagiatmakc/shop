@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CartImplementation;
 use App\Category;
-use App\Facades\ProdRepo;
+use App\Facades\ProductsRepository;
 use App\Product;
 use App\ProductAttributes;
 use App\Repositories\CategoryRepository;

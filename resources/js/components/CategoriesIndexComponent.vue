@@ -61,11 +61,6 @@
             </div>
 
         </div>
-        <!--<modal v-bind:parent_id="parent_id"-->
-        <!--v-bind:parent_title="parent_title"-->
-        <!--v-show="isModalVisible"-->
-        <!--@close="closeModal"-->
-        <!--/>-->
 
         <!--<div class="pagination">-->
         <!--<button class="page-item btn btn-secondary btn-sm"-->
@@ -124,7 +119,7 @@
 <script>
     import {bus} from '../app';
 
-    import CreateCategoryComponent from './CreateCategoryComponent.vue';
+    import CreateCategoryComponent from './CategoryCreateComponent.vue';
     import ModalCRUDCategory from './ModalCRUDCategory.vue';
 
     export default {
@@ -245,7 +240,6 @@
                 $('#create_category').click();
             },
             showModal() {
-                // bus.$emit('openModal');
                 this.isModalVisible = true;
             },
             closeModal() {

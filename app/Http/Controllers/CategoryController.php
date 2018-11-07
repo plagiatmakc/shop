@@ -6,11 +6,11 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Repositories\CategoryRepository;
 use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\PaginationRequest;
+use App\Http\Requests\PaginationAndCurrencyRequest;
 
 class CategoryController extends Controller
 {
-    public function index(PaginationRequest $request)
+    public function index()
     {
         $categories = new CategoryRepository;
         $response = $categories->allWithRelations();

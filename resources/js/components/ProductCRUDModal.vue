@@ -14,19 +14,19 @@
                     >
                         <slot name="header">
                             <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
-                                v-if="paramCRUD == 'addSubCategory'"
+                                v-if="paramCRUD == 'addAttributes'"
                             >
-                                Create subcategory of {{parent_title}}
+                                Create attributes of {{parent_title}}
                             </h4>
                             <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
-                                v-if="paramCRUD == 'editCategory'"
+                                v-if="paramCRUD == 'editProduct'"
                             >
-                                Edit category
+                                Edit product
                             </h4>
                             <h4 style="margin-top: 10px; padding-top: 20px; "
-                                v-if="paramCRUD == 'deleteCategory'"
+                                v-if="paramCRUD == 'deleteProduct'"
                             >
-                                Delete {{parent_title}}
+                                Delete {{product_name}}
                             </h4>
                             <button
                                 class="btn-close"
@@ -42,20 +42,19 @@
                         id="modalDescription"
                     >
                         <slot name="body">
-                            <CategoryCreateComponent
-                                v-if="paramCRUD == 'addSubCategory'"
-                                v-bind:parent_id="parent_id"
-                            ></CategoryCreateComponent>
-                            <CategoryUpdateComponent
-                                v-if="paramCRUD == 'editCategory'"
-                                v-bind:category_id="parent_id"
-                            ></CategoryUpdateComponent>
+                            <!--<ProductAttributes-->
+                                <!--v-if="paramCRUD == 'addAttributes'"-->
+                                <!--v-bind:parent_id="parent_id"-->
+                            <!--&gt;</ProductAttributes>-->
+                            <ProductUpdateComponent
+                                v-if="paramCRUD == 'editProduct'"
+                                v-bind:product_id="product_id"
+                            ></ProductUpdateComponent>
                             <div
-                                v-if="paramCRUD == 'deleteCategory'"
-                                v-bind:category_id="parent_id"
+                                v-if="paramCRUD == 'deleteProduct'"
+
                             >
-                                <span class="text-danger">Warning!</span>
-                                If subcategory exist, they will be destroyed!!!
+                                A you a sure?
                             </div>
                         </slot>
                     </section>
@@ -63,19 +62,19 @@
                         <slot name="footer">
                             <button @click="clickSubmitButton()"
                                     type="submit" class="btn-green"
-                                    v-if="paramCRUD == 'addSubCategory'"
+                                    v-if="paramCRUD == 'addAttributes'"
                             >
                                 Create
                             </button>
                             <button @click="clickSubmitButton()"
                                     type="submit" class="btn-green"
-                                    v-if="paramCRUD == 'editCategory'"
+                                    v-if="paramCRUD == 'editProduct'"
                             >
                                 Update
                             </button>
-                            <button @click="deleteCategoryClick(parent_id)"
+                            <button @click="deleteProductClick(product_id)"
                                     type="submit" class="btn-green"
-                                    v-if="paramCRUD == 'deleteCategory'"
+                                    v-if="paramCRUD == 'deleteProduct'"
                             >
                                 Delete
                             </button>
@@ -98,16 +97,15 @@
 
 
 <script>
-    import CategoryCreateComponent from './CategoryCreateComponent.vue'
-    import CategoryUpdateComponent from './CategoryUpdateComponent.vue'
+
+    import ProductUpdateComponent from './ProductUpdateComponent.vue'
     import {bus} from '../app';
 
     export default {
-        props: ['parent_id', 'parent_title', 'paramCRUD'],
-        name: "ModalCRUDCategory",
+        props: ['product_id', 'paramCRUD', 'product_name'],
+        name: "ProductCRUDModal",
         components: {
-            CategoryCreateComponent,
-            CategoryUpdateComponent,
+            ProductUpdateComponent,
         },
         create() {
 
@@ -117,11 +115,11 @@
                 this.$emit('close');
             },
             clickSubmitButton() {
-                $('#create_category').click();
+                $('#create_product').click();
             },
-            deleteCategoryClick(id) {
+            deleteProductClick(id) {
                 if (confirm("A you sure?")) {
-                    window.axios.post('/categories/' + id, {
+                    window.axios.post('/products/' + id, {
                         "_method": 'DELETE',
                     })
                         .then(response => {
@@ -142,7 +140,6 @@
 
 <style scoped>
     .modal-backdrop {
-        position: fixed;
         top: 0;
         bottom: 0;
         left: 0;
@@ -154,6 +151,8 @@
     }
 
     .modal {
+        position: fixed;
+        z-index: -1;
         top: auto;
         bottom: auto;
         left: auto;
@@ -183,6 +182,8 @@
     .modal-body {
         position: relative;
         padding: 20px 10px;
+        max-height: 600px;
+        overflow-y: auto;
     }
 
     .btn-close {
@@ -198,6 +199,7 @@
 
     .btn-green {
         color: white;
+        cursor: pointer;
         background: #4AAE9B;
         border: 1px solid #4AAE9B;
         border-radius: 2px;

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
 
 class ProductRequest extends FormRequest
 {
@@ -11,6 +13,9 @@ class ProductRequest extends FormRequest
      *
      * @return bool
      */
+
+    protected $type_of_currency = ['usd', 'eur', 'uah'];
+
     public function authorize()
     {
         return true;
@@ -26,7 +31,10 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'price' => "required|regex:/^\d*(\.\d{1,2})?$/",
-            'currency' => 'required|max:255',
+            'currency' => [
+                'required',
+                Rule::in($this->type_of_currency),
+            ],
         ];
     }
 }

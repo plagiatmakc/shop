@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Facades\ProdRepo;
+use App\Facades\ProductsRepository;
+use App\Http\Requests\PaginationAndCurrencyRequest;
 use App\Product;
 use App\ProductAttributes;
 use App\Repositories\ProductAttributesRepository;
@@ -15,16 +16,16 @@ use App\Http\Requests\ProductAttributeRequest;
 
 class ProductController extends Controller
 {
-    public function index(Request $request){
-        $response = ProdRepo::getProducts($request->pagination ?? 5);
+    public function index(PaginationAndCurrencyRequest $request){
+        $response = ProductsRepository::getProducts($request->pagination);
         if($request->type !=null){
-            $response = ProdRepo::convert_to($request->type, $response);
+            $response = ProductsRepository::convert_to($request->type, $response);
         }
-        return view('layouts.product.index',['products' => $response]);//response()->json($response);
+        return response()->json($response);//view('layouts.product.index',['products' => $response]);
     }
 
     public function show($product){
-        $response = ProdRepo::getById($product);
+        $response = ProductsRepository::getById($product);
         return view('layouts.product.show', ['product' => $response]);//response()->json($response);
     }
 
@@ -34,28 +35,28 @@ class ProductController extends Controller
     }
 
     public function store(ProductRequest $request){
-        ProdRepo::createRecord($request->all());
+        ProductsRepository::createRecord($request->all());
         return redirect('/products');//response()->json($product);
     }
 
     public function edit($product){
-        $result = ProdRepo::getById($product);
-        $categories = Category::all();
-        return view('layouts.product.edit',['product' => $result, 'categories' => $categories]);
+        $result = ProductsRepository::getById($product);
+//        $categories = Category::all();
+        return response()->json($result);//view('layouts.product.edit',['product' => $result, 'categories' => $categories]);
     }
 
     public function update(ProductRequest $request, $product){
-        ProdRepo::updateRecord($request->all(), $product);
-        return redirect('/products');//response()->json($product);
+        $result = ProductsRepository::updateRecord($request->all(), $product);
+        return response()->json($result);//redirect('/products');//response()->json($product);
     }
 
     public function destroy($product){
-        ProdRepo::delete($product);
+        ProductsRepository::delete($product);
         return redirect('/products');//response()->json($product);
     }
 
     public function addAttr($product_id){
-        $product = ProdRepo::getById($product_id);
+        $product = ProductsRepository::getById($product_id);
         return view('layouts.product.addAttributes', ['product' => $product, ]);
     }
 
