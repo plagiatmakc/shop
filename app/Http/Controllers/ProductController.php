@@ -16,67 +16,76 @@ use App\Http\Requests\ProductAttributeRequest;
 
 class ProductController extends Controller
 {
-    public function index(PaginationAndCurrencyRequest $request){
+    public function index(PaginationAndCurrencyRequest $request)
+    {
         $response = ProductsRepository::getProducts($request->pagination);
-        if($request->type !=null){
+        if ($request->type != null) {
             $response = ProductsRepository::convert_to($request->type, $response);
         }
         return response()->json($response);//view('layouts.product.index',['products' => $response]);
     }
 
-    public function show($product){
+    public function show($product)
+    {
         $response = ProductsRepository::getById($product);
         return view('layouts.product.show', ['product' => $response]);//response()->json($response);
     }
 
-    public function create(){
+    public function create()
+    {
         $categories = Category::all();
-        return view('layouts.product.create',['categories' => $categories]);
+        return view('layouts.product.create', ['categories' => $categories]);
     }
 
-    public function store(ProductRequest $request){
-        ProductsRepository::createRecord($request->all());
-        return redirect('/products');//response()->json($product);
+    public function store(ProductRequest $request)
+    {
+        $product = ProductsRepository::createRecord($request->all());
+        return response()->json($product);//redirect('/products');
     }
 
-    public function edit($product){
-        $result = ProductsRepository::getById($product);
-//        $categories = Category::all();
-        return response()->json($result);//view('layouts.product.edit',['product' => $result, 'categories' => $categories]);
+    public function edit($product)
+    {
+        return response()->json(ProductsRepository::getById($product));//view('layouts.product.edit',['product' => $result, 'categories' => $categories]);
     }
 
-    public function update(ProductRequest $request, $product){
+    public function update(ProductRequest $request, $product)
+    {
         $result = ProductsRepository::updateRecord($request->all(), $product);
         return response()->json($result);//redirect('/products');//response()->json($product);
     }
 
-    public function destroy($product){
-        ProductsRepository::delete($product);
-        return redirect('/products');//response()->json($product);
+    public function destroy($product)
+    {
+        return response()->json(ProductsRepository::delete($product));
     }
 
-    public function addAttr($product_id){
+    public function addAttr($product_id)
+    {
         $product = ProductsRepository::getById($product_id);
-        return view('layouts.product.addAttributes', ['product' => $product, ]);
+        return view('layouts.product.addAttributes', ['product' => $product,]);
     }
 
-    public function storeAttr(ProductAttributeRequest $request, ProductAttributesRepository $attributesRepository){
+    public function storeAttr(ProductAttributeRequest $request, ProductAttributesRepository $attributesRepository)
+    {
         $attributesRepository->create($request->all());
         return redirect()->back();//response()->json($product);
     }
 
-    public function delAttr($id, ProductAttributesRepository $attributesRepository){
+    public function delAttr($id, ProductAttributesRepository $attributesRepository)
+    {
         $attributesRepository->delete($id);
         return redirect()->back();
     }
 
-    public function editAttr($id, ProductAttributesRepository $attributesRepository){
+    public function editAttr($id, ProductAttributesRepository $attributesRepository)
+    {
         $result = $attributesRepository->getById($id);
         return response()->json($result);
     }
 
-    public function changeAttr($id, ProductAttributeRequest $request, ProductAttributesRepository $attributesRepository){
+    public function changeAttr($id, ProductAttributeRequest $request, ProductAttributesRepository $attributesRepository)
+    {
         $result = $attributesRepository->update($id, $request->all());
-       return response()->json($result);
+        return response()->json($result);
     }
 }

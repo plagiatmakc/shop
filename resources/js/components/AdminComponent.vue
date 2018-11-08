@@ -10,14 +10,16 @@
                     Products
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownProductsMenuLink">
-                    <a class="dropdown-item" @click="component= 'products-index'">
-                        <i class="fa fa-bars" aria-hidden="true"></i>
-                        Index
-                    </a>
-                    <a class="dropdown-item"  @click="component= 'product-create'">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                        Create
-                    </a>
+                    <!--<a class="dropdown-item" @click="component= 'products-index'">-->
+                        <!--<i class="fa fa-bars" aria-hidden="true"></i>-->
+                        <!--Index-->
+                    <!--</a>-->
+                    <router-link :to="{path:'/admin/products'}" class="dropdown-item"><i class="fa fa-bars" aria-hidden="true"></i>Index</router-link>
+                    <!--<a class="dropdown-item"  @click="component= 'product-create'">-->
+                        <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
+                        <!--Create-->
+                    <!--</a>-->
+                    <router-link to="/admin/create_product" class="dropdown-item"><i class="fa fa-plus" aria-hidden="true"></i>Create</router-link>
                 </div>
             </div>
             <div class="dropdown show">
@@ -25,24 +27,28 @@
                     <i class="fa fa-fw fa-database"></i>
                     Categories
                 </a>
+
                 <div class="dropdown-menu" aria-labelledby="dropdownCategoriesMenuLink">
-                    <a class="dropdown-item" @click="component= 'categories-index'">
-                        <i class="fa fa-bars" aria-hidden="true"></i>
-                        Index
-                    </a>
-                    <a class="dropdown-item"  @click="component= 'category-create'">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                        Create
-                    </a>
+                    <!--<a class="dropdown-item" @click="component= 'categories-index'">-->
+                        <!--<i class="fa fa-bars" aria-hidden="true"></i>-->
+                        <!--Index-->
+                    <!--</a>-->
+                    <router-link to="/admin/categories" class="dropdown-item"><i class="fa fa-bars" aria-hidden="true"></i>Index</router-link>
+                    <!--<a class="dropdown-item"  @click="component= 'category-create'">-->
+                        <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
+                        <!--Create-->
+                    <!--</a>-->
+                    <router-link to="/admin/create_category" class="dropdown-item"><i class="fa fa-plus" aria-hidden="true"></i>Create</router-link>
                 </div>
             </div>
             <a href="#"><i class="fa fa-fw fa-envelope"></i> Orders</a>
         </div>
-        <keep-alive>
-            <component
-                v-bind:is="component"
-            ></component>
-        </keep-alive>
+        <!--<keep-alive>-->
+            <!--<component-->
+                <!--v-bind:is="component"-->
+            <!--&gt;</component>-->
+        <!--</keep-alive>-->
+        <router-view></router-view>
     </div>
 </template>
 
@@ -70,6 +76,7 @@ import DashboardComponent from './DashboardComponent.vue';
                 component: 'dashboard',
             }
         },
+
         methods: {
 
         }

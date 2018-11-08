@@ -77,7 +77,7 @@
               }else{
                   this.checked_categories.push(data);
               }
-              console.log('toggleCategory');
+               console.log('toggleCategory');
           })
         },
         methods: {
@@ -100,6 +100,7 @@
                 })
                 .catch(error => {
                     console.log(error);
+                    this.message = '';
                     this.errors = error.response.data.errors;
                 });
             },

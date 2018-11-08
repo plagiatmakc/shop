@@ -141,6 +141,7 @@
                     this.errors = [];
                     this.message = 'Product was changed.';
                     bus.$emit('refreshPage');
+                     //window.location.reload();
                    // alert(this.message);
 
                     console.log(response);

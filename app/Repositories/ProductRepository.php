@@ -67,7 +67,6 @@ class ProductRepository{
             report($e);
             return false;
         }
-
     }
 
     public function convert_to($type, $products){
@@ -76,7 +75,6 @@ class ProductRepository{
             $product->currency = $type;
         }
         return $products;
-
     }
 
 }
