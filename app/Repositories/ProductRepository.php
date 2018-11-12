@@ -7,6 +7,8 @@ use App\Category;
 use App\ProductAttributes;
 use Illuminate\Http\Request;
 use Exception;
+use App\Repositories\ImageRepository;
+use Illuminate\Support\Facades\Input;
 
 class ProductRepository{
 
@@ -29,14 +31,22 @@ class ProductRepository{
     }
 
     public function createRecord($request){
+
         try{
-            Product::create($request)
-                ->categories()
+           $product = Product::create($request);
+               $product->categories()
                 ->attach($request['categories'] ?? []);
+               if($request['images'])
+               {
+                   $imageRepository = new ImageRepository();
+                  return $imageRepository->appendImagesToProduct($product->id, $request);
+               }
+
         }catch (Exception $e) {
             report($e);
             return false;
         }
+//        return ;
     }
 
     public function updateRecord($request, $product){

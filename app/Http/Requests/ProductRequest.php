@@ -28,13 +28,20 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|max:255',
             'price' => "required|regex:/^\d*(\.\d{1,2})?$/",
             'currency' => [
                 'required',
                 Rule::in($this->type_of_currency),
             ],
+                'images' => 'required|array',
+                'images.*' => 'required|image|mimes:jpeg,bmp,png|max:2000',
         ];
+//        $images = count($this->input('images'));
+//        foreach (range(0,$images) as $index) {
+//            $rules['images.' .$index] = 'image|mimes:jpeg,bmp,png|max:2000';
+//        }
+        return $rules;
     }
 }

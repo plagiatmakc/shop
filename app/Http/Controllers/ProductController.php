@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Repositories\ProductRepository;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductAttributeRequest;
+use Illuminate\Support\Facades\Input;
 
 
 class ProductController extends Controller

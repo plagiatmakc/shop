@@ -5,7 +5,7 @@
             <li v-for="error in errors" class="alert-danger"> {{error.toString()}}</li>
         </ul>
         <p v-if="message != '' && name ==''" class="alert-success">{{message}}</p>
-        <form method="POST" action="/products" @submit.prevent="addProduct()">
+        <form method="POST" action="/products" enctype="multipart/form-data" @submit.prevent="addProduct()">
             <label>Name</label><br/>
             <input type="text" name="name" v-model="name"><br/>
             <label>Price</label><br/>
@@ -39,6 +39,9 @@
                 </ul>
                 </li>
             </ul>
+            <label>Product photos (can attach more than one):</label><br />
+            <input type="file" name="images[]" multiple @change="onFileChanged($event)" />
+            <br /><br />
             <input type="submit" value="create" class="btn btn-info">
         </form>
 
@@ -63,6 +66,7 @@
                 errors: [],
                 message: '',
                 checked_categories: [],
+                images: [],
             }
         },
         mounted() {
@@ -82,12 +86,30 @@
         },
         methods: {
             addProduct() {
-                window.axios.post('/products', {
-                    name: this.name,
-                    price: this.price,
-                    currency: this.currency,
-                    categories: this.checked_categories
-                })
+                let formData = new FormData();
+                formData.append('name', this.name);
+                formData.append('price', this.price);
+                formData.append('currency', this.currency);
+                formData.append('categories', this.checked_categories);
+
+                for (var i =0 ; i < this.images.length; i++)
+                {     let image = this.images[i];
+                    formData.append('images['+i+']', image);
+                }
+
+                // for (var pair of formData.entries()) {
+                //     console.log(pair[0]+ ', ' + pair[1]);
+                // }
+                // return;
+                window.axios.post('/products', formData, {headers: {'Content-Type': 'multipart/form-data'}}
+                    // {
+                    // name: this.name,
+                    // price: this.price,
+                    // currency: this.currency,
+                    // categories: this.checked_categories,
+                    // images: this.images
+                // }
+                )
                 .then(response => {
                     console.log(response);
                     this.errors = [];
@@ -123,6 +145,19 @@
                 $("#i" + target + "").toggleClass('fa-caret-right').toggleClass('fa-caret-down');
 
             },
+            onFileChanged(e) {
+                this.images = [];
+                var files = e.target.files || e.dataTransfer.files;
+
+                console.log(files);
+                if (!files.length)
+                    return;
+                for (var i = files.length - 1; i >= 0; i--) {
+                    this.images.push(files[i]);
+                }
+                console.log(this.images);
+
+            }
         }
     }
 </script>

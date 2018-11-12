@@ -50175,7 +50175,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
                 _this3.loading = false;
             }).catch(function (error) {
-                console.log(error.data);
+                console.log(error.response.data);
                 _this3.loading = false;
             });
         },
@@ -51441,6 +51441,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -51458,7 +51461,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             categories: [],
             errors: [],
             message: '',
-            checked_categories: []
+            checked_categories: [],
+            images: []
         };
     },
     mounted: function mounted() {
@@ -51482,11 +51486,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addProduct: function addProduct() {
             var _this2 = this;
 
-            window.axios.post('/products', {
-                name: this.name,
-                price: this.price,
-                currency: this.currency,
-                categories: this.checked_categories
+            var formData = new FormData();
+            formData.append('name', this.name);
+            formData.append('price', this.price);
+            formData.append('currency', this.currency);
+            formData.append('categories', this.checked_categories);
+
+            for (var i = 0; i < this.images.length; i++) {
+                var image = this.images[i];
+                formData.append('images[' + i + ']', image);
+            }
+
+            // for (var pair of formData.entries()) {
+            //     console.log(pair[0]+ ', ' + pair[1]);
+            // }
+            // return;
+            window.axios.post('/products', formData, { headers: { 'Content-Type': 'multipart/form-data' }
+                // {
+                // name: this.name,
+                // price: this.price,
+                // currency: this.currency,
+                // categories: this.checked_categories,
+                // images: this.images
+                // }
             }).then(function (response) {
                 console.log(response);
                 _this2.errors = [];
@@ -51518,6 +51540,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         showSubCategories: function showSubCategories(target) {
             $("#sub_" + target + "").toggle();
             $("#i" + target + "").toggleClass('fa-caret-right').toggleClass('fa-caret-down');
+        },
+        onFileChanged: function onFileChanged(e) {
+            this.images = [];
+            var files = e.target.files || e.dataTransfer.files;
+
+            console.log(files);
+            if (!files.length) return;
+            for (var i = files.length - 1; i >= 0; i--) {
+                this.images.push(files[i]);
+            }
+            console.log(this.images);
         }
     }
 });
@@ -51762,7 +51795,11 @@ var render = function() {
     _c(
       "form",
       {
-        attrs: { method: "POST", action: "/products" },
+        attrs: {
+          method: "POST",
+          action: "/products",
+          enctype: "multipart/form-data"
+        },
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -51954,6 +51991,21 @@ var render = function() {
             ])
           ])
         }),
+        _vm._v(" "),
+        _c("label", [_vm._v("Product photos (can attach more than one):")]),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "file", name: "images[]", multiple: "" },
+          on: {
+            change: function($event) {
+              _vm.onFileChanged($event)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("br"),
+        _c("br"),
         _vm._v(" "),
         _c("input", {
           staticClass: "btn btn-info",

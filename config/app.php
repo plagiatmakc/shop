@@ -112,7 +112,7 @@ return [
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
-    |
+    |'image|mimes:jpeg,bmp,png|max:2000';
     | The service providers listed here will be automatically loaded on the
     | request to your application. Feel free to add your own services to
     | this array to grant expanded functionality to your applications.
@@ -159,7 +159,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -208,7 +208,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'ProductImage' => Intervention\Image\Facades\Image::class
     ],
 
 ];
