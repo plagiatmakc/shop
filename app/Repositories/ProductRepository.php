@@ -7,16 +7,16 @@ use App\Category;
 use App\ProductAttributes;
 use Illuminate\Http\Request;
 use Exception;
-use App\Repositories\ImageRepository;
+use App\Repositories\ProductImageRepository;
 use Illuminate\Support\Facades\Input;
 
 class ProductRepository{
 
     public function getProducts($items = 5){
         if ($items == null){
-            return Product::paginate(10);
+            return Product::with('product_images')->paginate(10);
         }
-       return Product::paginate($items);
+       return Product::with('product_images')->paginate($items);
     }
 
     public function getProductsByCategory($category, $items = 5){
@@ -27,7 +27,7 @@ class ProductRepository{
     }
 
     public function getById($product){
-        return Product::with('categories')->findOrFail($product);
+        return Product::with('categories','product_images')->findOrFail($product);
     }
 
     public function createRecord($request){
@@ -36,17 +36,17 @@ class ProductRepository{
            $product = Product::create($request);
                $product->categories()
                 ->attach($request['categories'] ?? []);
-               if($request['images'])
-               {
-                   $imageRepository = new ImageRepository();
-                  return $imageRepository->appendImagesToProduct($product->id, $request);
-               }
+//               if($request['images'])
+//               {
+//                   $imageRepository = new ProductImageRepository();
+//                  return $imageRepository->appendImagesToProduct($product->id, $request);
+//               }
 
         }catch (Exception $e) {
             report($e);
             return false;
         }
-//        return ;
+        return $product;
     }
 
     public function updateRecord($request, $product){
@@ -63,6 +63,7 @@ class ProductRepository{
 
     public function delete($product){
         $attributesRepository = new ProductAttributesRepository;
+        $imageRepository = new ProductImageRepository();
         try{
             $attributesRepository->deleteByProduct($product);
         }catch (Exception $e) {
@@ -72,8 +73,12 @@ class ProductRepository{
         $result = Product::findOrFail($product);
         try{
             $result->categories()->detach();
+            if($result->has('product_images'))
+            {
+                $imageRepository->deleteImagesByProduct($product);
+            }
             $result->delete();
-        }catch (Exeption $e) {
+        }catch (Exception $e) {
             report($e);
             return false;
         }

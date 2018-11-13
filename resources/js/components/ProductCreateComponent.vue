@@ -40,7 +40,14 @@
                 </li>
             </ul>
             <label>Product photos (can attach more than one):</label><br />
-            <input type="file" name="images[]" multiple @change="onFileChanged($event)" />
+            <input type="file" name="images[]" id="images" ref="images" style="display: none;" multiple @change="onFileChanged($event)" />
+            <input type="button" class="btn btn-sm btn-light" value="Browse..." onclick="document.getElementById('images').click();" />
+            <div class="col-md-12">
+                <div class="attachment-holder animated fadeIn" v-cloak v-for="(image, index) in images">
+                    <span class="label label-primary">{{ image.name + ' (' + Number((image.size / 1024 / 1024).toFixed(1)) + 'MB)'}}</span>
+                    <span class="" style="background: red; cursor: pointer;" @click="removeImage(image)"><a class="btn btn-sm btn-light">Remove</a></span>
+                </div>
+            </div>
             <br /><br />
             <input type="submit" value="create" class="btn btn-info">
         </form>
@@ -157,7 +164,20 @@
                 }
                 console.log(this.images);
 
-            }
+            },
+            removeImage(image) {
+                this.images.splice(this.images.indexOf(image),1);
+                this.getAttachmentSize();
+
+
+            },
+            getAttachmentSize() {
+
+                this.upload_size = 0; // Reset to beginningƒ
+                this.images.map((item) => { this.upload_size += parseInt(item.size); });
+                this.upload_size = Number((this.upload_size).toFixed(1));
+                this.$forceUpdate();
+            },
         }
     }
 </script>

@@ -25,6 +25,8 @@ Vue.component('modal-category-create', require('./components/ModalCRUDCategory.v
 Vue.component('products-index', require('./components/ProductsIndexComponent.vue'));
 Vue.component('product-create', require('./components/ProductCreateComponent.vue'));
 Vue.component('product-update', require('./components/ProductUpdateComponent.vue'));
+Vue.component('product-show', require('./components/ProductShowComponent.vue'));
+Vue.component('image-manage', require('./components/ImageManagerComponent.vue'));
 Vue.component('dashboard', require('./components/DashboardComponent.vue'));
 
 Vue.component('categories-checkbox', require('./components/CategoriesCheckBox.vue'));

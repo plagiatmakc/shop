@@ -18,10 +18,21 @@
                             >
                                 Create attributes of {{parent_title}}
                             </h4>
+
+                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
+                                v-if="paramCRUD == 'showProduct'"
+                                >
+                                Show Product
+                            </h4>
                             <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
                                 v-if="paramCRUD == 'editProduct'"
                             >
                                 Edit product
+                            </h4>
+                            <h4 style="margin-top: 10px; padding-top: 20px; "
+                                v-if="paramCRUD == 'imageManage'"
+                            >
+                                 {{product_name}}
                             </h4>
                             <h4 style="margin-top: 10px; padding-top: 20px; "
                                 v-if="paramCRUD == 'deleteProduct'"
@@ -46,10 +57,19 @@
                                 <!--v-if="paramCRUD == 'addAttributes'"-->
                                 <!--v-bind:parent_id="parent_id"-->
                             <!--&gt;</ProductAttributes>-->
+                            <ProductShowComponent
+                                v-if="paramCRUD == 'showProduct'"
+                                v-bind:product_id="product_id"
+                            ></ProductShowComponent>
                             <ProductUpdateComponent
                                 v-if="paramCRUD == 'editProduct'"
                                 v-bind:product_id="product_id"
                             ></ProductUpdateComponent>
+                            <ImageManagerComponent
+                                v-if="paramCRUD == 'imageManage'"
+                                v-bind:product_id="product_id"
+                            ></ImageManagerComponent>
+
                             <div
                                 v-if="paramCRUD == 'deleteProduct'"
 
@@ -99,6 +119,8 @@
 <script>
 
     import ProductUpdateComponent from './ProductUpdateComponent.vue'
+    import ProductShowComponent from './ProductShowComponent.vue'
+    import ImageManagerComponent from './ImageManagerComponent.vue'
     import {bus} from '../app';
 
     export default {
@@ -106,6 +128,8 @@
         name: "ProductCRUDModal",
         components: {
             ProductUpdateComponent,
+            ProductShowComponent,
+            ImageManagerComponent,
         },
         create() {
 

@@ -7,6 +7,7 @@ use App\Facades\ProductsRepository;
 use App\Http\Requests\PaginationAndCurrencyRequest;
 use App\Product;
 use App\ProductAttributes;
+use App\Repositories\ProductImageRepository;
 use App\Repositories\ProductAttributesRepository;
 use Illuminate\Http\Request;
 use App\Repositories\ProductRepository;
@@ -28,8 +29,7 @@ class ProductController extends Controller
 
     public function show($product)
     {
-        $response = ProductsRepository::getById($product);
-        return view('layouts.product.show', ['product' => $response]);//response()->json($response);
+        return response()->json(ProductsRepository::getById($product));//view('layouts.product.show', ['product' => $response])
     }
 
     public function create()
@@ -41,6 +41,10 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product = ProductsRepository::createRecord($request->all());
+        if($request->hasFile('images')){
+            $imageRepository = new ProductImageRepository();
+                $imageRepository->appendImagesToProduct($product->id, $request);
+        }
         return response()->json($product);//redirect('/products');
     }
 

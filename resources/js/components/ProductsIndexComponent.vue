@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        {{products}}
         <!--<button class="btn btn-light btn-sm"@click="getProductsWithPagination(3, type_of_currency)">per 3</button>-->
         <router-link :to="{path: $route.fullPath, query: {pagination: 3}}">Per 3</router-link>
         <!--<button class="btn btn-light btn-sm"@click="getProductsWithPagination(items_per_page, 'usd')">USD</button>-->
@@ -8,6 +9,7 @@
             <thead>
             <tr>
                 <th scope="col">Id</th>
+                <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
                 <th scope="col">Currency</th>
@@ -17,14 +19,17 @@
             <tbody>
 
             <tr v-for="product in products">
+
                 <td>{{product.id}}</td>
+                <td v-if="product.product_images.length"><img :src="'storage/'+ product.product_images[Math.floor(Math.random() * product.product_images.length)].link_to_thumb" width="50%"></td>
                 <td>{{product.name}}</td>
                 <td>{{product.price}}</td>
                 <td>{{product.currency}}</td>
                 <td>
-                    <a class="btn btn-light btn-sm">Show</a>
+                    <a class="btn btn-light btn-sm" @click="showProduct(product.id)">Show</a>
                     <a class="btn btn-light btn-sm" @click="editProduct(product.id)">Edit</a>
                     <a class="btn btn-light btn-sm">Attributes</a>
+                    <a class="btn btn-light btn-sm" @click="imageManage(product.id, product.name)">Manage images</a>
                     <a class="btn btn-light btn-sm" @click="deleteProduct(product.id, product.name)">
                         Delete
                     </a>
@@ -182,10 +187,21 @@
             fetchPaginateProducts(url, items, currency) {
                 this.getPart(url, items, currency);
             },
+            showProduct(id) {
+              this.product_id = id;
+              this.paramCRUD = 'showProduct';
+              this.openModal();
+            },
             editProduct(id) {
                 this.product_id = id;
                 this.paramCRUD = 'editProduct';
                 this.openModal();
+            },
+            imageManage(id,name) {
+              this.product_id = id;
+              this.product_name = name;
+              this.paramCRUD = 'imageManage';
+              this.openModal();
             },
             deleteProduct(id, name) {
                 this.product_id = id;

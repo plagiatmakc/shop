@@ -20,7 +20,8 @@ Auth::routes();
 
 Route::resources([
     'categories' => 'CategoryController',
-    'products' => 'ProductController'
+    'products' => 'ProductController',
+    'product_images' => 'ProductImagesController',
 ]);
 Route::get('/products/{product_id}/attributes', 'ProductController@addAttr');
 Route::post('/products/{product_id}/attributes', 'ProductController@storeAttr');
