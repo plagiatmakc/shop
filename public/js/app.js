@@ -53918,6 +53918,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getLastAddedProducts("/get-last-products?page=" + this.$router.currentRoute.query.page, this.$router.currentRoute.query.pagination, this.$router.currentRoute.query.type);
     },
 
+    watch: {
+        '$route': function $route(to, from) {
+            this.getLastAddedProducts("/get-last-products?page=" + this.$router.currentRoute.query.page, this.$router.currentRoute.query.pagination, this.$router.currentRoute.query.type);
+        }
+    },
     methods: {
         getLastAddedProducts: function getLastAddedProducts(url, items, currency) {
             var _this = this;
@@ -54124,6 +54129,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['product_id'],
@@ -54214,10 +54232,19 @@ var render = function() {
               "li",
               { staticStyle: { display: "inline-block" } },
               [
-                _vm._v(" "),
-                _c("router-link", { attrs: { to: { path: "/" } } }, [
-                  _vm._v("Main")
-                ])
+                _vm._v(" \n            "),
+                _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      to: {
+                        path: "/",
+                        query: { type: _vm.$router.currentRoute.query.type }
+                      }
+                    }
+                  },
+                  [_vm._v("\n                Main\n            ")]
+                )
               ],
               1
             ),
@@ -54228,15 +54255,21 @@ var render = function() {
                     "li",
                     { staticStyle: { display: "inline-block" } },
                     [
-                      _vm._v("» "),
+                      _vm._v("\n            » \n            "),
                       _c(
                         "router-link",
                         {
                           attrs: { to: { path: "/category/" + breadCrumb.id } }
                         },
-                        [_vm._v(_vm._s(breadCrumb.title))]
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(breadCrumb.title) +
+                              "\n            "
+                          )
+                        ]
                       ),
-                      _vm._v(" ")
+                      _vm._v(" \n        ")
                     ],
                     1
                   )

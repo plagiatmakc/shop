@@ -33,7 +33,14 @@
         mounted() {
             this.getLastAddedProducts("/get-last-products?page=" + this.$router.currentRoute.query.page,
                 this.$router.currentRoute.query.pagination,
-                this.$router.currentRoute.query.type,);
+                this.$router.currentRoute.query.type);
+        },
+        watch: {
+            '$route'(to, from) {
+                this.getLastAddedProducts("/get-last-products?page=" + this.$router.currentRoute.query.page,
+                    this.$router.currentRoute.query.pagination,
+                    this.$router.currentRoute.query.type);
+            }
         },
         methods: {
             getLastAddedProducts(url, items, currency) {
