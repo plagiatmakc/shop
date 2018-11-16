@@ -137,6 +137,7 @@
         methods: {
             close() {
                 this.$emit('close');
+                bus.$emit('refreshPage');
             },
             clickSubmitButton() {
                 $('#create_product').click();

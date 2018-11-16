@@ -5,18 +5,16 @@
         <!--<button class="btn btn-outline-secondary" @click="getCategories(10)">per 10</button><br><hr>-->
         <!--Loaded-->
 
-        <div>{{parent_id}}</div>
+        <!--<div>{{parent_id}}</div>-->
         <div class="panel panel-primary">
 
             <div class="panel-heading"></div>
-
+                <h3>Categories list</h3>
             <div class="panel-body">
 
                 <div class="row">
 
                     <div class="col-md-10">
-
-                        <h3>Category List</h3>
 
                         <ul id="tree1" style="list-style-type:none">
 
@@ -28,19 +26,22 @@
                                         {{category.title }}
                                     </button>
                                     <a @click="getParent(category.id, category.title)"
-                                       class="btn btn-sm "
+                                       class="btn btn-sm"
+                                       data-toggle="tooltip" title="Add subcategory"
                                     >
-                                        Add subcategory
+                                        <i class="fa fa-braille" aria-hidden="true"></i>
                                     </a>
                                     <a @click="editCategory(category.id)"
                                        class="btn btn-sm"
+                                       data-toggle="tooltip" title="Edit"
                                     >
-                                        Edit
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </a>
                                     <a @click="deleteCategory(category.id, category.title)"
                                        class="btn btn-sm"
+                                       data-toggle="tooltip" title="Delete"
                                     >
-                                        Delete
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </a>
                                 </div>
                                 <ul v-bind:id="'sub_'+ category.id" v-if="category.categories_recursive"
@@ -223,18 +224,16 @@
                     .catch(error => {
                         console.log(error.data);
                         this.loading = false;
-                    })
-
+                    });
             },
             showSubCategories(target) {
                 $("#sub_" + target + "").toggle();
                 $("#i" + target + "").toggleClass('fa-minus-circle');
-
             },
             getParent(id, title) {
                 bus.$emit('changeParentId', id);
                 bus.$emit('changeParentTitle', title);
-                bus.$emit('changeParamCRUD', 'addSubCategory')
+                bus.$emit('changeParamCRUD', 'addSubCategory');
             },
             clickSubmitButton() {
                 $('#create_category').click();
@@ -253,21 +252,6 @@
                 bus.$emit('changeParentId', id);
                 bus.$emit('changeParentTitle', title);
                 bus.$emit('changeParamCRUD','deleteCategory');
-                // if(confirm("A you sure?")){
-                //     window.axios.post('/categories/'+id, {
-                //         "_method": 'DELETE',
-                //     })
-                //         .then(response => {
-                //             console.log(response);
-                //             bus.$emit('refreshPage');
-                //             this.loading = false;
-                //         })
-                //         .catch(error => {
-                //             console.log(error.statusText);
-                //             this.loading = false;
-                //         })
-                // }
-
             }
         }
     }
@@ -276,5 +260,6 @@
 <style scoped>
 a.btn-sm:hover {
     color: #227dc7;
+    transform: scale(1.5);
 }
 </style>

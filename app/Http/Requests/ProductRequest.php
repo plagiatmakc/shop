@@ -35,8 +35,8 @@ class ProductRequest extends FormRequest
                 'required',
                 Rule::in($this->type_of_currency),
             ],
-                'images' => 'required|array',
-                'images.*' => 'required|image|mimes:jpeg,bmp,png|max:2000',
+                'images' => 'array',
+                'images.*' => 'image|mimes:jpeg,bmp,png|max:2000',
         ];
 //        $images = count($this->input('images'));
 //        foreach (range(0,$images) as $index) {

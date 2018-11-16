@@ -69,6 +69,7 @@
                             </button>
                             <button @click="clickSubmitButton()"
                                     type="submit" class="btn-green"
+
                                     v-if="paramCRUD == 'editCategory'"
                             >
                                 Update
@@ -202,4 +203,5 @@
         border: 1px solid #4AAE9B;
         border-radius: 2px;
     }
+
 </style>

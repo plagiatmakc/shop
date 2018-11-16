@@ -14,7 +14,7 @@ use App\Repositories\ProductRepository;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductAttributeRequest;
 use Illuminate\Support\Facades\Input;
-
+use DateTime;
 
 class ProductController extends Controller
 {
@@ -24,12 +24,16 @@ class ProductController extends Controller
         if ($request->type != null) {
             $response = ProductsRepository::convert_to($request->type, $response);
         }
-        return response()->json($response);//view('layouts.product.index',['products' => $response]);
+        return response($response);//view('layouts.product.index',['products' => $response]);
     }
 
-    public function show($product)
+    public function show($product,Request $request)
     {
-        return response()->json(ProductsRepository::getById($product));//view('layouts.product.show', ['product' => $response])
+        $poduct_info = ProductsRepository::getById($product);
+        if ($request->type != null) {
+            $poduct_info = ProductsRepository::single_convert_to($request->type, $poduct_info);
+        }
+        return response()->json($poduct_info);//view('layouts.product.show', ['product' => $response])
     }
 
     public function create()
@@ -43,7 +47,7 @@ class ProductController extends Controller
         $product = ProductsRepository::createRecord($request->all());
         if($request->hasFile('images')){
             $imageRepository = new ProductImageRepository();
-                $imageRepository->appendImagesToProduct($product->id, $request);
+            $imageRepository->appendImagesToProduct($product->id, $request);
         }
         return response()->json($product);//redirect('/products');
     }

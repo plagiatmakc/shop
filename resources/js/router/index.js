@@ -9,11 +9,28 @@ import ProductsIndexComponent from '../components/ProductsIndexComponent.vue';
 import ProductCreateComponent from '../components/ProductCreateComponent.vue';
 import CategoriesIndexComponent from '../components/CategoriesIndexComponent.vue';
 import CategoryCreateComponent from '../components/CategoryCreateComponent.vue';
+import HomePageComponent from '../components/HomePageComponent.vue';
+import ShopShowProductComponent from '../components/ShopShowProductComponent.vue';
 
 
 export default new Router({
     routes: [
         { path: '/admin', component: AdminComponent,
+            meta: {requiresAuth: true},
+            beforeEnter: (to, from, next) => {
+            console.log(to);
+                window.axios.get('/is-admin')
+                    .then(response => {
+                        console.log(response.data);
+                        if(response.data === true) {
+                           next();
+                        }else {
+                            from();
+                        }
+                    }).catch(error => {
+                        if(error) return from();
+                });
+            },
             children: [
                 {
                     path: 'products',
@@ -34,9 +51,17 @@ export default new Router({
                 }
             ]
         },
-        // { path: '', component:  }
+        { path: '/', component:  HomePageComponent,},
+
+        {
+            path: '/product/:product_id',
+            component: ShopShowProductComponent,
+            props: true
+        }
+
+
 
     ],
-
+    // mode: 'history',
 
 })

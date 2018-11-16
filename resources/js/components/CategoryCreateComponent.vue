@@ -17,7 +17,7 @@
             <!--<option v-for="category in categories" v-bind:value="category.id">{{category.title}}</option>-->
             <!--</select>-->
             <p></p>
-            <input id="create_category" type="submit" value="create" class="btn btn-info"
+            <input id="create_category" type="submit" value="Create" class="btn btn-light"
                    v-show="parent_id == undefined">
         </form>
     </div>

@@ -27,6 +27,15 @@ class PageController extends Controller
         ]);
     }
 
+    public function getLastProducts(Request $request, CategoryRepository $categoryRepository, CartImplementation $cart)
+    {
+        $response = ProductsRepository::getProductsByCategory($request->category ?? "all", $request->pagination ?? 5);
+        if ($request->type != null) {
+            $response = ProductsRepository::convert_to($request->type, $response);
+        }
+        return response($response);
+    }
+
     public function showProduct($id, $sku)
     {
 

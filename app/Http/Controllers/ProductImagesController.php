@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\ProductImageRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests\ImageRequest;
+use DateTime;
 
 class ProductImagesController extends Controller
 {
@@ -15,7 +16,7 @@ class ProductImagesController extends Controller
        {
            $imageRepository = new ProductImageRepository();
 
-           return response()->json($imageRepository->getImagesByProductId($request->product_id));
+           return response($imageRepository->getImagesByProductId($request->product_id));
        }
     }
 
@@ -38,4 +39,16 @@ class ProductImagesController extends Controller
 
         return response()->json($imageRepository->deleteImage($product_image));
     }
+
+    public function store(ImageRequest $request)
+    {
+
+        if($request->has('product_id') && $request->hasFile('images'))
+        {
+            $imageRepository = new ProductImageRepository();
+            return response($imageRepository->appendImagesToProduct($request->product_id, $request->all()));
+        }
+
+    }
+
 }

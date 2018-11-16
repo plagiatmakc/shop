@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,15 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function admin(){
-        return view('layouts.admin');
+    public function admin(Request $request){
+        if($request->ajax()){
+            if (Auth::check() && Auth::user()->authorizeRoles(['admin'])) {
+                return response('true');
+            }else {
+                return response('This action is unauthorized.');
+            }
+
+        }
+
     }
 }

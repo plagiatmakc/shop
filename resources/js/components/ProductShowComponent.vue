@@ -10,7 +10,7 @@
                 <li v-for="category in categories_of_product">{{category.title}}</li>
             </ul>
         <label v-if="images_of_product.length >0">Images:</label><br/>
-        <ul v-if="images_of_product.length >0">
+        <ul v-if="images_of_product.length >0" style="list-style-type:none">
             <li v-for="image in images_of_product"><img class="thumbnail" :src="'storage/'+image.link_to_thumb" width="30%"></li>
         </ul>
     </div>

@@ -1,13 +1,13 @@
 <template>
     <div class="container">
-        {{products}}
+        <!--{{products}}-->
         <!--<button class="btn btn-light btn-sm"@click="getProductsWithPagination(3, type_of_currency)">per 3</button>-->
         <router-link :to="{path: $route.fullPath, query: {pagination: 3}}">Per 3</router-link>
         <!--<button class="btn btn-light btn-sm"@click="getProductsWithPagination(items_per_page, 'usd')">USD</button>-->
         <router-link :to="{path: $route.fullPath, query: {type: 'eur'}}">EUR</router-link>
-        <table class="table">
+        <table class="table" style="width: 70%">
             <thead>
-            <tr>
+            <tr >
                 <th scope="col">Id</th>
                 <th scope="col">Image</th>
                 <th scope="col">Name</th>
@@ -20,18 +20,29 @@
 
             <tr v-for="product in products">
 
-                <td>{{product.id}}</td>
-                <td v-if="product.product_images.length"><img :src="'storage/'+ product.product_images[Math.floor(Math.random() * product.product_images.length)].link_to_thumb" width="50%"></td>
-                <td>{{product.name}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.currency}}</td>
-                <td>
-                    <a class="btn btn-light btn-sm" @click="showProduct(product.id)">Show</a>
-                    <a class="btn btn-light btn-sm" @click="editProduct(product.id)">Edit</a>
-                    <a class="btn btn-light btn-sm">Attributes</a>
-                    <a class="btn btn-light btn-sm" @click="imageManage(product.id, product.name)">Manage images</a>
-                    <a class="btn btn-light btn-sm" @click="deleteProduct(product.id, product.name)">
-                        Delete
+                <td width="1%">{{product.id}}</td>
+                <td v-if="product.product_images.length" width="2%">
+                    <img :src="'storage/'+ product.product_images[0].link_to_thumb + '?img=' + Math.random()" width="100%">
+                </td>
+                <td v-else width="2%">
+                    <img src="/images/No_Image.png" width="50%">
+                </td>
+                <td width="20%"><h5 style="max-width: 100%">{{product.name}}</h5></td>
+                <td width="1%">{{product.price}}</td>
+                <td width="1%">{{product.currency}}</td>
+                <td width="1%">
+                    <a class="btn btn-light btn-sm" @click="showProduct(product.id)" data-toggle="tooltip" title="Show product info">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-light btn-sm" @click="editProduct(product.id)" data-toggle="tooltip" title="Edit product info">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </a>
+                    <!--<a class="btn btn-light btn-sm">Attributes</a>-->
+                    <a class="btn btn-light btn-sm" @click="imageManage(product.id, product.name)" data-toggle="tooltip" title="Manage images">
+                        <i class="fa fa-picture-o" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-light btn-sm" @click="deleteProduct(product.id, product.name)" data-toggle="tooltip" title="Delete product">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </a>
                 </td>
             </tr>
@@ -99,7 +110,7 @@
             '$route'(to, from) {
                 // this.getProductsWithPagination(this.$router.currentRoute.query.pagination,
                 //                                 this.$router.currentRoute.query.type);
-                this.getPart("http://shop.loc/products?page=" + this.$router.currentRoute.query.page,
+                this.getPart("/products?page=" + this.$router.currentRoute.query.page,
                     this.$router.currentRoute.query.pagination,
                     this.$router.currentRoute.query.type,
                 );
@@ -108,7 +119,7 @@
         },
         mounted() {
             // this.getProductsWithPagination(this.$router.currentRoute.query.pagination,this.$router.currentRoute.query.type);
-            this.getPart("http://shop.loc/products?page=" + this.$router.currentRoute.query.page,
+            this.getPart("/products?page=" + this.$router.currentRoute.query.page,
                 this.$router.currentRoute.query.pagination,
                 this.$router.currentRoute.query.type,
             );
@@ -116,7 +127,7 @@
         created() {
              bus.$on('refreshPage', () => {
                  //this.getProductsWithPagination();
-                 this.getPart("http://shop.loc/products?page=" + this.$router.currentRoute.query.page,
+                 this.getPart("/products?page=" + this.$router.currentRoute.query.page,
                      this.$router.currentRoute.query.pagination,
                      this.$router.currentRoute.query.type,
                  );
@@ -154,26 +165,26 @@
                         type: currency,
                     }
                 })
-                    .then(response => {
-                        console.log(response);
-                        this.products = response.data.data;
-                        this.makePagination(response.data);
-                        this.items_per_page = items;
-                        this.type_of_currency = currency;
-                        this.$router.push({
-                            path: this.$router.path,
-                            query: {
-                                pagination: this.items_per_page,
-                                page: this.pagination.current_page,
-                                type: this.type_of_currency
-                            }
-                        });
-                        this.loading = false;
-                    })
-                    .catch(error => {
-                        console.log(error.response.data);
-                        this.loading = false;
-                    })
+                .then(response => {
+                    console.log(response);
+                    this.products = response.data.data;
+                    this.makePagination(response.data);
+                    this.items_per_page = items;
+                    this.type_of_currency = currency;
+                    this.$router.push({
+                        path: this.$router.path,
+                        query: {
+                            pagination: this.items_per_page,
+                            page: this.pagination.current_page,
+                            type: this.type_of_currency
+                        }
+                    });
+                    this.loading = false;
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    this.loading = false;
+                })
             },
             makePagination(data) {
                 var pagination = {
@@ -226,5 +237,6 @@
 <style scoped>
     a.btn:hover {
         color: #227dc7;
+        transform: scale(1.5);
     }
 </style>

@@ -10,17 +10,21 @@ use App\Http\Requests\PaginationAndCurrencyRequest;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = new CategoryRepository;
-        $response = $categories->allWithRelations();
-        return response()->json($response);//view('layouts.category.index', ['categories' => $response]);
+        if($request->ajax())
+        {
+         $categories = new CategoryRepository;
+         $response = $categories->allWithRelations();
+         return response()->json($response);//view('layouts.category.index', ['categories' => $response]);
+        }
+
     }
 
     public function show($category, CategoryRepository $categoryRepository)
     {
         $response = $categoryRepository->getById($category);
-        return view('layouts.category.show', ['category' => $response]);//response()->json($response);
+        return response()->json($response);
     }
 
     public function create()

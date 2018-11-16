@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="sidebar">
+        <div class="sidebar wrapper">
 
             <a href="#" @click="component= 'dashboard'"><i class="fa fa-fw fa-home"></i> Dashboard</a>
             <a href="#"><i class="fa fa-fw fa-vcard"></i> Clients</a>
@@ -14,12 +14,18 @@
                         <!--<i class="fa fa-bars" aria-hidden="true"></i>-->
                         <!--Index-->
                     <!--</a>-->
-                    <router-link :to="{path:'/admin/products'}" class="dropdown-item"><i class="fa fa-bars" aria-hidden="true"></i>Index</router-link>
+                    <router-link :to="{path:'/admin/products'}" class="dropdown-item">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                        Index
+                    </router-link>
                     <!--<a class="dropdown-item"  @click="component= 'product-create'">-->
                         <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
                         <!--Create-->
                     <!--</a>-->
-                    <router-link to="/admin/create_product" class="dropdown-item"><i class="fa fa-plus" aria-hidden="true"></i>Create</router-link>
+                    <router-link to="/admin/create_product" class="dropdown-item">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Create
+                    </router-link>
                 </div>
             </div>
             <div class="dropdown show">
@@ -33,12 +39,18 @@
                         <!--<i class="fa fa-bars" aria-hidden="true"></i>-->
                         <!--Index-->
                     <!--</a>-->
-                    <router-link to="/admin/categories" class="dropdown-item"><i class="fa fa-bars" aria-hidden="true"></i>Index</router-link>
+                    <router-link to="/admin/categories" class="dropdown-item">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                        Index
+                    </router-link>
                     <!--<a class="dropdown-item"  @click="component= 'category-create'">-->
                         <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
                         <!--Create-->
                     <!--</a>-->
-                    <router-link to="/admin/create_category" class="dropdown-item"><i class="fa fa-plus" aria-hidden="true"></i>Create</router-link>
+                    <router-link to="/admin/create_category" class="dropdown-item">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Create
+                    </router-link>
                 </div>
             </div>
             <a href="#"><i class="fa fa-fw fa-envelope"></i> Orders</a>

@@ -152,7 +152,7 @@
                 $("#i" + target + "").toggleClass('fa-caret-right').toggleClass('fa-caret-down');
 
             },
-            onFileChanged(e) {
+            onExistsFileChanged(e) {
                 this.images = [];
                 var files = e.target.files || e.dataTransfer.files;
 
@@ -168,8 +168,6 @@
             removeImage(image) {
                 this.images.splice(this.images.indexOf(image),1);
                 this.getAttachmentSize();
-
-
             },
             getAttachmentSize() {
 

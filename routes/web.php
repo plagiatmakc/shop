@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'PageController@index');
+Route::get('/get-last-products', 'PageController@getLastProducts');
 
 
 Auth::routes();
@@ -38,6 +39,7 @@ Route::get('/remove-from-cart/{id}', 'CartController@removeFromCart');
 Route::get('/show-product/{id}/{sku}', 'PageController@showProduct');
 
 Route::get('/all-categories', 'CategoryController@allCategories');
+
 //Route::post('/category/create', 'CategoryController@store');
 //Route::get('/category/{id}', 'CategoryController@show');
 //Route::get('/category/update/{id}', 'CategoryController@edit');
@@ -55,5 +57,5 @@ Route::get('/all-categories', 'CategoryController@allCategories');
 //Route::get('/products/{items}', 'ProductController@index');
 
 
-Route::get('/home', 'HomeController@index')->middleware('auth');
-Route::get('/admin', 'HomeController@admin')->middleware('admin');
+Route::get('/home', 'HomeController@index');
+Route::get('/is-admin', 'HomeController@admin');

@@ -20,12 +20,12 @@ class ProductImageRepository
 
             $originalFile = $request['images'][$i];
             $originalImage = Image::make($originalFile)->resize(600,600)->encode($request['images'][$i]->extension());
-            $originalPath = 'images/products/' . $product_id . '/'. $i. '.' . $request['images'][$i]->extension();
+            $originalPath = 'images/products/' . $product_id . '/'. $i. time() . '.' . $request['images'][$i]->extension();
             $storeOriginal = Storage::put($originalPath , $originalImage->__toString());
 //            $url_full_image = Storage::url($originalPath);
 
             $thumbnailImage = Image::make($originalFile)->resize(150,150)->encode($request['images'][$i]->extension());
-            $thumbnailPath = 'images/products/' . $product_id . '/thumbnail/'. $i . '.' . $request['images'][$i]->extension();
+            $thumbnailPath = 'images/products/' . $product_id . '/thumbnail/'. $i . time() . '.' . $request['images'][$i]->extension();
             $storeThumb = Storage::put($thumbnailPath , $thumbnailImage->__toString());
 //            $url_thumb_image = Storage::url($thumbnailPath);
 
@@ -57,12 +57,12 @@ class ProductImageRepository
         $image = ProductImage::findOrFail($image_id);
         try{
             $originalFile = $request['image'];
-            $originalImage = Image::make($originalFile)->resize(600,600)->encode('png');
+            $originalImage = Image::make($originalFile)->resize(600,600)->encode($request['image']->extension());
             if (Storage::exists($image->link_to_file)) {
                 Storage::delete($image->link_to_file);
             }
             Storage::put($image->link_to_file , $originalImage->__toString());
-            $thumbnailImage = Image::make($originalFile)->resize(150,150)->encode('png');
+            $thumbnailImage = Image::make($originalFile)->resize(150,150)->encode($request['image']->extension());
             if (Storage::exists($image->link_to_thumb)) {
                 Storage::delete($image->link_to_thumb);
             }
