@@ -34,6 +34,7 @@ class PaginationAndCurrencyRequest extends FormRequest
                 Rule::in($this->type_of_currency),
                 'nullable',
             ],
+            'category' => 'exists:categories,id|nullable',
         ];
     }
 }

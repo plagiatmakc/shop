@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <label>Name: </label>
-        <label type="text" >{{name}}</label><br/>
+        <h5 type="text" style="max-width: 300px" >{{name}}</h5><br/>
         <label>Price: </label>
         <label type="text" >{{price}}</label>
         <label type="text" >{{currency}}</label><br/>

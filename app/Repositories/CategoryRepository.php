@@ -29,7 +29,7 @@ class CategoryRepository
 
     public function getById($category)
     {
-        return Category::findOrFail($category);
+        return Category::with('categoriesRecursive')->findOrFail($category);
     }
 
     public function create($request)

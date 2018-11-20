@@ -16,48 +16,54 @@ class CategoryController extends Controller
         {
          $categories = new CategoryRepository;
          $response = $categories->allWithRelations();
-         return response()->json($response);//view('layouts.category.index', ['categories' => $response]);
+         return response()->json($response);
         }
 
     }
 
     public function show($category, CategoryRepository $categoryRepository)
     {
-        $response = $categoryRepository->getById($category);
-        return response()->json($response);
-    }
-
-    public function create()
-    {
-        return view('layouts.category.create');
+        return response()
+            ->json($categoryRepository->getById($category));
     }
 
     public function store(CategoryRequest $request, CategoryRepository $categoryRepository)
     {
-        $result = $categoryRepository->create($request->all());
-        return response()->json($result);//view('layouts.category.create');
+        ;
+        return response()
+            ->json($categoryRepository
+                ->create($request->all())
+            );
     }
 
     public function edit($category, CategoryRepository $categoryRepository)
     {
-        $category_for_edit = $categoryRepository->getById($category);
-        return response()->json($category_for_edit);//view('layouts.category.edit', ['category' => $result]);
+        return response()
+            ->json($categoryRepository->getById($category));
     }
 
     public function update($category, CategoryRequest $request, CategoryRepository $categoryRepository)
     {
-        $result = $categoryRepository->update($request->all(), $category);
-        return response()->json($result);
+        return response()
+            ->json($categoryRepository
+                ->update($request->all(), $category)
+            );
     }
 
     public function destroy($category, CategoryRepository $categoryRepository)
     {
-        $result = $categoryRepository->delete($category);
-        return response()->json($result);
+
+        return response()
+            ->json($categoryRepository
+                ->delete($category)
+            );
     }
 
     public function allCategories(CategoryRepository $categoryRepository)
     {
-        return response()->json($categoryRepository->allCategories());
+        return response()
+            ->json($categoryRepository
+                ->allCategories()
+            );
     }
 }

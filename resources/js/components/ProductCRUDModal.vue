@@ -29,7 +29,7 @@
                             >
                                 Edit product
                             </h4>
-                            <h4 style="margin-top: 10px; padding-top: 20px; "
+                            <h4 style="margin-top: 10px; padding-top: 20px; max-width: 300px"
                                 v-if="paramCRUD == 'imageManage'"
                             >
                                  {{product_name}}

@@ -13,8 +13,7 @@ use Illuminate\Http\Request;
 use App\Repositories\ProductRepository;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductAttributeRequest;
-use Illuminate\Support\Facades\Input;
-use DateTime;
+
 
 class ProductController extends Controller
 {
@@ -60,7 +59,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $product)
     {
         $result = ProductsRepository::updateRecord($request->all(), $product);
-        return response()->json($result);//redirect('/products');//response()->json($product);
+        return response()->json($result);//redirect('/products')
     }
 
     public function destroy($product)
@@ -68,33 +67,33 @@ class ProductController extends Controller
         return response()->json(ProductsRepository::delete($product));
     }
 
-    public function addAttr($product_id)
-    {
-        $product = ProductsRepository::getById($product_id);
-        return view('layouts.product.addAttributes', ['product' => $product,]);
-    }
-
-    public function storeAttr(ProductAttributeRequest $request, ProductAttributesRepository $attributesRepository)
-    {
-        $attributesRepository->create($request->all());
-        return redirect()->back();//response()->json($product);
-    }
-
-    public function delAttr($id, ProductAttributesRepository $attributesRepository)
-    {
-        $attributesRepository->delete($id);
-        return redirect()->back();
-    }
-
-    public function editAttr($id, ProductAttributesRepository $attributesRepository)
-    {
-        $result = $attributesRepository->getById($id);
-        return response()->json($result);
-    }
-
-    public function changeAttr($id, ProductAttributeRequest $request, ProductAttributesRepository $attributesRepository)
-    {
-        $result = $attributesRepository->update($id, $request->all());
-        return response()->json($result);
-    }
+//    public function addAttr($product_id)
+//    {
+//        $product = ProductsRepository::getById($product_id);
+//        return view('layouts.product.addAttributes', ['product' => $product,]);
+//    }
+//
+//    public function storeAttr(ProductAttributeRequest $request, ProductAttributesRepository $attributesRepository)
+//    {
+//        $attributesRepository->create($request->all());
+//        return redirect()->back();//response()->json($product);
+//    }
+//
+//    public function delAttr($id, ProductAttributesRepository $attributesRepository)
+//    {
+//        $attributesRepository->delete($id);
+//        return redirect()->back();
+//    }
+//
+//    public function editAttr($id, ProductAttributesRepository $attributesRepository)
+//    {
+//        $result = $attributesRepository->getById($id);
+//        return response()->json($result);
+//    }
+//
+//    public function changeAttr($id, ProductAttributeRequest $request, ProductAttributesRepository $attributesRepository)
+//    {
+//        $result = $attributesRepository->update($id, $request->all());
+//        return response()->json($result);
+//    }
 }

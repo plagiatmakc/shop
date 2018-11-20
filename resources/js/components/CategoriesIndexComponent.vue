@@ -22,7 +22,7 @@
 
                                 <div>
                                     <i v-bind:id="'i'+category.id" class="fa fa-plus-circle"></i>
-                                    <button class="btn btn-sm" @click="showSubCategories(category.id)" href="#">
+                                    <button class="btn btn-sm" @click="showSubCategories(category.id)" >
                                         {{category.title }}
                                     </button>
                                     <a @click="getParent(category.id, category.title)"

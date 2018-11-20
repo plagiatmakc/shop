@@ -26,10 +26,13 @@ class ProductRepository
     public function getProductsByCategory($category, $items = 5)
     {
         if ($category == "all") {
-            return Product::with('product_images')->orderBy('updated_at', 'desc')->paginate($items);
+            return Product::with('product_images')
+                ->orderBy('updated_at', 'desc')
+                ->paginate($items);
         }
         return Category::findOrFail($category)
             ->products()
+            ->with('product_images')
             ->paginate($items);
     }
 

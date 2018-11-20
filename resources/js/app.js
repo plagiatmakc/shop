@@ -31,6 +31,8 @@ Vue.component('dashboard', require('./components/DashboardComponent.vue'));
 Vue.component('landing-page',require('./components/LandingPageComponent.vue'));
 Vue.component('home-page',require('./components/HomePageComponent.vue'));
 Vue.component('shop-show-product', require('./components/ShopShowProductComponent.vue'));
+Vue.component('shop-filters', require('./components/ShopFiltersComponent.vue'));
+Vue.component('category-products', require('./components/CategoryProductsComponent.vue'));
 
 Vue.component('categories-checkbox', require('./components/CategoriesCheckBox.vue'));
 

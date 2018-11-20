@@ -1,7 +1,5 @@
 <template>
     <div class="container">
-
-Landing component
         <router-view></router-view>
     </div>
 </template>

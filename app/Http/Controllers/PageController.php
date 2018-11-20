@@ -10,6 +10,7 @@ use App\ProductAttributes;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ProductAttributesRepository;
 use Illuminate\Http\Request;
+use App\Http\Requests\PaginationAndCurrencyRequest;
 
 
 class PageController extends Controller
@@ -27,7 +28,7 @@ class PageController extends Controller
         ]);
     }
 
-    public function getLastProducts(Request $request, CategoryRepository $categoryRepository, CartImplementation $cart)
+    public function getLastProducts(PaginationAndCurrencyRequest $request, CategoryRepository $categoryRepository, CartImplementation $cart)
     {
         $response = ProductsRepository::getProductsByCategory($request->category ?? "all", $request->pagination ?? 5);
         if ($request->type != null) {

@@ -15,7 +15,11 @@
                 style="display: inline-block;"
             >
                 &raquo;&nbsp;
-                <router-link :to="{path: '/category/'+ breadCrumb.id }">
+                <router-link
+                    :to="{ path: '/',
+                           query: { type: $router.currentRoute.query.type,
+                            category: breadCrumb.id}}"
+                >
                     {{breadCrumb.title}}
                 </router-link>&nbsp;
             </li>
