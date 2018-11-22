@@ -5,12 +5,11 @@
             {{products}}
             <div class="card-group">
                 <div class="card col-md-2" v-for="product in products">
-                    <img class="card-img-top" src="" alt="Card image cap">
                     <div v-if="product.product_images.length">
-                        <img :src="'storage/'+ product.product_images[0].link_to_thumb + '?img=' + Math.random()" width="100%">
+                        <img class="card-img-top" :src="'storage/'+ product.product_images[0].link_to_thumb + '?img=' + Math.random()" width="100%">
                     </div>
                     <div v-else>
-                        <img src="/images/No_Image.png" width="100%">
+                        <img class="card-img-top" src="/images/No_Image.png" width="100%">
                     </div>
                     <div class="card-body">
                         <router-link :to="{path: '/product/'+ product.id , query: {type: $router.currentRoute.query.type}}" class="card-title">{{product.name}}</router-link>

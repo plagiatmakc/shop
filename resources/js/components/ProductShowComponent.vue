@@ -1,18 +1,22 @@
 <template>
     <div class="container">
-        <label>Name: </label>
-        <h5 type="text" style="max-width: 300px" >{{name}}</h5><br/>
-        <label>Price: </label>
-        <label type="text" >{{price}}</label>
-        <label type="text" >{{currency}}</label><br/>
-        <label v-if="categories_of_product.length >0">Selected categories:</label><br/>
-            <ul v-if="categories_of_product.length >0">
-                <li v-for="category in categories_of_product">{{category.title}}</li>
+        <div v-if="loading === true"  >
+            <img src="/images/loading.gif" />
+        </div>
+        <div v-else>
+            <label>Name: </label>
+            <label  style="max-width: 300px" >{{name}}</label><br/>
+            <label>Price: </label>
+            <label>{{price}} {{currency}}</label><br/>
+            <label v-if="categories_of_product.length >0">Selected categories:</label><br/>
+                <ul v-if="categories_of_product.length >0">
+                    <li v-for="category in categories_of_product">{{category.title}}</li>
+                </ul>
+            <label v-if="images_of_product.length >0">Images:</label><br/>
+            <ul v-if="images_of_product.length >0" style="list-style-type:none">
+                <li v-for="image in images_of_product"><img class="thumbnail" :src="'storage/'+image.link_to_thumb" width="30%"></li>
             </ul>
-        <label v-if="images_of_product.length >0">Images:</label><br/>
-        <ul v-if="images_of_product.length >0" style="list-style-type:none">
-            <li v-for="image in images_of_product"><img class="thumbnail" :src="'storage/'+image.link_to_thumb" width="30%"></li>
-        </ul>
+        </div>
     </div>
 </template>
 
@@ -27,6 +31,7 @@
                 currency: '',
                 categories_of_product:[],
                 images_of_product:[],
+                loading: false,
 
             }
         },
@@ -35,6 +40,7 @@
         },
         methods: {
             getProductInfo(id) {
+                this.loading = true;
                 window.axios.get('/products/'+id)
                     .then(response => {
                         console.log(response.data);
@@ -48,10 +54,12 @@
                             this.images_of_product.push(response.data.product_images[index]);
                         };
                         console.log(response.data.categories);
+                        this.loading = false;
 
                     })
                     .catch(error => {
-                        console.log(error.statusText)
+                        console.log(error.statusText);
+                        this.loading = false;
                     })
             },
 
@@ -61,13 +69,13 @@
 
 <style scoped>
     .thumbnail:hover {
-        position:relative;
-        top:-25px;
-        left:-35px;
-        width:100%;
-        height:auto;
-        display:block;
-        z-index:999;
+        position: relative;
+        top: -25px;
+        left: -35px;
+        width: 60%;
+        height: auto;
+        display: block;
+        z-index: 999;
         background-blend-mode: lighten;
 
     }

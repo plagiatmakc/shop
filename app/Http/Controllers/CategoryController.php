@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use Illuminate\Http\Request;
 use App\Repositories\CategoryRepository;
 use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\PaginationAndCurrencyRequest;
+
 
 class CategoryController extends Controller
 {
@@ -21,25 +20,30 @@ class CategoryController extends Controller
 
     }
 
-    public function show($category, CategoryRepository $categoryRepository)
+    public function show($category, CategoryRepository $categoryRepository, Request $request)
     {
-        return response()
-            ->json($categoryRepository->getById($category));
+        if($request->ajax()) {
+            return response()
+                ->json($categoryRepository->getById($category));
+        }
     }
 
     public function store(CategoryRequest $request, CategoryRepository $categoryRepository)
     {
-        ;
-        return response()
-            ->json($categoryRepository
-                ->create($request->all())
-            );
+        if($request->ajax()) {
+            return response()
+                ->json($categoryRepository
+                    ->create($request->all())
+                );
+        }
     }
 
-    public function edit($category, CategoryRepository $categoryRepository)
+    public function edit($category, CategoryRepository $categoryRepository, Request $request)
     {
-        return response()
-            ->json($categoryRepository->getById($category));
+        if($request->ajax()) {
+            return response()
+                ->json($categoryRepository->getById($category));
+        }
     }
 
     public function update($category, CategoryRequest $request, CategoryRepository $categoryRepository)

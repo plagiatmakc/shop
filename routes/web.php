@@ -14,7 +14,6 @@
 Route::get('/', 'PageController@index');
 Route::get('/get-last-products', 'PageController@getLastProducts');
 
-
 Auth::routes();
 
 //Route::prefix('admin')->group(function () {});
@@ -24,11 +23,14 @@ Route::resources([
     'products' => 'ProductController',
     'product_images' => 'ProductImagesController',
 ]);
-Route::get('/products/{product_id}/attributes', 'ProductController@addAttr');
-Route::post('/products/{product_id}/attributes', 'ProductController@storeAttr');
-Route::delete('/attributes/{id}', 'ProductController@delAttr');
-Route::get('/attributes/{id}', 'ProductController@editAttr');
-Route::put('/attributes/{id}', 'ProductController@changeAttr');
+
+//Product attributes routes
+
+//Route::get('/products/{product_id}/attributes', 'ProductController@addAttr');
+//Route::post('/products/{product_id}/attributes', 'ProductController@storeAttr');
+//Route::delete('/attributes/{id}', 'ProductController@delAttr');
+//Route::get('/attributes/{id}', 'ProductController@editAttr');
+//Route::put('/attributes/{id}', 'ProductController@changeAttr');
 
 // Cart manipulations
 Route::get('/cart', 'CartController@index');

@@ -184,7 +184,7 @@
             //             this.loading = false;
             //         })
             // },
-            // getPart(url, items){
+            // getProductsWithPagination(url, items){
             //     this.loading = true;
             //     window.axios.get(url, {
             //         params: {
@@ -212,7 +212,7 @@
             //     this.pagination = pagination
             // },
             // fetchPaginateCategories(url,items) {
-            //     this.getPart(url,items);
+            //     this.getProductsWithPagination(url,items);
             // },
             getCategories() {
                 window.axios.get('/categories')

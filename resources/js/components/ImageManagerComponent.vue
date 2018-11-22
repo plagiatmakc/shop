@@ -1,49 +1,54 @@
 <template>
     <div>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Image</th>
-                <th scope="col">Operations</th>
-            </tr>
-            </thead>
-            <tbody v-if="images.length">
+        <div v-if="loading == true"  >
+            <img src="/images/loading.gif" />
+        </div>
+        <div v-else>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Operations</th>
+                </tr>
+                </thead>
+                <tbody v-if="images.length">
 
-            <tr v-for="image in images" v-if="images.length">
-                <td>
-                    <img :src="'/storage/'+image.link_to_thumb + '?rnd=' + Math.random()"  width="50%">
-                </td>
-                <td>
-                    <input type="file" class="btn btn-sm btn-light" name="image" :id="'image'+image.id" ref="image" @change="onExistsFileChanged($event,image.id)" hidden/>
-                    <button class="btn btn-sm btn-light" value="update" @click="browseExistsFileUpdate(image.id)" data-toggle="tooltip" title="Change image">
-                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                    </button>
-                    <button class="btn btn-light btn-sm" @click="destroyImage(image.id)" data-toggle="tooltip" title="Delete">
+                <tr v-for="image in images" v-if="images.length">
+                    <td>
+                        <img :src="'/storage/'+image.link_to_thumb + '?rnd=' + Math.random()"  width="50%">
+                    </td>
+                    <td>
+                        <input type="file" class="btn btn-sm btn-light" name="image" :id="'image'+image.id" ref="image" @change="onExistsFileChanged($event,image.id)" hidden/>
+                        <button class="btn btn-sm btn-light" value="update" @click="browseExistsFileUpdate(image.id)" data-toggle="tooltip" title="Change image">
+                            <i class="fa fa-exchange" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-light btn-sm" @click="destroyImage(image.id)" data-toggle="tooltip" title="Delete">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+                        <!--<a class="btn btn-light btn-sm" @click="updateImage(image.id)">update</a>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <input type="file" multiple class="btn btn-sm btn-light" name="image[]" id="new_image" ref="image" @change="onNewFilesChanged($event)" hidden/>
+            <button class="btn btn-light btn-sm" data-toggle="tooltip" title="add new one" onclick="document.getElementById('new_image').click();">
+                <i class="fa fa-plus-square-o" aria-hidden="true"></i> New
+            </button>
+            <div class="col-md-12">
+                <div class="attachment-holder animated fadeIn" v-cloak v-for="(image, index) in new_images">
+                    <span class="label label-primary">{{ image.name + ' (' + Number((image.size / 1024 / 1024).toFixed(1)) + 'MB)'}}</span>
+                    <button class="btn btn-light btn-sm" @click="dropFromNewImages(image)" data-toggle="tooltip" title="Delete">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
-                    <!--<a class="btn btn-light btn-sm" @click="updateImage(image.id)">update</a>-->
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <input type="file" multiple class="btn btn-sm btn-light" name="image[]" id="new_image" ref="image" @change="onNewFilesChanged($event)" hidden/>
-        <button class="btn btn-light btn-sm" data-toggle="tooltip" title="add new one" onclick="document.getElementById('new_image').click();">
-            <i class="fa fa-plus-square-o" aria-hidden="true"></i> New
-        </button>
-        <div class="col-md-12">
-            <div class="attachment-holder animated fadeIn" v-cloak v-for="(image, index) in new_images">
-                <span class="label label-primary">{{ image.name + ' (' + Number((image.size / 1024 / 1024).toFixed(1)) + 'MB)'}}</span>
-                <button class="btn btn-light btn-sm" @click="dropFromNewImages(image)" data-toggle="tooltip" title="Delete">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </button>
+                </div>
             </div>
+            <button v-if="new_images.length" class="btn btn-light btn-sm" @click="appendImagesToProduct()" data-toggle="tooltip" title="Append">
+                <i class="fa fa-check-square-o" aria-hidden="true">OK</i>
+            </button>
+            <ul v-if="errors != null">
+                <li v-for="error in errors" class="alert-danger"> {{error.toString()}}</li>
+            </ul>
         </div>
-        <button v-if="new_images.length" class="btn btn-light btn-sm" @click="appendImagesToProduct()" data-toggle="tooltip" title="Append">
-            <i class="fa fa-check-square-o" aria-hidden="true">OK</i>
-        </button>
-        <ul v-if="errors != null">
-            <li v-for="error in errors" class="alert-danger"> {{error.toString()}}</li>
-        </ul>
     </div>
 </template>
 
@@ -59,6 +64,7 @@
                 image_to_change:'',
                 new_images:[],
                 errors:[],
+                loading: false,
             }
         },
         mounted() {
@@ -66,6 +72,7 @@
         },
         methods: {
             getImages(id) {
+                this.loading = true;
                 window.axios.get('/product_images', {
                     params: {
                         'product_id': id,
@@ -75,10 +82,12 @@
                     console.log(response.data);
                     this.errors = [];
                     this.images = response.data;
+                    this.loading = false;
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors;
                     console.log(error.response.statusText);
+                    this.loading = false;
                 })
 
             },

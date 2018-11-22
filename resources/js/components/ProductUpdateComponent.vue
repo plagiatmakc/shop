@@ -1,61 +1,65 @@
 <template>
     <div class="container">
-        {{checked_categories}}
-        <ul v-if="errors != null">
-            <li v-for="error in errors" class="alert-danger"> {{error.toString()}}</li>
-        </ul>
-        <p v-if="message !== ''" class="alert-success">{{message}}</p>
-        <form method="POST" action="/products" @submit.prevent="updateProduct(product_id)">
-            <label>Name</label><br/>
-            <input type="text" name="name" v-model="name"><br/>
-            <label>Price</label><br/>
-            <input type="text" name="price" v-model="price"><br/>
-            <label>Currency</label><br/>
-            <select type="text" name="currency" v-model="currency">
-                <option disabled value="">Choose currency</option>
-                <option v-bind:value="'usd'">USD</option>
-                <option v-bind:value="'eur'">EUR</option>
-                <option v-bind:value="'uah'">UAH</option>
-            </select><br>
-            <label v-if="categories_of_product.length >0">Selected categories:</label><br/>
-            <ul v-if="categories_of_product.length >0">
-                <li v-for="category in categories_of_product">{{category.title}}</li>
+        <div v-if="loading == true"  >
+            <img src="/images/loading.gif" />
+        </div>
+        <div v-else>
+            {{checked_categories}}
+            <ul v-if="errors != null">
+                <li v-for="error in errors" class="alert-danger"> {{error.toString()}}</li>
             </ul>
-            <!--<select multiple="multiple" class="form-control input-sm" name="categories[]" v-model="categories" size="10" id="category" style="width: 250px">-->
-            <!--<option v-for="category in list_of_categories"  v-bind:value="category.id"  >{{category.title}}-->
-            <!--</option>-->
-            <!--</select>-->
-            <label>Map categories:</label><br/>
-            <ul  v-for="category in list_of_categories" style="list-style-type:none">
-                <li class="form-inline">
-                    <i v-bind:id="'i'+category.id"
-                       class="fa fa-caret-right"
-                       aria-hidden="true"
-                       @click="showSubCategories(category.id)"
-                    ></i>
-                    <input type="checkbox"
-                           :disabled="category.categories_recursive.length >0 &&
-                            (checked_categories === undefined || !checked_categories.includes(category.id))"
-                           v-bind:id="category.id" v-bind:value="category.id"
-                           v-model="categories"
-                           @change="check($event, category.id)"
-                    >
-                    <label v-bind:for="category.id">
-                        {{category.title}}
-                    </label>
-                    <ul v-bind:id="'sub_'+ category.id"
-                        v-if="category.categories_recursive"
-                        style="display:none"
-                    >
-                        <categories-checkbox v-bind:checked_categories="checked_categories"
-                            v-bind:list_of_categories="category.categories_recursive"
-                        ></categories-checkbox>
-                    </ul>
-                </li>
-            </ul>
-            <input id="create_product" type="submit" value="update" class="btn btn-info" v-show="false">
-        </form>
-
+            <p v-if="message !== ''" class="alert-success">{{message}}</p>
+            <form method="POST" action="/products" @submit.prevent="updateProduct(product_id)">
+                <label>Name</label><br/>
+                <input type="text" name="name" v-model="name"><br/>
+                <label>Price</label><br/>
+                <input type="text" name="price" v-model="price"><br/>
+                <label>Currency</label><br/>
+                <select type="text" name="currency" v-model="currency">
+                    <option disabled value="">Choose currency</option>
+                    <option v-bind:value="'usd'">USD</option>
+                    <option v-bind:value="'eur'">EUR</option>
+                    <option v-bind:value="'uah'">UAH</option>
+                </select><br>
+                <label v-if="categories_of_product.length >0">Selected categories:</label><br/>
+                <ul v-if="categories_of_product.length >0">
+                    <li v-for="category in categories_of_product">{{category.title}}</li>
+                </ul>
+                <!--<select multiple="multiple" class="form-control input-sm" name="categories[]" v-model="categories" size="10" id="category" style="width: 250px">-->
+                <!--<option v-for="category in list_of_categories"  v-bind:value="category.id"  >{{category.title}}-->
+                <!--</option>-->
+                <!--</select>-->
+                <label>Map categories:</label><br/>
+                <ul  v-for="category in list_of_categories" style="list-style-type:none">
+                    <li class="form-inline">
+                        <i v-bind:id="'i'+category.id"
+                           class="fa fa-caret-right"
+                           aria-hidden="true"
+                           @click="showSubCategories(category.id)"
+                        ></i>
+                        <input type="checkbox"
+                               :disabled="category.categories_recursive.length >0 &&
+                                (checked_categories === undefined || !checked_categories.includes(category.id))"
+                               v-bind:id="category.id" v-bind:value="category.id"
+                               v-model="categories"
+                               @change="check($event, category.id)"
+                        >
+                        <label v-bind:for="category.id">
+                            {{category.title}}
+                        </label>
+                        <ul v-bind:id="'sub_'+ category.id"
+                            v-if="category.categories_recursive"
+                            style="display:none"
+                        >
+                            <categories-checkbox v-bind:checked_categories="checked_categories"
+                                v-bind:list_of_categories="category.categories_recursive"
+                            ></categories-checkbox>
+                        </ul>
+                    </li>
+                </ul>
+                <input id="create_product" type="submit" value="update" class="btn btn-info" v-show="false">
+            </form>
+        </div>
     </div>
 </template>
 
@@ -75,6 +79,7 @@
                 errors: [],
                 message: '',
                 checked_categories: [],
+                loading: false,
             }
         },
         mounted() {
@@ -95,16 +100,19 @@
         },
         methods: {
             getAllCategories() {
+                this.loading = true;
                 window.axios.get('/categories')
                     .then(response => {
                         console.log(response.data);
                         this.list_of_categories = response.data;
+                        this.loading = false;
                     })
                     .catch(error => {
                         console.log(error.statusText)
                     })
             },
             getProductForEdit(id) {
+                this.loading = true;
                 window.axios.get('/products/'+id+'/edit')
                     .then(response => {
                         console.log(response.statusText);
@@ -117,10 +125,12 @@
                              this.checked_categories.push(response.data.categories[index].id);
                          };
                         console.log(response.data.categories);
+                        // this.loading = false;
 
                     })
                     .catch(error => {
-                        console.log(error.statusText)
+                        console.log(error.statusText);
+                        this.loading = false;
                     })
             },
             showSubCategories(target) {
@@ -141,9 +151,6 @@
                     this.errors = [];
                     this.message = 'Product was changed.';
                     bus.$emit('refreshPage');
-                     //window.location.reload();
-                   // alert(this.message);
-
                     console.log(response);
                 }).catch(error => {
                     this.message = '';

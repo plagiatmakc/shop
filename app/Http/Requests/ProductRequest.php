@@ -32,16 +32,15 @@ class ProductRequest extends FormRequest
             'name' => 'required|max:255',
             'price' => "required|regex:/^\d*(\.\d{1,2})?$/",
             'currency' => [
-                'required',
-                Rule::in($this->type_of_currency),
-            ],
-                'images' => 'array',
-                'images.*' => 'image|mimes:jpeg,bmp,png|max:2000',
+                            'required',
+                            Rule::in($this->type_of_currency),
+                            ],
+            'images' => 'array',
+            'images.*' => 'image|mimes:jpeg,bmp,png|max:2000',
+            'categories' => 'array|',
+            'categories.*' => 'exists:categories,id',
         ];
-//        $images = count($this->input('images'));
-//        foreach (range(0,$images) as $index) {
-//            $rules['images.' .$index] = 'image|mimes:jpeg,bmp,png|max:2000';
-//        }
+
         return $rules;
     }
 }

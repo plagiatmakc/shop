@@ -47,13 +47,6 @@ class ProductRepository
 
         try {
             $product = Product::create($request);
-            $product->categories()
-                ->attach($request['categories'] ?? []);
-//               if($request['images'])
-//               {
-//                   $imageRepository = new ProductImageRepository();
-//                  return $imageRepository->appendImagesToProduct($product->id, $request);
-//               }
 
         } catch (Exception $e) {
             report($e);

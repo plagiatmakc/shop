@@ -28,7 +28,7 @@ class HomeController extends Controller
     }
 
     public function admin(Request $request){
-        if($request->ajax()){
+        if($request->ajax()) {
             if (Auth::check() && Auth::user()->authorizeRoles(['admin'])) {
                 return response('true');
             }else {

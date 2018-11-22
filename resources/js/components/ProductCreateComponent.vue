@@ -40,7 +40,7 @@
                 </li>
             </ul>
             <label>Product photos (can attach more than one):</label><br />
-            <input type="file" name="images[]" id="images" ref="images" style="display: none;" multiple @change="onFileChanged($event)" />
+            <input type="file" name="images[]" id="images" ref="images" style="display: none;" multiple @change="onExistsFileChanged($event)" />
             <input type="button" class="btn btn-sm btn-light" value="Browse..." onclick="document.getElementById('images').click();" />
             <div class="col-md-12">
                 <div class="attachment-holder animated fadeIn" v-cloak v-for="(image, index) in images">
@@ -97,8 +97,11 @@
                 formData.append('name', this.name);
                 formData.append('price', this.price);
                 formData.append('currency', this.currency);
-                formData.append('categories', this.checked_categories);
-
+                // formData.append('categories', this.checked_categories);
+                for (var i =0 ; i < this.checked_categories.length; i++)
+                {     let category = this.checked_categories[i];
+                    formData.append('categories['+i+']', category);
+                }
                 for (var i =0 ; i < this.images.length; i++)
                 {     let image = this.images[i];
                     formData.append('images['+i+']', image);
@@ -125,6 +128,7 @@
                     this.name = '';
                     this.price = '';
                     this.currency = '';
+                    this.images = [];
 
                 })
                 .catch(error => {

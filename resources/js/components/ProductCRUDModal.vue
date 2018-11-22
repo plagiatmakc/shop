@@ -13,32 +13,32 @@
                         id="modalTitle"
                     >
                         <slot name="header">
-                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
+                            <label style="margin-top: 10px; padding-right: 10px; padding-top: 30px; max-width: 300px;"
                                 v-if="paramCRUD == 'addAttributes'"
                             >
                                 Create attributes of {{parent_title}}
-                            </h4>
+                            </label>
 
-                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
+                            <label style="margin-top: 10px; padding-right: 10px; padding-top: 30px; max-width: 300px;"
                                 v-if="paramCRUD == 'showProduct'"
                                 >
                                 Show Product
-                            </h4>
-                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
+                            </label>
+                            <label style="margin-top: 10px; padding-right: 10px; padding-top: 30px; max-width: 300px;"
                                 v-if="paramCRUD == 'editProduct'"
                             >
                                 Edit product
-                            </h4>
-                            <h4 style="margin-top: 10px; padding-top: 20px; max-width: 300px"
+                            </label>
+                            <label style="margin-top: 5px; padding-top: 20px; max-width: 300px;"
                                 v-if="paramCRUD == 'imageManage'"
                             >
                                  {{product_name}}
-                            </h4>
-                            <h4 style="margin-top: 10px; padding-top: 20px; "
+                            </label>
+                            <label style="margin-top: 10px; padding-top: 20px; max-width: 300px; "
                                 v-if="paramCRUD == 'deleteProduct'"
                             >
-                                Delete {{product_name}}
-                            </h4>
+                                Delete "{{product_name}}"
+                            </label>
                             <button
                                 class="btn-close"
                                 @click="close"

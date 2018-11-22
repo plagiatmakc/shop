@@ -19,20 +19,20 @@ class ProductController extends Controller
 {
     public function index(PaginationAndCurrencyRequest $request)
     {
-        $response = ProductsRepository::getProducts($request->pagination);
+        $products = ProductsRepository::getProducts($request->pagination);
         if ($request->type != null) {
-            $response = ProductsRepository::convert_to($request->type, $response);
+            $products = ProductsRepository::convert_to($request->type, $products);
         }
-        return response($response);//view('layouts.product.index',['products' => $response]);
+        return response($products);//view('layouts.product.index',['products' => $response]);
     }
 
-    public function show($product,Request $request)
+    public function show($product,PaginationAndCurrencyRequest $request)
     {
-        $poduct_info = ProductsRepository::getById($product);
+        $product_info = ProductsRepository::getById($product);
         if ($request->type != null) {
-            $poduct_info = ProductsRepository::single_convert_to($request->type, $poduct_info);
+            $product_info = ProductsRepository::single_convert_to($request->type, $product_info);
         }
-        return response()->json($poduct_info);//view('layouts.product.show', ['product' => $response])
+        return response()->json($product_info);//view('layouts.product.show', ['product' => $response])
     }
 
     public function create()
@@ -44,9 +44,13 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product = ProductsRepository::createRecord($request->all());
-        if($request->hasFile('images')){
+        if($request->hasFile('images')) {
             $imageRepository = new ProductImageRepository();
             $imageRepository->appendImagesToProduct($product->id, $request);
+        }
+        if($request->has('categories')) {
+            $product->categories()
+                ->attach($request->categories);
         }
         return response()->json($product);//redirect('/products');
     }

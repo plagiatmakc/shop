@@ -10,11 +10,9 @@
             <label>Description</label><br>
             <input id="category_description_id" type="text" name="description" v-model="description"><br>
             <label >Parent category:</label><br/>
-            <!--<input type="text" disabled name="parent_id" v-bind:value="parent_id" v-if="parent_id != undefined"-->
-                   <!--style="width: 50px;">-->
             <select name="parent_id"  v-model="parent_id" style="width: 210px">
-            <option :value="null" >Hasn't parent category</option>
-            <option v-for="category in categories"  v-bind:value="category.id">{{category.title}}</option>
+                <option :value="null" >Hasn't parent category</option>
+                <option v-for="category in categories"  v-bind:value="category.id">{{category.title}}</option>
             </select>
             <p></p>
             <input id="create_category" type="submit" value="update" class="btn btn-info"

@@ -31,7 +31,8 @@ Vue.component('dashboard', require('./components/DashboardComponent.vue'));
 Vue.component('landing-page',require('./components/LandingPageComponent.vue'));
 Vue.component('home-page',require('./components/HomePageComponent.vue'));
 Vue.component('shop-show-product', require('./components/ShopShowProductComponent.vue'));
-Vue.component('shop-filters', require('./components/ShopFiltersComponent.vue'));
+Vue.component('shop-menu-categories', require('./components/ShopMenuCategoriesComponent.vue'));
+Vue.component('menu-categories-element', require('./components/MenuCategoriesElement.vue'));
 Vue.component('category-products', require('./components/CategoryProductsComponent.vue'));
 
 Vue.component('categories-checkbox', require('./components/CategoriesCheckBox.vue'));
@@ -42,6 +43,7 @@ Vue.component('categories-checkbox', require('./components/CategoriesCheckBox.vu
 export const bus = new Vue();
 
 import router from './router';
+
 const app = new Vue({
     router,
     el: '#app'

@@ -13,20 +13,20 @@
                         id="modalTitle"
                     >
                         <slot name="header">
-                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
+                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 20px; max-width: 250px"
                                 v-if="paramCRUD == 'addSubCategory'"
                             >
-                                Create subcategory of {{parent_title}}
+                                Create subcategory of "{{parent_title}}"
                             </h4>
-                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 30px"
+                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 20px; max-width: 250px"
                                 v-if="paramCRUD == 'editCategory'"
                             >
                                 Edit category
                             </h4>
-                            <h4 style="margin-top: 10px; padding-top: 20px; "
+                            <h4 style="margin-top: 10px; padding-top: 20px; max-width: 250px "
                                 v-if="paramCRUD == 'deleteCategory'"
                             >
-                                Delete {{parent_title}}
+                                Delete "{{parent_title}}"
                             </h4>
                             <button
                                 class="btn-close"
@@ -54,8 +54,8 @@
                                 v-if="paramCRUD == 'deleteCategory'"
                                 v-bind:category_id="parent_id"
                             >
-                                <span class="text-danger">Warning!</span>
-                                If subcategory exist, they will be destroyed!!!
+                                <h4 class="text-danger" style="text-align: center" >Warning!</h4>
+                                All subcategories will be destroyed!!!
                             </div>
                         </slot>
                     </section>

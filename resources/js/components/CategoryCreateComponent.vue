@@ -1,21 +1,23 @@
 <template>
     <div class="container">
         <ul v-if="errors != null">
-            <li v-for="error in errors" class="alert-danger"> {{error.toString()}}</li>
+            <li class="alert-danger"
+                v-for="error in errors"
+            >{{error.toString()}}</li>
         </ul>
-        <p v-if="message != '' && title ==''" class="alert-success">{{message}}</p>
+        <p class="alert-success"
+           v-if="message != '' && title ==''"
+        >{{message}}</p>
         <form method="POST" action="/categories" @submit.prevent="addCategory()">
             <label>Title</label><br>
             <input id="category_title_id" type="text" name="title" v-model="title"><br>
             <label>Description</label><br>
             <input id="category_description_id" type="text" name="description" v-model="description"><br>
             <label v-if="parent_id != undefined">Parent category id:</label>
-            <input type="text" disabled name="parent_id" v-bind:value="parent_id" v-if="parent_id != undefined"
-                   style="width: 50px;">
-            <!--<select name="parent_id"  v-model="parent_id">-->
-            <!--<option value="" selected>Hasn't parent category</option>-->
-            <!--<option v-for="category in categories" v-bind:value="category.id">{{category.title}}</option>-->
-            <!--</select>-->
+            <input type="text" disabled name="parent_id" style="width: 50px;"
+                   v-bind:value="parent_id"
+                   v-if="parent_id != undefined"
+            >
             <p></p>
             <input id="create_category" type="submit" value="Create" class="btn btn-light"
                    v-show="parent_id == undefined">
@@ -39,21 +41,6 @@
                 message: '',
             }
         },
-        mounted() {
-            //this.getAllCategories();
-        },
-        created() {
-            // bus.$on('openModal', () => {
-            //     this.title = '';
-            //     this.description = '';
-            // });
-        },
-        // watch: {
-        //   parent_id: function() {
-        //       this.title = '';
-        //       this.description = '';
-        //   }
-        // },
         methods: {
             addCategory() {
                 window.axios.post('/categories', {
@@ -69,24 +56,12 @@
                         this.description = '';
                         this.errors = [];
                         this.message = 'Category was added to database.';
-                        // $('form :input').val('');
                     })
                     .catch(error => {
                         this.errors = error.response.data.errors;
                         console.log(error.response);
                     });
             },
-
-            // getAllCategories() {
-            //     window.axios.get('/all-categories')
-            //         .then(response => {
-            //             console.log(response.data);
-            //             this.categories = response.data;
-            //         })
-            //         .catch(error => {
-            //             console.log(error.statusText)
-            //         })
-            // }
         }
     }
 </script>
