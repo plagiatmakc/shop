@@ -16,9 +16,9 @@
             >
                 &raquo;&nbsp;
                 <router-link
-                    :to="{ path: '/',
-                           query: { type: $router.currentRoute.query.type,
-                            category: breadCrumb.id}}"
+                    :to="{ path: '/category/'+breadCrumb.id,
+                           query: { type: $router.currentRoute.query.type,}
+                          }"
                 >
                     {{breadCrumb.title}}
                 </router-link>&nbsp;
@@ -32,11 +32,11 @@
                              :src="'storage/'+productImages[0].link_to_file"/>
                         <img v-else class="main_img" src="/images/No_Image.png">
                     </div>
-                    <div class="col-md-2">
-                        <div v-for="image in product.product_images" class="row thumb_img">
-                            <img :src="'storage/'+image.link_to_thumb" @click="setImage(image.link_to_file)"/>
-                        </div>
-                    </div>
+                    <ul class="col-md-2 inline-block scrollable-menu" style="vertical-align: middle; margin-left: 50%;">
+                        <li v-for="image in product.product_images" class="row" style="height: 100px" >
+                            <img :src="'storage/'+image.link_to_thumb" @click="setImage(image.link_to_file)" class="thumb_img"/>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                     PRODUCT VERSIONS SECTION
                 </div>
                 <div class="row">
-                    <a href="#" class="btn btn-primary btn-md">Add to cart</a>
+                    <a :href="'/add-to-cart/' + product.id" class="btn btn-primary btn-md">Add to cart</a>
                 </div>
             </div>
         </div>
@@ -130,6 +130,12 @@
 </script>
 
 <style scoped>
+    .scrollable-menu {
+        height: auto;
+        max-height: 480px;
+        overflow-x: hidden;
+    }
+
     img.main_img {
         display: block;
         max-width: 450px;
@@ -144,11 +150,11 @@
     }
 
     .thumb_img {
-        position: relative;
-        padding-right: 0px;
-        margin-left: 270px;
+        position: sticky;
+        /*alig: end;*/
+        /*margin-left: 270px;*/
         padding-top: 2px;
-        width: 130%;
+        width: 100%;
         z-index: 1;
     }
 

@@ -9,15 +9,13 @@ use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, CategoryRepository $categoryRepository)
     {
         if($request->ajax())
         {
-         $categories = new CategoryRepository;
-         $response = $categories->allWithRelations();
-         return response()->json($response);
+         return response()
+             ->json($categoryRepository->allWithRelations());
         }
-
     }
 
     public function show($category, CategoryRepository $categoryRepository, Request $request)

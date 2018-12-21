@@ -12,6 +12,7 @@ import CategoryCreateComponent from '../components/CategoryCreateComponent.vue';
 import HomePageComponent from '../components/HomePageComponent.vue';
 import ShopShowProductComponent from '../components/ShopShowProductComponent.vue';
 import CategoryProductsComponent from '../components/CategoryProductsComponent.vue';
+import ShopCartComponent from '../components/ShopCartComponent.vue';
 
 
 export default new Router({
@@ -62,6 +63,11 @@ export default new Router({
         {
             path: '/category/:category_id',
             component: CategoryProductsComponent,
+            props: true
+        },
+        {
+            path: '/shop-cart',
+            component: ShopCartComponent,
             props: true
         }
 

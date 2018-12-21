@@ -109,18 +109,18 @@
                 }
 
             },
-            getSubMenu(id, sub_id) {
-                window.axios.get('/categories/'+id)
-                    .then(response => {
-                        this.subcat[id].push(response.data.categories_recursive );
-                        console.log(response.data);
-
-
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
-            }
+            // getSubMenu(id, sub_id) {
+            //     window.axios.get('/categories/'+id)
+            //         .then(response => {
+            //             this.subcat[id].push(response.data.categories_recursive );
+            //             console.log(response.data);
+            //
+            //
+            //         })
+            //         .catch(error => {
+            //             console.log(error);
+            //         })
+            // }
 
 
         }
@@ -155,5 +155,36 @@
         cursor: default;
         text-decoration: none;
         color: black;
+    }
+    @media only screen and (max-width: 450px) {
+        .catWrap {
+            position: absolute;
+            margin-left: 150px;
+            margin-top: -50px;
+            min-height: auto;
+            min-width: 200px;
+            max-height: 300px;
+            padding: 2px;
+            border: 1px #00a0ea solid;
+            background-color: #fffdf4;
+            /*box-shadow: 3px 3px 9px rgba(0, 0, 0, 1);*/
+        }
+        dl {
+            display: -ms-flexbox;           /* IE 10 */
+            display: -webkit-flex;          /* Safari 6.1+. iOS 7.1+ */
+            display: flex;
+            -webkit-flex-flow: wrap column; /* Safari 6.1+ */
+            flex-flow: wrap column;
+            max-height: 200px;              /* Limit height to whatever you need */
+            overflow-y: scroll;
+            max-width: 200px;
+            padding-left: 5px;
+        }
+        .not-active {
+            pointer-events: none;
+            cursor: default;
+            text-decoration: none;
+            color: black;
+        }
     }
 </style>

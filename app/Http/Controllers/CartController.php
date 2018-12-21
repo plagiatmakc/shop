@@ -22,19 +22,20 @@ class CartController extends Controller
 
     public function index(CartImplementation $cart)
     {
-        return view('cart', ['cart' => $cart]);
+        return response()->json($cart); //view('cart', ['cart' => $cart]);
     }
-    public function addToCart($id, ProductAttributesRepository $attributesRepository)
+
+    public function addToCart($id, ProductRepository $productRepository)
     {
-        $attribute = $attributesRepository->getById($id);
-        Cart::add($attribute, $attribute->id);
+        $product = $productRepository->getById($id);
+        Cart::add($product, $product->id);
         return back();
     }
 
     public function delFromCart($id)
     {
         Cart::del($id);
-        return redirect('/cart');
+        return back();//redirect('/cart');
     }
 
     public function removeFromCart($id){

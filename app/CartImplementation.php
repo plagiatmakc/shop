@@ -32,6 +32,7 @@ class CartImplementation
         $this->items[$id]= $storedItem;
         $this->totalQuantity++;
         $this->totalPrice += $item->price;
+        $this->totalPrice = round($this->totalPrice, 2);
         Session::put('cart', $this);
     }
 
@@ -41,8 +42,12 @@ class CartImplementation
             $this->items[$id]['price'] = $this->items[$id]['item']->price * $this->items[$id]['qty'];
             $this->totalQuantity--;
             $this->totalPrice -= $this->items[$id]['item']->price;
+            $this->totalPrice = round($this->totalPrice, 2);
+
 
         }else{
+            $this->totalPrice -= $this->items[$id]['item']->price;
+            $this->totalPrice = round($this->totalPrice, 2);
             unset($this->items[$id]);
         }
         Session::put('cart', $this);
@@ -51,6 +56,7 @@ class CartImplementation
     public function destroyItem($id){
         $this->totalQuantity-=$this->items[$id]['qty'];
         $this->totalPrice -= $this->items[$id]['price'];
+        $this->totalPrice = round($this->totalPrice, 2);
         unset($this->items[$id]);
         Session::put('cart', $this);
     }

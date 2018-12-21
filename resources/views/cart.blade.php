@@ -18,7 +18,7 @@
            <tbody>
            @foreach($cart->items as $item)
                <tr>
-                   <td>{{$item['item']->sku}}</td>
+                   <td>{{$item['item']->name}}</td>
                    <td>{{$item['item']->price}}</td>
                    <td>{{$item['qty']}}</td>
                    <td>{{$item['price']}}</td>

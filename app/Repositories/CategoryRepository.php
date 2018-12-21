@@ -14,14 +14,8 @@ class CategoryRepository
         return Category::all();
     }
 
-    public function allWithRelations($items = null)
+    public function allWithRelations()
     {
-        if ($items) {
-            return Category::with('categoriesRecursive')
-                ->whereNull('parent_id')
-                ->paginate($items);
-        }
-
         return Category::with('categoriesRecursive')
             ->whereNull('parent_id')
             ->get();

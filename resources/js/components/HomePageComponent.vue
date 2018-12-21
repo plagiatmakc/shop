@@ -87,7 +87,11 @@
                                          :to="{ path: '/product/'+ product.id ,
                                                 query: { type: $router.currentRoute.query.type }
                                                }"
-                            >{{product.name}}</router-link>
+                            >
+                                <div class="text">
+                                    {{product.name}}
+                                </div>
+                            </router-link>
                             <p class="card-text">{{product.price}} {{product.currency}}</p>
                         </div>
                    </div>
@@ -157,8 +161,16 @@
 </script>
 
 <style scoped>
-.card:hover {
-    transform: scale(1.02);
-}
+    .card:hover {
+        transform: scale(1.02);
+    }
+    .text {
+        display: block;
+        max-width: 200px;
+        height: 200px;
+        overflow-y: hidden;
+        white-space: pre-line;
+        text-overflow: ellipsis;
+    }
 
 </style>

@@ -3,7 +3,7 @@
         <dd class="col-md-2" v-for="category in categories" style="margin-bottom: 1px">
            <router-link :class="category.categories_recursive.length >0 ? 'not-active' : ''"
                         :to="{path: '/category/'+category.id}"
-           >{{category.title}}</router-link>
+           >&nbsp;&nbsp;{{category.title}}</router-link>
 
             <div class="row" v-if="category.categories_recursive" >
                     <menu-categories-element
