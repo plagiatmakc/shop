@@ -50,7 +50,9 @@
                 <h3 class="text-right">Total price: {{cart.totalPrice}}</h3>
             </div>
             <div class="text-right">
-                <a href="#" class="btn btn-info btn-lg" style="border-radius: 25px;">Make order ></a>
+                <!--<a href="/order-checkout" class="btn btn-info btn-lg" style="border-radius: 25px;">Make order ></a>-->
+                <router-link :to="{path: '/order-checkout'}" class="btn btn-info btn-lg" style="border-radius: 25px;"
+                >Make order ></router-link>
             </div>
         </div>
     </div>

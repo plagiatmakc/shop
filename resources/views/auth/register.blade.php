@@ -58,7 +58,7 @@
                             <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Avatar') }}</label>
 
                             <div class="col-md-6">
-                                <input id="avatar" type="file" class="form-control{{ $errors->has('avatar') ? ' is-invalid' : '' }}" name="avatar" value="{{ old('avatar') }}" required autofocus>
+                                <input id="avatar" type="file" class="form-control{{ $errors->has('avatar') ? ' is-invalid' : '' }}" name="avatar" value="{{ old('avatar') }}" autofocus>
 
                                 @if ($errors->has('avatar'))
                                     <span class="invalid-feedback" role="alert">

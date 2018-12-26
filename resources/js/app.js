@@ -35,6 +35,10 @@ Vue.component('shop-menu-categories', require('./components/ShopMenuCategoriesCo
 Vue.component('menu-categories-element', require('./components/MenuCategoriesElement.vue'));
 Vue.component('category-products', require('./components/CategoryProductsComponent.vue'));
 Vue.component('shop-cart', require('./components/ShopCartComponent.vue'));
+Vue.component('order-checkout', require('./components/OrderCheckoutComponent.vue'));
+Vue.component('navbar-component', require('./components/NavbarComponent.vue'));
+Vue.component('login-component', require('./components/LoginComponent.vue'));
+Vue.component('register-component', require('./components/RegisterComponent.vue'));
 
 Vue.component('categories-checkbox', require('./components/CategoriesCheckBox.vue'));
 
