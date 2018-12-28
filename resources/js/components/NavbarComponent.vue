@@ -20,7 +20,7 @@
                         <router-link :to="{ name: 'register' }" class="nav-link" v-if="!isLoggedIn">Register</router-link>
                         <span v-if="isLoggedIn" class="custom-control-inline">
                             <img :src="'storage/'+avatar" v-if="avatar != null">
-                                <router-link :to="{ name: 'dashboard' }" class="nav-link" v-if="user_type != 'Admin'"> Hi, {{name}}</router-link>
+                                <router-link :to="{ name: 'dashboard' }" class="nav-link" v-if="user_type == 0"> Hi, {{name}}</router-link>
                                 <router-link :to="{ name: 'admin' }" class="nav-link" v-if="user_type == 'Admin'"> Hi, {{name}}</router-link>
                         </span>
                         <li class="nav-link" v-if="isLoggedIn" @click="logout"> Logout</li>
