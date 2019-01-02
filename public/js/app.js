@@ -56197,7 +56197,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -56266,6 +56266,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "OrderCheckoutComponent",
@@ -56276,13 +56323,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             email: '',
             phone: '',
             address: '',
+            selected_country: '',
+            street_address: '',
+            apartment_address: '',
+            city: '',
+            state: '',
+            postal_code: '',
             isLoggedIn: localStorage.getItem('bigStore.jwt') != null,
             cart: [],
-            items: []
+            items: [],
+            countries: [],
+            dial_code: ''
         };
     },
     mounted: function mounted() {
         this.checkAuthorize();
+        this.getCountries();
         this.getCartItems();
         this.paypalButtonRender();
     },
@@ -56303,17 +56359,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error.response);
             });
         },
-        placeOrder: function placeOrder() {},
-        getCartItems: function getCartItems() {
+        getCountries: function getCountries() {
             var _this2 = this;
+
+            window.axios.get('/api/countries').then(function (response) {
+                _this2.countries = response.data;
+            }).catch(function (error) {
+                console.log(error.response.statusText);
+            });
+        },
+        setPhoneCode: function setPhoneCode() {
+            for (var country in this.countries) {
+                // console.log(this.countries[country]);
+                if (this.countries[country].country === this.selected_country) {
+                    this.dial_code = this.countries[country].dial_code;
+                }
+            }
+        },
+        placeOrder: function placeOrder() {
+            this.address = { 'country': this.selected_country, 'state': this.state, 'city': this.city, 'street_address': this.street_address, 'apartment_address': this.apartment_address, 'postal_code': this.postal_code };
+            console.log(JSON.stringify(this.address));
+        },
+        getCartItems: function getCartItems() {
+            var _this3 = this;
 
             this.loading = true;
             window.axios.get('/cart').then(function (response) {
                 console.log(response.data);
-                _this2.cart = response.data;
+                _this3.cart = response.data;
 
                 for (var key in response.data.items) {
-                    _this2.items.push({
+                    _this3.items.push({
                         name: response.data.items[key].item.name,
                         quantity: response.data.items[key].qty,
                         price: response.data.items[key].price,
@@ -56321,12 +56397,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         currency: response.data.items[key].item.currency.toUpperCase()
                     });
                 }
-                console.log(_this2.items);
+                console.log(_this3.items);
 
-                _this2.loading = false;
+                _this3.loading = false;
             }).catch(function (error) {
                 console.log(error.response.statusText);
-                _this2.loading = false;
+                _this3.loading = false;
             });
         },
         paypalButtonRender: function paypalButtonRender() {
@@ -56443,6 +56519,11 @@ var render = function() {
           _vm._v(" "),
           _vm.isLoggedIn
             ? _c("div", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.cart) +
+                    "\n                    "
+                ),
                 _c("form", [
                   _c("div", { staticClass: "form-group row" }, [
                     _c(
@@ -56554,41 +56635,6 @@ var render = function() {
                       "label",
                       {
                         staticClass: "col-sm-4 col-form-label text-md-right",
-                        attrs: { for: "phone" }
-                      },
-                      [_vm._v("Phone")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.phone,
-                            expression: "phone"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { id: "phone", type: "text", required: "" },
-                        domProps: { value: _vm.phone },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.phone = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-4 col-form-label text-md-right",
                         attrs: { for: "address" }
                       },
                       [_vm._v("Delivery Address")]
@@ -56617,6 +56663,348 @@ var render = function() {
                         }
                       })
                     ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-4 col-form-label text-md-right",
+                        attrs: { for: "country" }
+                      },
+                      [_vm._v("Country")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected_country,
+                              expression: "selected_country"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { id: "country", type: "text", required: "" },
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.selected_country = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                              function($event) {
+                                _vm.setPhoneCode()
+                              }
+                            ]
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { disabled: "", value: "" } }, [
+                            _vm._v("Choose country")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.countries, function(country) {
+                            return _c("option", [
+                              _vm._v(_vm._s(country.country))
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-4 col-form-label text-md-right",
+                        attrs: { for: "street_address" }
+                      },
+                      [_vm._v("Street Address")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.street_address,
+                            expression: "street_address"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          id: "street_address",
+                          type: "text",
+                          required: ""
+                        },
+                        domProps: { value: _vm.street_address },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.street_address = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-4 col-form-label text-md-right",
+                        attrs: { for: "apartment_address" }
+                      },
+                      [_vm._v("Apt., ste., bldg.")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.apartment_address,
+                            expression: "apartment_address"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          id: "apartment_address",
+                          type: "text",
+                          required: ""
+                        },
+                        domProps: { value: _vm.apartment_address },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.apartment_address = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-4 col-form-label text-md-right",
+                        attrs: { for: "city" }
+                      },
+                      [_vm._v("City / Town / Village")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.city,
+                            expression: "city"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { id: "city", type: "text", required: "" },
+                        domProps: { value: _vm.city },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.city = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-4 col-form-label text-md-right",
+                        attrs: { for: "state" }
+                      },
+                      [_vm._v("State / Province / Region")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.state,
+                            expression: "state"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { id: "state", type: "text", required: "" },
+                        domProps: { value: _vm.state },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.state = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-4 col-form-label text-md-right",
+                        attrs: { for: "postal_code" }
+                      },
+                      [_vm._v("Postal code")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.postal_code,
+                            expression: "postal_code"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          id: "postal_code",
+                          type: "number",
+                          required: "",
+                          pattern: "\\d+"
+                        },
+                        domProps: { value: _vm.postal_code },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.postal_code = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-4 col-form-label text-md-right",
+                        attrs: { for: "phone" }
+                      },
+                      [_vm._v("Phone")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-md-6 custom-control-inline" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.dial_code,
+                                expression: "dial_code"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            staticStyle: {
+                              "max-width": "85px",
+                              "padding-left": "unset",
+                              "padding-right": "unset"
+                            },
+                            attrs: {
+                              id: "dial_code",
+                              type: "text",
+                              required: ""
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.dial_code = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          _vm._l(_vm.countries, function(country) {
+                            return _c(
+                              "option",
+                              { domProps: { value: country.dial_code } },
+                              [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(country.flag) +
+                                    _vm._s(country.dial_code) +
+                                    "\n                                    "
+                                )
+                              ]
+                            )
+                          })
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.phone,
+                              expression: "phone"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { id: "phone", type: "tel", required: "" },
+                          domProps: { value: _vm.phone },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.phone = $event.target.value
+                            }
+                          }
+                        })
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group mb-0 " }, [
@@ -57520,12 +57908,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: {
-                      id: "last_name",
-                      type: "text",
-                      required: "",
-                      autofocus: ""
-                    },
+                    attrs: { id: "last_name", type: "text", required: "" },
                     domProps: { value: _vm.last_name },
                     on: {
                       input: function($event) {
@@ -57560,12 +57943,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: {
-                      id: "phone",
-                      type: "text",
-                      required: "",
-                      autofocus: ""
-                    },
+                    attrs: { id: "phone", type: "text", required: "" },
                     domProps: { value: _vm.phone },
                     on: {
                       input: function($event) {

@@ -17,11 +17,11 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('user_id')->unsigned();
-            $table->string('cart');
-            $table->string('address');
+            $table->json('cart');
+            $table->json('address');
             $table->integer('status_id')->unsigned();
-            $table->integer('payment_id')->unsigned();
-            $table->integer('ship_id')->unsigned();
+            $table->integer('payment_id')->unsigned()->nullable();
+            $table->integer('ship_id')->unsigned()->nullable();
 
         });
     }

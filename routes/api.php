@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('countries', function (\App\Country $country) {
+    return response()->json($country->all());
+});
 
 Route::post('login', 'UserController@login');
 Route::post('register', 'UserController@register');

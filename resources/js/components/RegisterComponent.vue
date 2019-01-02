@@ -18,13 +18,13 @@
                             <div class="form-group row">
                                 <label for="last_name" class="col-md-4 col-form-label text-md-right">Last name</label>
                                 <div class="col-md-6">
-                                    <input id="last_name" type="text" class="form-control" v-model="last_name" required autofocus>
+                                    <input id="last_name" type="text" class="form-control" v-model="last_name" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="phone" class="col-md-4 col-form-label text-md-right">Phone</label>
                                 <div class="col-md-6">
-                                    <input id="phone" type="text" class="form-control" v-model="phone" required autofocus>
+                                    <input id="phone" type="text" class="form-control" v-model="phone" required>
                                 </div>
                             </div>
                             <div class="form-group row">

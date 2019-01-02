@@ -9,6 +9,7 @@
                         <router-link :to="{ name: 'register' }" class="col-md-4 btn btn-danger float-right">Register</router-link>
                     </div>
                     <div v-if="isLoggedIn">
+                        {{cart}}
                         <form>
                             <div class="form-group row">
                                 <label for="first_name" class="col-md-4 col-form-label text-md-right">First name</label>
@@ -29,15 +30,61 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="phone" class="col-sm-4 col-form-label text-md-right">Phone</label>
-                                <div class="col-md-6">
-                                    <input id="phone" type="text" class="form-control" v-model="phone" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="address" class="col-sm-4 col-form-label text-md-right">Delivery Address</label>
                                 <div class="col-md-6">
                                     <input id="address" type="text" class="form-control" v-model="address" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="country" class="col-sm-4 col-form-label text-md-right">Country</label>
+                                <div class="col-md-6">
+                                    <select id="country" type="text" class="form-control" v-model="selected_country" @change="setPhoneCode()" required>
+                                        <option disabled value="">Choose country</option>
+                                        <option v-for="country in countries">{{country.country}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="street_address" class="col-sm-4 col-form-label text-md-right">Street Address</label>
+                                <div class="col-md-6">
+                                    <input id="street_address" type="text" class="form-control" v-model="street_address" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="apartment_address" class="col-sm-4 col-form-label text-md-right">Apt., ste., bldg.</label>
+                                <div class="col-md-6">
+                                    <input id="apartment_address" type="text" class="form-control" v-model="apartment_address" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="city" class="col-sm-4 col-form-label text-md-right">City / Town / Village</label>
+                                <div class="col-md-6">
+                                    <input id="city" type="text" class="form-control" v-model="city" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="state" class="col-sm-4 col-form-label text-md-right">State / Province / Region</label>
+                                <div class="col-md-6">
+                                    <input id="state" type="text" class="form-control" v-model="state" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="postal_code" class="col-sm-4 col-form-label text-md-right">Postal code</label>
+                                <div class="col-md-6">
+                                    <input id="postal_code" type="number" class="form-control" v-model="postal_code" required pattern="\d+">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="phone" class="col-sm-4 col-form-label text-md-right">Phone</label>
+                                <div class="col-md-6 custom-control-inline">
+                                    <select id="dial_code" v-model="dial_code" type="text" class="form-control"
+                                            style="max-width: 85px; padding-left: unset; padding-right: unset" required
+                                    >
+                                        <option v-for="country in countries" :value="country.dial_code">
+                                            {{country.flag}}{{country.dial_code}}
+                                        </option>
+                                    </select>
+                                    <input id="phone" type="tel" class="form-control" v-model="phone" required>
                                 </div>
                             </div>
                             <div class="form-group mb-0 ">
@@ -66,13 +113,22 @@
                 email: '',
                 phone: '',
                 address: '',
+                selected_country: '',
+                street_address: '',
+                apartment_address: '',
+                city: '',
+                state: '',
+                postal_code: '',
                 isLoggedIn: localStorage.getItem('bigStore.jwt') != null,
                 cart: [],
                 items: [],
+                countries: [],
+                dial_code: '',
             }
         },
         mounted() {
              this.checkAuthorize();
+             this.getCountries();
              this.getCartItems();
              this.paypalButtonRender();
         },
@@ -92,8 +148,29 @@
                         console.log(error.response);
                     });
             },
-            placeOrder() {
+            getCountries() {
+                window.axios.get('/api/countries')
+                    .then(response => {
+                        this.countries = response.data;
+                    })
+                    .catch(error => {
+                        console.log(error.response.statusText)
+                    });
 
+            },
+            setPhoneCode() {
+                for(var country in this.countries)
+                {
+                    // console.log(this.countries[country]);
+                    if (this.countries[country].country === this.selected_country)
+                    {
+                        this.dial_code = this.countries[country].dial_code;
+                    }
+                }
+            },
+            placeOrder() {
+                this.address = {'country': this.selected_country, 'state': this.state, 'city': this.city, 'street_address': this.street_address, 'apartment_address': this.apartment_address, 'postal_code': this.postal_code};
+                console.log(JSON.stringify(this.address));
             },
             getCartItems() {
                 this.loading = true;
