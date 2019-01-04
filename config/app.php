@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        Propaganistas\LaravelPhone\PhoneServiceProvider::class,
     ],
 
     /*

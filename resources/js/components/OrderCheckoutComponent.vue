@@ -40,7 +40,7 @@
                                 <div class="col-md-6">
                                     <select id="country" type="text" class="form-control" v-model="selected_country" @change="setPhoneCode()" required>
                                         <option disabled value="">Choose country</option>
-                                        <option v-for="country in countries">{{country.country}}</option>
+                                        <option v-for="country in countries" :value="country.country">{{country.country}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -77,10 +77,10 @@
                             <div class="form-group row">
                                 <label for="phone" class="col-sm-4 col-form-label text-md-right">Phone</label>
                                 <div class="col-md-6 custom-control-inline">
-                                    <select id="dial_code" v-model="dial_code" type="text" class="form-control"
+                                    <select id="dial_code" v-model="code_country" type="text" class="form-control"
                                             style="max-width: 85px; padding-left: unset; padding-right: unset" required
                                     >
-                                        <option v-for="country in countries" :value="country.dial_code">
+                                        <option v-for="country in countries" :value="country.code">
                                             {{country.flag}}{{country.dial_code}}
                                         </option>
                                     </select>
@@ -104,6 +104,7 @@
 </template>
 
 <script>
+    import {phoneUtil} from '../app'
     export default {
         name: "OrderCheckoutComponent",
         data() {
@@ -123,11 +124,11 @@
                 cart: [],
                 items: [],
                 countries: [],
+                code_country: '',
                 dial_code: '',
             }
         },
         mounted() {
-             this.checkAuthorize();
              this.getCountries();
              this.getCartItems();
              this.paypalButtonRender();
@@ -143,6 +144,9 @@
                         this.last_name = response.data.last_name;
                         this.email = response.data.email;
                         this.phone = response.data.phone;
+                        this.dial_code = '+'+phoneUtil.parseAndKeepRawInput(this.phone, "").getCountryCode();
+                        this.code_country = phoneUtil.getRegionCodeForNumber(phoneUtil.parseAndKeepRawInput(this.phone, ""));
+                        this.setSelectedCountry();
                     })
                     .catch(error => {
                         console.log(error.response);
@@ -156,13 +160,22 @@
                     .catch(error => {
                         console.log(error.response.statusText)
                     });
-
+                this.checkAuthorize();
+            },
+            setSelectedCountry() {
+                for(var country in this.countries)
+                {
+                    if (this.countries[country].code == this.code_country)
+                    {
+                        this.selected_country = this.countries[country].country;
+                    }
+                }
             },
             setPhoneCode() {
                 for(var country in this.countries)
                 {
                     // console.log(this.countries[country]);
-                    if (this.countries[country].country === this.selected_country)
+                    if (this.countries[country].country == this.selected_country )
                     {
                         this.dial_code = this.countries[country].dial_code;
                     }

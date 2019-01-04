@@ -53,7 +53,8 @@ const app = new Vue({
     router,
     el: '#app'
 });
-
+export const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+export const PNF = require('google-libphonenumber').PhoneNumberFormat;
 
 $(document).ready(function(){
     $(".del").click(function(){

@@ -28,7 +28,7 @@ class RegisterRequest extends FormRequest
         return [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'phone' => ['required',
+            'phone' => ['required', 'phone:AUTO',
                 Rule::unique('users')->ignore($this->id),
                 ],
             'email' => [

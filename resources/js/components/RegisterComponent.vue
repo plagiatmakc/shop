@@ -22,9 +22,16 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="phone" class="col-md-4 col-form-label text-md-right">Phone</label>
-                                <div class="col-md-6">
-                                    <input id="phone" type="text" class="form-control" v-model="phone" required>
+                                <label for="phone" class="col-sm-4 col-form-label text-md-right">Phone</label>
+                                <div class="col-md-6 custom-control-inline">
+                                    <select id="dial_code" v-model="country_code" type="text" class="form-control"
+                                            style="max-width: 40px; padding-left: unset; padding-right: unset" required
+                                    >
+                                        <option v-for="country in countries" :value="country.code" data-toggle="tooltip" :title="country.country">
+                                            {{country.flag}}&nbsp;{{country.country}}&nbsp;{{country.dial_code}}
+                                        </option>
+                                    </select>
+                                    <input id="phone" type="tel" class="form-control" v-model="phone" required>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -68,8 +75,10 @@
 
 <script>
     import {bus} from '../app'
+    import {phoneUtil} from '../app'
+    import {PNF} from '../app'
     export default {
-        data(){
+        data() {
             return {
                 first_name : "",
                 last_name : "",
@@ -79,10 +88,39 @@
                 password : "",
                 password_confirmation : "",
                 errors: [],
+                countries: [],
+                country_code: '',
             }
         },
+        mounted() {
+            this.getCountries();
+            $('#dial_code').change(function() {
+                $(this).attr("data-original-title", $('[value='+$(this).val()+']').attr('title'));
+                $('#dial_code').tooltip('show');
+            });
+        },
         methods : {
+            getCountries() {
+                window.axios.get('/api/countries')
+                    .then(response => {
+                        this.countries = response.data;
+                    })
+                    .catch(error => {
+                        console.log(error.response.statusText)
+                    });
+            },
             handleSubmit(e) {
+                try{
+                    var number = phoneUtil.parseAndKeepRawInput(this.phone, this.country_code);
+                    phoneUtil.isValidNumber(number);
+                    phoneUtil.isValidNumberForRegion(number, this.country_code);
+                }catch (error) {
+                    return alert(error);
+                }
+                if (!phoneUtil.isValidNumberForRegion(number, this.country_code)) {
+                    return alert('This invalid phone number for selected country');
+                }
+
                 e.preventDefault();
                 if (this.password !== this.password_confirmation || this.password.length <= 0) {
                     this.password = "";
@@ -92,7 +130,7 @@
                 let formData = new FormData();
                 formData.append('first_name', this.first_name);
                 formData.append('last_name', this.last_name);
-                formData.append('phone', this.phone);
+                formData.append('phone', phoneUtil.format(number, PNF.E164));
                 formData.append('email', this.email);
                 formData.append('password', this.password);
                 formData.append('c_password', this.password_confirmation);
