@@ -17,7 +17,7 @@ import OrderCheckoutComponent from '../components/OrderCheckoutComponent.vue';
 import LoginComponent from '../components/LoginComponent.vue';
 import RegisterComponent from '../components/RegisterComponent.vue';
 import DashboardComponent from '../components/DashboardComponent.vue';
-
+import OrderPaymentComponent from '../components/OrderPaymentComponent.vue';
 
 export default new Router({
     routes: [
@@ -84,6 +84,12 @@ export default new Router({
         {
             path: '/order-checkout',
             component: OrderCheckoutComponent,
+            props: true
+        },
+        {
+            path: '/order-payment/:order_id',
+            name: 'payOrder',
+            component: OrderPaymentComponent,
             props: true
         },
         {

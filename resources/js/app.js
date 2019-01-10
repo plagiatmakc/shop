@@ -36,12 +36,13 @@ Vue.component('menu-categories-element', require('./components/MenuCategoriesEle
 Vue.component('category-products', require('./components/CategoryProductsComponent.vue'));
 Vue.component('shop-cart', require('./components/ShopCartComponent.vue'));
 Vue.component('order-checkout', require('./components/OrderCheckoutComponent.vue'));
+Vue.component('order-payment', require('./components/OrderPaymentComponent.vue'));
 Vue.component('navbar-component', require('./components/NavbarComponent.vue'));
 Vue.component('login-component', require('./components/LoginComponent.vue'));
 Vue.component('register-component', require('./components/RegisterComponent.vue'));
 
 Vue.component('categories-checkbox', require('./components/CategoriesCheckBox.vue'));
-
+Vue.component('card-element', require('./components/CardElement.vue'));
 
 
 
@@ -56,71 +57,71 @@ const app = new Vue({
 export const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 export const PNF = require('google-libphonenumber').PhoneNumberFormat;
 
-$(document).ready(function(){
-    $(".del").click(function(){
-    if(confirm("A you sure?")){
-        var token = $(this).data("token");
-        $.ajax({
-            method: "POST",
-            url: $(this).attr("url"),
-            data: { "_method": 'DELETE',
-                "_token": token,},
-            success: function (response) {
-                console.log(response);
-            },
-            error: function (error){
-                console.log(error);
-            }
-        });
-        $(this).closest("tr").fadeOut();
-    }
-
-    });
-
-
-    $('.editAttr').click(function () {
-        var id = $(this).closest("tr").attr('id');
-        $(".modal-content").hide();
-        $.ajax({
-            type: 'GET',
-            url: '/attributes/' + id,
-            success: function (response) {
-                $("#change_attr").attr("url", "/attributes/"+id);
-                $("#id_attr").val(response.id);
-                $("#id_sku").val(response.sku);
-                $("#id_size").val(response.size);
-                $("#id_price").val(response.price);
-                $("#id_stock").val(response.stock);
-                $(".modal-content").show();
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    });
-
-    $('.changeAttr').click(function () {
-        var token = $(this).data("token");
-        $.ajax({
-            method: "POST",
-            url: $(this).attr("url"),
-            data: { "_method": 'PUT',
-                "_token": token,
-                "product_id": $("#id_prod").val(),
-                "sku": $("#id_sku").val(),
-                "size": $("#id_size").val(),
-                "price": $("#id_price").val(),
-                "stock": $("#id_stock").val(),
-             },
-            success: function (response) {
-                console.log(response);
-                location.reload();
-
-            },
-            error: function (error){
-                console.log(error);
-            }
-        });
-    });
-
-});
+// $(document).ready(function(){
+//     $(".del").click(function(){
+//     if(confirm("A you sure?")){
+//         var token = $(this).data("token");
+//         $.ajax({
+//             method: "POST",
+//             url: $(this).attr("url"),
+//             data: { "_method": 'DELETE',
+//                 "_token": token,},
+//             success: function (response) {
+//                 console.log(response);
+//             },
+//             error: function (error){
+//                 console.log(error);
+//             }
+//         });
+//         $(this).closest("tr").fadeOut();
+//     }
+//
+//     });
+//
+//
+//     $('.editAttr').click(function () {
+//         var id = $(this).closest("tr").attr('id');
+//         $(".modal-content").hide();
+//         $.ajax({
+//             type: 'GET',
+//             url: '/attributes/' + id,
+//             success: function (response) {
+//                 $("#change_attr").attr("url", "/attributes/"+id);
+//                 $("#id_attr").val(response.id);
+//                 $("#id_sku").val(response.sku);
+//                 $("#id_size").val(response.size);
+//                 $("#id_price").val(response.price);
+//                 $("#id_stock").val(response.stock);
+//                 $(".modal-content").show();
+//             },
+//             error: function (error) {
+//                 console.log(error);
+//             }
+//         });
+//     });
+//
+//     $('.changeAttr').click(function () {
+//         var token = $(this).data("token");
+//         $.ajax({
+//             method: "POST",
+//             url: $(this).attr("url"),
+//             data: { "_method": 'PUT',
+//                 "_token": token,
+//                 "product_id": $("#id_prod").val(),
+//                 "sku": $("#id_sku").val(),
+//                 "size": $("#id_size").val(),
+//                 "price": $("#id_price").val(),
+//                 "stock": $("#id_stock").val(),
+//              },
+//             success: function (response) {
+//                 console.log(response);
+//                 location.reload();
+//
+//             },
+//             error: function (error){
+//                 console.log(error);
+//             }
+//         });
+//     });
+//
+// });

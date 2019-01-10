@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $fillable = [
-        'user_id', 'cart', 'address', 'status_id', 'payment_id', 'ship_id'
+        'user_id', 'cart', 'recipient', 'address', 'status_id', 'payment_id', 'ship_id'
     ];
 
     public function user()
@@ -18,5 +18,10 @@ class Order extends Model
     public function status()
     {
         $this->belongsTo('App\OrderStatus');
+    }
+
+    public function payment()
+    {
+        $this->hasOne('App\Payment');
     }
 }

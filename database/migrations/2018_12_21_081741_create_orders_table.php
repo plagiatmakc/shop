@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->json('cart');
+            $table->json('recipient');
             $table->json('address');
             $table->integer('status_id')->unsigned();
             $table->integer('payment_id')->unsigned()->nullable();

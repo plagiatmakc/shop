@@ -30,17 +30,11 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="address" class="col-sm-4 col-form-label text-md-right">Delivery Address</label>
-                                <div class="col-md-6">
-                                    <input id="address" type="text" class="form-control" v-model="address" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="country" class="col-sm-4 col-form-label text-md-right">Country</label>
                                 <div class="col-md-6">
                                     <select id="country" type="text" class="form-control" v-model="selected_country" @change="setPhoneCode()" required>
                                         <option disabled value="">Choose country</option>
-                                        <option v-for="country in countries" :value="country.country">{{country.country}}</option>
+                                        <option v-for="country in countries" :value="country.country">{{country.flag}} {{country.country}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -95,7 +89,7 @@
                         </form>
 
                         <br>
-                        <div id="paypal-button"></div>
+                        <!--<div id="paypal-button"></div>-->
                     </div>
                 </div>
             </div>
@@ -105,15 +99,16 @@
 
 <script>
     import {phoneUtil} from '../app'
+    import {PNF} from '../app'
     export default {
         name: "OrderCheckoutComponent",
         data() {
             return {
+                user_id: '',
                 first_name: '',
                 last_name: '',
                 email: '',
                 phone: '',
-                address: '',
                 selected_country: '',
                 street_address: '',
                 apartment_address: '',
@@ -125,13 +120,13 @@
                 items: [],
                 countries: [],
                 code_country: '',
-                dial_code: '',
+                // dial_code: '',
             }
         },
         mounted() {
              this.getCountries();
              this.getCartItems();
-             this.paypalButtonRender();
+             // this.paypalButtonRender();
         },
         methods: {
             checkAuthorize() {
@@ -140,12 +135,14 @@
                 })
                     .then(response => {
                         console.log(response.data);
+                        this.phone = phoneUtil.parseAndKeepRawInput(response.data.phone, "").getNationalNumber();
+                        // this.dial_code = '+'+phoneUtil.parseAndKeepRawInput(response.data.phone, "").getCountryCode();
+                        this.code_country = phoneUtil.getRegionCodeForNumber(phoneUtil.parseAndKeepRawInput(response.data.phone, ""));
+                        this.user_id = response.data.id;
                         this.first_name = response.data.first_name;
                         this.last_name = response.data.last_name;
                         this.email = response.data.email;
-                        this.phone = response.data.phone;
-                        this.dial_code = '+'+phoneUtil.parseAndKeepRawInput(this.phone, "").getCountryCode();
-                        this.code_country = phoneUtil.getRegionCodeForNumber(phoneUtil.parseAndKeepRawInput(this.phone, ""));
+
                         this.setSelectedCountry();
                     })
                     .catch(error => {
@@ -163,7 +160,8 @@
                 this.checkAuthorize();
             },
             setSelectedCountry() {
-                for(var country in this.countries)
+                console.log(this.code_country);
+                for(let country in this.countries)
                 {
                     if (this.countries[country].code == this.code_country)
                     {
@@ -172,18 +170,57 @@
                 }
             },
             setPhoneCode() {
-                for(var country in this.countries)
+                console.log(this.selected_country);
+                for(let country in this.countries)
                 {
-                    // console.log(this.countries[country]);
                     if (this.countries[country].country == this.selected_country )
                     {
-                        this.dial_code = this.countries[country].dial_code;
+                        this.code_country = this.countries[country].code;
                     }
                 }
             },
             placeOrder() {
-                this.address = {'country': this.selected_country, 'state': this.state, 'city': this.city, 'street_address': this.street_address, 'apartment_address': this.apartment_address, 'postal_code': this.postal_code};
-                console.log(JSON.stringify(this.address));
+
+                try{
+                    console.log(this.phone);
+                    console.log(this.code_country);
+                    var number = phoneUtil.parseAndKeepRawInput( (this.phone).toString(), (this.code_country).toString() );
+                    phoneUtil.isValidNumber(number);
+                }catch (error) {
+                    alert(error);
+                }
+                if (!phoneUtil.isValidNumberForRegion(number, this.code_country)) {
+                    return alert('This invalid phone number for selected country');
+                }
+                let pnf_E164 = phoneUtil.format(number, PNF.E164);
+
+                let address = {'country': this.selected_country, 'country_code': this.code_country, 'state': this.state, 'city': this.city, 'street_address': this.street_address, 'apartment_address': this.apartment_address, 'postal_code': this.postal_code};
+                let recipient = {'first_name': this.first_name, 'last_name': this.last_name, 'email': this.email, 'phone': pnf_E164};
+                console.log(JSON.stringify(recipient));
+                console.log(JSON.stringify(address));
+
+                let formData = new FormData();
+                formData.append('user_id', this.user_id);
+                formData.append('recipient', JSON.stringify(recipient));
+                formData.append('address', JSON.stringify(address));
+                formData.append('cart', JSON.stringify(this.cart));
+                formData.append('status_id', '1');
+
+                window.axios.post('/api/order', formData,
+                    {headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')}}
+                    )
+                    .then(response => {
+                        console.log(response.data);
+                        console.log(response);
+                        var order_id = response.data.order_id;
+                        if (order_id) {
+                            this.$router.push({ name: 'payOrder', params: { order_id } });
+                        }
+                    })
+                    .catch(errors => {
+                       alert(errors.response.statusText);
+                    });
+
             },
             getCartItems() {
                 this.loading = true;
@@ -192,7 +229,7 @@
                         console.log(response.data);
                         this.cart = response.data;
 
-                        for (var key in response.data.items)
+                        for (let key in response.data.items)
                         {
                             this.items.push({
                                 name: response.data.items[key].item.name,
@@ -212,75 +249,75 @@
                         this.loading = false;
                     });
             },
-            paypalButtonRender() {
-                var vm = this;
-                paypal.Button.render({
-                    // Configure environment
-                    env: 'sandbox',
-                    client: {
-                        sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
-                        production: 'demo_production_client_id'
-                    },
-                    // Customize button (optional)
-                    locale: 'en_US',
-                    style: {
-                        size: 'small',
-                        color: 'gold',
-                        shape: 'pill',
-                    },
-
-                    // Enable Pay Now checkout flow (optional)
-                    commit: true,
-
-                    // Set up a payment
-                    payment: function(data, actions) {
-                        return actions.payment.create({
-                            transactions: [{
-                                amount: {
-                                    total: vm.cart.totalPrice,
-                                    currency: 'USD',
-                                    // details: {
-                                    //     subtotal: '499.00',
-                                    //     tax: '0.07',
-                                    //     shipping: '0.03',
-                                    //     handling_fee: '1.00',
-                                    //     shipping_discount: '-1.00',
-                                    //     insurance: '0.01'
-                                    // }
-                                },
-                                description: 'The payment transaction description.',
-                                custom: '90048630024435',
-                                //invoice_number: '12345', Insert a unique invoice number
-                                payment_options: {
-                                    allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
-                                },
-                                soft_descriptor: 'ECHI5786786',
-                                item_list: {
-                                    items: vm.items,
-                                    shipping_address: {
-                                        recipient_name: vm.first_name+' '+vm.last_name,
-                                        line1: '4th Floor',
-                                        line2: 'Unit #34',
-                                        city: 'San Jose',
-                                        country_code: 'US',
-                                        postal_code: '95131',
-                                        phone: '011862212345678',
-                                        state: 'CA'
-                                    }
-                                }
-                            }],
-                            note_to_payer: 'Contact us for any questions on your order.'
-                        });
-                    },
-                    // Execute the payment
-                    onAuthorize: function(data, actions) {
-                        return actions.payment.execute().then(function() {
-                            // Show a confirmation message to the buyer
-                            window.alert('Thank you for your purchase!');
-                        });
-                    }
-                }, '#paypal-button');
-            }
+            // paypalButtonRender() {
+            //     var vm = this;
+            //     paypal.Button.render({
+            //         // Configure environment
+            //         env: 'sandbox',
+            //         client: {
+            //             sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+            //             production: 'demo_production_client_id'
+            //         },
+            //         // Customize button (optional)
+            //         locale: 'en_US',
+            //         style: {
+            //             size: 'small',
+            //             color: 'gold',
+            //             shape: 'pill',
+            //         },
+            //
+            //         // Enable Pay Now checkout flow (optional)
+            //         commit: true,
+            //
+            //         // Set up a payment
+            //         payment: function(data, actions) {
+            //             return actions.payment.create({
+            //                 transactions: [{
+            //                     amount: {
+            //                         total: vm.cart.totalPrice,
+            //                         currency: 'USD',
+            //                         // details: {
+            //                         //     subtotal: '499.00',
+            //                         //     tax: '0.07',
+            //                         //     shipping: '0.03',
+            //                         //     handling_fee: '1.00',
+            //                         //     shipping_discount: '-1.00',
+            //                         //     insurance: '0.01'
+            //                         // }
+            //                     },
+            //                     description: 'The payment transaction description.',
+            //                     custom: '90048630024435',
+            //                     //invoice_number: '12345', Insert a unique invoice number
+            //                     payment_options: {
+            //                         allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
+            //                     },
+            //                     soft_descriptor: 'ECHI5786786',
+            //                     item_list: {
+            //                         items: vm.items,
+            //                         shipping_address: {
+            //                             recipient_name: vm.first_name+' '+vm.last_name,
+            //                             line1: '4th Floor',
+            //                             line2: 'Unit #34',
+            //                             city: 'San Jose',
+            //                             country_code: 'US',
+            //                             postal_code: '95131',
+            //                             phone: '011862212345678',
+            //                             state: 'CA'
+            //                         }
+            //                     }
+            //                 }],
+            //                 note_to_payer: 'Contact us for any questions on your order.'
+            //             });
+            //         },
+            //         // Execute the payment
+            //         onAuthorize: function(data, actions) {
+            //             return actions.payment.execute().then(function() {
+            //                 // Show a confirmation message to the buyer
+            //                 window.alert('Thank you for your purchase!');
+            //             });
+            //         }
+            //     }, '#paypal-button');
+            // }
         }
     }
 </script>
