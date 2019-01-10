@@ -113,6 +113,10 @@ export default new Router({
 
 
     ],
-    // mode: 'history',
+     mode: 'history',
+     hashbang: false,
+     history: true,
+     base: '/vue/',
+     linkActiveClass: 'active'
 
 })

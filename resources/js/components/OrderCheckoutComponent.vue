@@ -10,7 +10,7 @@
                     </div>
                     <div v-if="isLoggedIn">
                         {{cart}}
-                        <form>
+                        <form @submit.prevent="placeOrder">
                             <div class="form-group row">
                                 <label for="first_name" class="col-md-4 col-form-label text-md-right">First name</label>
                                 <div class="col-md-6">
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="form-group mb-0 ">
-                                <button class="col-md-3 btn btn-sm btn-success float-right" v-if="isLoggedIn" @click="placeOrder">
+                                <button class="col-md-3 btn btn-sm btn-success float-right" v-if="isLoggedIn" >
                                     Continue
                                 </button>
                             </div>
@@ -214,7 +214,7 @@
                         console.log(response);
                         var order_id = response.data.order_id;
                         if (order_id) {
-                            this.$router.push({ name: 'payOrder', params: { order_id } });
+                            this.$router.push({ name: 'payOrder', params:  { order_id: order_id }  });
                         }
                     })
                     .catch(errors => {

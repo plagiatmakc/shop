@@ -23,7 +23,7 @@ Route::resources([
     'products' => 'ProductController',
     'product_images' => 'ProductImagesController',
 ]);
-
+Route::get('/vue/{vue_capture?}', 'PageController@index')->where('vue_capture', '^(?!storage).*$');
 //Product attributes routes
 
 //Route::get('/products/{product_id}/attributes', 'ProductController@addAttr');

@@ -21,7 +21,7 @@
                 <tr v-for="product in products">
                     <td width="1%">{{product.id}}</td>
                     <td v-if="product.product_images.length" width="2%">
-                        <img :src="'storage/'+ product.product_images[0].link_to_thumb + '?img=' + Math.random()" width="100%">
+                        <img :src="'/storage/'+ product.product_images[0].link_to_thumb + '?img=' + Math.random()" width="100%">
                     </td>
                     <td v-else width="2%">
                         <img src="/images/No_Image.png" width="50%">

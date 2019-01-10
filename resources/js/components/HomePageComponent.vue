@@ -77,7 +77,7 @@
                 <div class="card-group">
                    <div class="card col-md-2" v-for="product in last_added_products">
                        <div v-if="product.product_images.length">
-                           <img class="card-img-top" :src="'storage/'+ product.product_images[0].link_to_thumb + '?img=' + Math.random()" width="100%">
+                           <img class="card-img-top" :src="'/storage/'+ product.product_images[0].link_to_thumb + '?img=' + Math.random()" width="100%">
                        </div>
                        <div v-else>
                            <img class="card-img-top" src="/images/No_Image.png" width="100%">

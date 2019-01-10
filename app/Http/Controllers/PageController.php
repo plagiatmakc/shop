@@ -21,6 +21,7 @@ class PageController extends Controller
         if ($request->type != null) {
             $response = ProductsRepository::convert_to($request->type, $response);
         }
+
         return view('welcome', [
             'products' => $response,
             'categories' => $categoryRepository->allWithRelations(),
