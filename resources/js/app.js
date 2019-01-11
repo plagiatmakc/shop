@@ -37,6 +37,7 @@ Vue.component('category-products', require('./components/CategoryProductsCompone
 Vue.component('shop-cart', require('./components/ShopCartComponent.vue'));
 Vue.component('order-checkout', require('./components/OrderCheckoutComponent.vue'));
 Vue.component('order-payment', require('./components/OrderPaymentComponent.vue'));
+Vue.component('confirm-three-d-secure', require('./components/Confirm3DSomponent.vue'));
 Vue.component('navbar-component', require('./components/NavbarComponent.vue'));
 Vue.component('login-component', require('./components/LoginComponent.vue'));
 Vue.component('register-component', require('./components/RegisterComponent.vue'));

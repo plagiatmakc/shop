@@ -64,7 +64,7 @@
 </template>
 
 <script>
-    let stripe = Stripe('pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l'),
+    let stripe = Stripe(process.env.MIX_STRIPE_KEY),
         elements = stripe.elements(),
         card = undefined;
 
@@ -179,13 +179,28 @@
                 let vm = this;
                     stripe.createSource({
                         type: "three_d_secure",
-                        amount: this.amount,
+                        amount: this.amount * 100,
                         currency: "usd",
+                        owner: {
+                            email: this.email,
+                            address: {
+                                city: vm.order_address.city,
+                                country: vm.order_address.country,
+                                line1: vm.order_address.street_address,
+                                line2: vm.order_address.apartment_address,
+                                postal_code: vm.order_address.postal_code,
+                                state: vm.order_address.state
+                            }
+                        },
+                        metadata: {
+                            order_id: this.order_id,
+                            description: this.description
+                        },
                         three_d_secure: {
                             card: source.id
                         },
                         redirect: {
-                            return_url: window.location.href
+                            return_url: 'http://shop.loc/vue/confirm-three-d-secure/' + vm.order_id,//window.location.href
                         }
                     }).then(function(result) {
                         if (result.error){
@@ -194,17 +209,11 @@
                         //redirect to verification 3DS page
                          window.location = result.source.redirect.url;
 
-                                        if (result.source.status === 'chargeable') {
-                                            alert('OK');
-                                            vm.createCharge(result.source.id);
-                                            console.log(result.source);
-                                        }
-
                     });
             },
-            createCharge(card_token) {
+            createCharge(source_id) {
                 window.axios.post('/api/charge',
-                    {card_token: card_token, email: this.email, amount: this.amount, order_id: this.order_id, description: this.description},
+                    {source_id: source_id, email: this.email, amount: this.amount, order_id: this.order_id, description: this.description},
                     {headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')}}
                     )
                     .then(response => {

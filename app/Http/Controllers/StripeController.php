@@ -32,15 +32,12 @@ class StripeController extends Controller
 //                ]
 //            ]);
 
-            Charge::create([
+           $charge = Charge::create([
                 "amount" => $request->amount * 100,
                 "currency" => "usd",
-                "source" => $request->card_token, // obtained with Stripe.js
+                "source" => $request->source_id, // obtained with Stripe.js
                 "description" => $request->description,
                 "receipt_email" => $request->email
-            ]);
-            return response()->json([
-                'success' => true
             ]);
 
         } catch(\Stripe\Error\Card $e) {
@@ -67,6 +64,9 @@ class StripeController extends Controller
             // Something else happened, completely unrelated to Stripe
             return response()->json($e->getJsonBody());
         }
+
+        return response()->json($charge);
+
     }
 
 }

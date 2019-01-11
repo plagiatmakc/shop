@@ -35,26 +35,26 @@
             </div>
 
             <div class="dropdown show">
-                <a href="#" class="btn dropdown-toggle" role="button"
+                <a href="#" class="btn dropdown-toggle" role="button" data-display="static"
                    id="dropdownMenuLinkCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Currency
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkCurrency">
-                    <router-link class="dropdown-item" :class="$router.currentRoute.query.type == 'usd' ? 'active' : '' "
+                    <router-link  :class=" $router.currentRoute.query.type === 'usd' ? 'text-danger dropdown-item' : 'dropdown-item' "
                                  :to="{ path: $router.path,
                                         query:{ type: 'usd',
                                                 pagination: $router.currentRoute.query.pagination
                                                }
                                  }"
                     >USD</router-link>
-                    <router-link class="dropdown-item" :class="$router.currentRoute.query.type == 'eur' ? 'active' : '' "
+                    <router-link :class="$router.currentRoute.query.type === 'eur' ? 'text-danger dropdown-item' : 'dropdown-item' "
                                  :to="{ path: $router.path,
                                         query:{ type: 'eur',
                                                 pagination: $router.currentRoute.query.pagination
                                               }
                                  }"
                     >EUR</router-link>
-                    <router-link class="dropdown-item" :class="$router.currentRoute.query.type == 'uah' ? 'active' : '' "
+                    <router-link :class="$router.currentRoute.query.type === 'uah' ? 'text-danger dropdown-item' : 'dropdown-item' "
                                  :to="{ path: $router.path,
                                         query:{ type: 'uah',
                                                 pagination: $router.currentRoute.query.pagination

@@ -18,6 +18,7 @@ import LoginComponent from '../components/LoginComponent.vue';
 import RegisterComponent from '../components/RegisterComponent.vue';
 import DashboardComponent from '../components/DashboardComponent.vue';
 import OrderPaymentComponent from '../components/OrderPaymentComponent.vue';
+import Confirm3DSomponent from '../components/Confirm3DSomponent.vue';
 
 export default new Router({
     routes: [
@@ -90,6 +91,12 @@ export default new Router({
             path: '/order-payment/:order_id',
             name: 'payOrder',
             component: OrderPaymentComponent,
+            props: true
+        },
+        {
+            path: '/confirm-three-d-secure/:order_id',
+            name: 'confirm3DS',
+            component: Confirm3DSomponent,
             props: true
         },
         {
