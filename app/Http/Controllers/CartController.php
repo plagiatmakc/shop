@@ -15,21 +15,21 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductAttributeRequest;
 use Illuminate\Support\Facades\Session;
 use App\Facades\Cart;
-
+use App\Http\Requests\PaginationAndCurrencyRequest;
 
 class CartController extends Controller
 {
 
-    public function index(CartImplementation $cart)
+    public function index(CartImplementation $cart,PaginationAndCurrencyRequest $request)
     {
         return response()->json($cart); //view('cart', ['cart' => $cart]);
     }
 
     public function addToCart($id, ProductRepository $productRepository)
     {
-        $product = $productRepository->getById($id);
+        $product = $productRepository->getById($id)->unsetRelation('product_images')->unsetRelation('categories');
         Cart::add($product, $product->id);
-        return back();
+        return response()->json(['product' => $product->id]);
     }
 
     public function delFromCart($id)

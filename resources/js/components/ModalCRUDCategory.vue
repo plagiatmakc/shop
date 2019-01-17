@@ -9,23 +9,17 @@
                      aria-describedby="modalDescription"
                 >
                     <header
-                        class="modal-header d-inline-flex"
+                        class="modal-header"
                         id="modalTitle"
                     >
                         <slot name="header">
-                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 20px; max-width: 250px"
-                                v-if="paramCRUD == 'addSubCategory'"
-                            >
+                            <h4 v-if="paramCRUD == 'addSubCategory'">
                                 Create subcategory of "{{parent_title}}"
                             </h4>
-                            <h4 style="margin-top: 10px; padding-right: 10px; padding-top: 20px; max-width: 250px"
-                                v-if="paramCRUD == 'editCategory'"
-                            >
+                            <h4 v-if="paramCRUD == 'editCategory'">
                                 Edit category
                             </h4>
-                            <h4 style="margin-top: 10px; padding-top: 20px; max-width: 250px "
-                                v-if="paramCRUD == 'deleteCategory'"
-                            >
+                            <h4 v-if="paramCRUD == 'deleteCategory'">
                                 Delete "{{parent_title}}"
                             </h4>
                             <button
@@ -155,10 +149,15 @@
     }
 
     .modal {
+        position: fixed;
+        z-index: -1;
         top: auto;
         bottom: auto;
         left: auto;
         right: auto;
+        width: auto;
+        height: auto;
+        max-height: 95vh;
         background: #FFFFFF;
         box-shadow: 2px 2px 20px 1px;
         overflow-x: auto;
@@ -170,8 +169,8 @@
         border-bottom: 1px solid #eeeeee;
         color: #121212;
         justify-content: space-between;
-        padding-bottom: 0px;
-        padding-top: 5px;
+        /*padding-bottom: 0px;*/
+        padding: 15px;
     }
 
     .modal-footer {
@@ -184,21 +183,25 @@
     .modal-body {
         position: relative;
         padding: 20px 10px;
+        max-height: 600px;
+        overflow-y: auto;
     }
 
     .btn-close {
-
         border: none;
         font-size: 20px;
-        padding: 0px;
+        padding: 0px 0px 0px 15px;
         cursor: pointer;
         font-weight: bold;
         color: #121212;
         background: transparent;
+        justify-content: flex-end;
+        margin-top: -10px;
     }
 
     .btn-green {
         color: white;
+        cursor: pointer;
         background: #4AAE9B;
         border: 1px solid #4AAE9B;
         border-radius: 2px;

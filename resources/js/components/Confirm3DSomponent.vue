@@ -8,7 +8,10 @@
         Email: {{email}}<br>
         Description: {{description}}<br>
         {{message}}
-        <button class="btn btn-success" v-if="isButtonVisible" @click="createCharge(source_id)">Confirm pay</button>
+        <button class="btn btn-success" type="button" v-if="isButtonVisible" @click="createCharge(source_id)">
+            <span id="btn_spinner" v-if="isSpinnerVisible" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span>Confirm pay</span>
+        </button>
     </div>
 </template>
 
@@ -29,6 +32,7 @@
                 description: null,
                 pollCount: 10,
                 isButtonVisible: false,
+                isSpinnerVisible: false,
             }
         },
         mounted() {
@@ -61,15 +65,20 @@
                 });
             },
             createCharge(source_id) {
+                this.isSpinnerVisible = true;
                 window.axios.post('/api/charge',
                     {source_id: source_id, email: this.email, amount: this.amount, order_id: this.order_id, description: this.description},
                     {headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')}}
                 )
                     .then(response => {
+                        this.isSpinnerVisible = false;
                         console.log(response.data);
                         this.message = response.statusText;
+                        alert(response.data.status);
+                        this.$router.push({name: 'userOrders'});
                     })
                     .catch(error => {
+                        this.isSpinnerVisible = false;
                         console.log(error.response);
                     });
             },

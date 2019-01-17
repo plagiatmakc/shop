@@ -1,9 +1,9 @@
 <template>
-    <div class="container" v-if="loading == false">
+    <div v-if="loading == false">
 
-        Show item
-        {{product_id}}
-        {{product}}<br/>
+        <!--Show item-->
+        <!--{{product_id}}-->
+        <!--{{product}}<br/>-->
         <ul style="list-style-type:none;">
             <li style="display: inline-block;">&nbsp;
                 <router-link :to="{path: '/', query: {type: $router.currentRoute.query.type}}">
@@ -32,8 +32,8 @@
                              :src="'/storage/'+productImages[0].link_to_file"/>
                         <img v-else class="main_img" src="/images/No_Image.png">
                     </div>
-                    <ul class="col-md-2 inline-block scrollable-menu" style="vertical-align: middle; margin-left: 50%;">
-                        <li v-for="image in product.product_images" class="row" style="height: 100px" >
+                    <ul class="col-md-2 inline-block scrollable-menu">
+                        <li v-for="image in product.product_images" class="row" style="height: 10vh" >
                             <img :src="'/storage/'+image.link_to_thumb" @click="setImage(image.link_to_file)" class="thumb_img"/>
                         </li>
                     </ul>
@@ -41,7 +41,7 @@
             </div>
 
             <div id="fold_content" style="margin-left: auto; margin-right: auto; padding: 2%; max-width: 50% ">
-                <div class="row" style="width: 500px"><h4 class="product_title">{{product.name}}</h4></div>
+                <div class="row" style="width: 50vw"><h4 class="product_title">{{product.name}}</h4></div>
                 <div class="row form-inline"
                      style="margin-left: auto; margin-right: auto; padding: 2%; max-width: 500px; ">
                     <div class="col-md-4 price" style="max-width: 50%">
@@ -57,7 +57,7 @@
                     PRODUCT VERSIONS SECTION
                 </div>
                 <div class="row">
-                    <a :href="'/add-to-cart/' + product.id" class="btn btn-primary btn-md">Add to cart</a>
+                    <a @click="addToCart()" class="btn btn-primary btn-md">Add to cart</a>
                 </div>
             </div>
         </div>
@@ -124,7 +124,21 @@
             },
             setImage(target) {
                 $("img.main_img").attr('src', '/storage/' + target);
-            }
+            },
+            addToCart() {
+                window.axios.get('/add-to-cart/' + this.product_id)
+                    .then(response => {
+                        if(response.status === 200)
+                        {
+                         alert(response.statusText);
+                         console.log(response.data);
+                         this.$router.go(-1);
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error.response);
+                    });
+            },
         }
     }
 </script>
@@ -132,8 +146,9 @@
 <style scoped>
     .scrollable-menu {
         height: auto;
-        max-height: 480px;
+        max-height: 50vh;
         overflow-x: hidden;
+        margin-left: 50%;
     }
 
     img.main_img {
@@ -146,7 +161,7 @@
     }
 
     #product_row {
-        height: 500px;
+        height: 51vh;
     }
 
     .thumb_img {
@@ -154,7 +169,7 @@
         /*alig: end;*/
         /*margin-left: 270px;*/
         padding-top: 2px;
-        width: 100%;
+        width: 5vw;
         z-index: 1;
     }
 

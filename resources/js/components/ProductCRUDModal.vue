@@ -9,34 +9,24 @@
                      aria-describedby="modalDescription"
                 >
                     <header
-                        class="modal-header d-inline-flex"
+                        class="modal-header"
                         id="modalTitle"
                     >
                         <slot name="header">
-                            <label style="margin-top: 10px; padding-right: 10px; padding-top: 30px; max-width: 300px;"
-                                v-if="paramCRUD == 'addAttributes'"
-                            >
+                            <label v-if="paramCRUD == 'addAttributes'">
                                 Create attributes of {{parent_title}}
                             </label>
 
-                            <label style="margin-top: 10px; padding-right: 10px; padding-top: 30px; max-width: 300px;"
-                                v-if="paramCRUD == 'showProduct'"
-                                >
+                            <label v-if="paramCRUD == 'showProduct'">
                                 Show Product
                             </label>
-                            <label style="margin-top: 10px; padding-right: 10px; padding-top: 30px; max-width: 300px;"
-                                v-if="paramCRUD == 'editProduct'"
-                            >
+                            <label v-if="paramCRUD == 'editProduct'">
                                 Edit product
                             </label>
-                            <label style="margin-top: 5px; padding-top: 20px; max-width: 300px;"
-                                v-if="paramCRUD == 'imageManage'"
-                            >
+                            <label v-if="paramCRUD == 'imageManage'">
                                  {{product_name}}
                             </label>
-                            <label style="margin-top: 10px; padding-top: 20px; max-width: 300px; "
-                                v-if="paramCRUD == 'deleteProduct'"
-                            >
+                            <label v-if="paramCRUD == 'deleteProduct'">
                                 Delete "{{product_name}}"
                             </label>
                             <button
@@ -136,7 +126,7 @@
         },
         methods: {
             close() {
-                this.$emit('close');
+                // this.$emit('close');
                 bus.$emit('refreshPage');
             },
             clickSubmitButton() {
@@ -182,6 +172,9 @@
         bottom: auto;
         left: auto;
         right: auto;
+        width: auto;
+        height: auto;
+        max-height: 95vh;
         background: #FFFFFF;
         box-shadow: 2px 2px 20px 1px;
         overflow-x: auto;
@@ -193,8 +186,8 @@
         border-bottom: 1px solid #eeeeee;
         color: #121212;
         justify-content: space-between;
-        padding-bottom: 0px;
-        padding-top: 5px;
+        /*padding-bottom: 0px;*/
+        padding: 15px;
     }
 
     .modal-footer {
@@ -220,6 +213,8 @@
         font-weight: bold;
         color: #121212;
         background: transparent;
+        justify-content: flex-end;
+        margin-top: -10px;
     }
 
     .btn-green {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar sticky-top navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <router-link :to="{path: '/'}" class="navbar-brand">Shop</router-link>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,8 +20,8 @@
                         <router-link :to="{ name: 'register' }" class="nav-link" v-if="!isLoggedIn">Register</router-link>
                         <span v-if="isLoggedIn" class="custom-control-inline">
                             <img :src="'/storage/'+avatar" v-if="avatar != null">
-                                <router-link :to="{ name: 'dashboard' }" class="nav-link" v-if="user_type == 0"> Hi, {{name}}</router-link>
-                                <router-link :to="{ name: 'admin' }" class="nav-link" v-if="user_type == 'Admin'"> Hi, {{name}}</router-link>
+                                <router-link :to="{ name: 'dashboard' }" class="nav-link" v-if="user_type !== 'Admin'"> Hi, {{name}}</router-link>
+                                <router-link :to="{ name: 'admin' }" class="nav-link" v-if="user_type === 'Admin'"> Hi, {{name}}</router-link>
                         </span>
                         <li class="nav-link" v-if="isLoggedIn" @click="logout"> Logout</li>
                     </ul>
@@ -56,6 +56,7 @@
         methods : {
             setDefaults() {
                 if (this.isLoggedIn) {
+                    this.user_type = 0;
                     let user = JSON.parse(localStorage.getItem('bigStore.user'));
                     this.name = user.first_name;
                     this.avatar = user.avatar;

@@ -7,6 +7,7 @@ use \Stripe\Stripe;
 use \Stripe\Token;
 use \Stripe\Charge;
 use App\Order;
+use App\Payment;
 
 class StripeController extends Controller
 {
@@ -32,7 +33,7 @@ class StripeController extends Controller
 //                ]
 //            ]);
 
-           $charge = Charge::create([
+            $charge = Charge::create([
                 "amount" => $request->amount * 100,
                 "currency" => "usd",
                 "source" => $request->source_id, // obtained with Stripe.js
@@ -40,7 +41,7 @@ class StripeController extends Controller
                 "receipt_email" => $request->email
             ]);
 
-        } catch(\Stripe\Error\Card $e) {
+        } catch (\Stripe\Error\Card $e) {
             // Since it's a decline, \Stripe\Error\Card will be caught
             return response()->json($e->getJsonBody());
         } catch (\Stripe\Error\RateLimit $e) {
@@ -60,10 +61,29 @@ class StripeController extends Controller
             // Display a very generic error to the user, and maybe send
             // yourself an email
             return response()->json($e->getJsonBody());
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Something else happened, completely unrelated to Stripe
             return response()->json($e->getJsonBody());
         }
+
+        try {
+            Payment::updateOrCreate(
+                ['order_id' => $request->order_id],
+                ['charge_id' => $charge->id, 'amount' => $charge->amount / 100, 'currency' => $charge->currency,
+                    'source_id' => $charge->source->id, 'status' => $charge->status]
+            );
+        } catch (\Exception $e) {
+            // Something else happened, completely unrelated to Stripe
+            return response()->json($e->getJsonBody());
+        }
+
+        try {
+            Order::findOrFail($request->order_id)->setStatus(Order::AWAITING_FULFILLMENT);
+        } catch (\Exception $e) {
+            // Something else happened, completely unrelated to Stripe
+            return response()->json($e->getJsonBody());
+        }
+
 
         return response()->json($charge);
 

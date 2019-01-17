@@ -19,6 +19,8 @@ import RegisterComponent from '../components/RegisterComponent.vue';
 import DashboardComponent from '../components/DashboardComponent.vue';
 import OrderPaymentComponent from '../components/OrderPaymentComponent.vue';
 import Confirm3DSomponent from '../components/Confirm3DSomponent.vue';
+import OrdersIndexComponent from "../components/OrdersIndexComponent.vue";
+import OrderShowComponent from '../components/OrderShowComponent.vue';
 
 export default new Router({
     routes: [
@@ -27,9 +29,10 @@ export default new Router({
             beforeEnter: (to, from, next) => {
             console.log(to);
                 let user = JSON.parse(localStorage.getItem('bigStore.user'));
-                let roles = user.roles;
-                let user_type = roles[0].name;
-            if(user_type === 'Admin') {
+                // if(user.roles){
+                //     var user_type = user.roles[0].name;
+                // }
+            if(user.roles && user.roles[0].name === 'Admin') {
                 next();
             }
                 // window.axios.get('/is-admin')
@@ -62,6 +65,15 @@ export default new Router({
                 {
                     path: 'create_category',
                     component: CategoryCreateComponent
+                },
+                {
+                    path: 'orders',
+                    component: OrdersIndexComponent,
+                },
+                {
+                    path: 'order/:order_id',
+                    component: OrderShowComponent,
+                    props: true,
                 }
             ]
         },
@@ -115,8 +127,21 @@ export default new Router({
             path: '/dashboard',
             name: 'dashboard',
             component: DashboardComponent,
-            props: true
+            props: true,
+            children: [
+                {
+                    path: 'orders',
+                    name: 'userOrders',
+                    component: OrdersIndexComponent,
+                },
+                {
+                    path: 'order/:order_id',
+                    component: OrderShowComponent,
+                    props: true,
+                }
+            ],
         },
+
 
 
     ],

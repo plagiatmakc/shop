@@ -6,7 +6,7 @@
         <div v-else>
             <router-link :to="{path: $route.fullPath, query: {pagination: 3}}">Per 3</router-link>
             <router-link :to="{path: $route.fullPath, query: {type: 'eur'}}">EUR</router-link>
-            <table class="table" style="width: 70%">
+            <table class="table table-responsive table-sm">
                 <thead>
                 <tr >
                     <th scope="col">Id</th>
@@ -27,7 +27,7 @@
                         <img src="/images/No_Image.png" width="50%">
                     </td>
                     <td width="20%">
-                        <h5 style="width: 400px; text-overflow: ellipsis; white-space: nowrap;
+                        <h5 style="width: 200px; text-overflow: ellipsis; white-space: nowrap;
 overflow: hidden;">{{product.name}}</h5>
                     </td>
                     <td width="1%">{{product.price}}</td>
@@ -167,7 +167,7 @@ overflow: hidden;">{{product.name}}</h5>
                 })
             },
             makePagination(data) {
-                var pagination = {
+                let pagination = {
                     current_page: data.current_page,
                     last_page: data.last_page,
                     next_page_url: data.next_page_url,

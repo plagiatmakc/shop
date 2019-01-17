@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         Dashboard
+        <router-link to="/dashboard/orders">My orders</router-link>
+
+        <router-view></router-view>
     </div>
 </template>
 

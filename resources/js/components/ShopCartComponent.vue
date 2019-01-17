@@ -4,7 +4,7 @@
         <p v-if="cart.items == null || cart.items.length == 0">Your cart is empty!!!</p>
         <div v-else>
             <div v-if="loading == true">
-                <img src="/public/images/loading.gif">
+                <img src="/images/loading.gif">
             </div>
             <table class="table" v-else>
                 <thead>
@@ -20,9 +20,9 @@
 
                 <tr v-for="items in cart.items" :id="'row_' + items.item.id">
                     <td style="max-width: 250px">{{items.item.name}}</td>
-                    <td>{{items.item.price}}</td>
+                    <td>{{items.item.price}} {{items.item.currency}}</td>
                     <td>{{items.qty}}</td>
-                    <td>{{items.price}}</td>
+                    <td>{{items.price}} {{items.item.currency}}</td>
                     <td>
                         <div>
                             <a class="btn btn-info btn-sm" style="border-radius: 25px;" data-toggle="tooltip"

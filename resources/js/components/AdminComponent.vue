@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="sidebar wrapper">
+        <div class="sidebar wrapper" @mouseover="showSidebar()">
 
-            <a href="#" @click="component= 'dashboard'"><i class="fa fa-fw fa-home"></i> Dashboard</a>
-            <a href="#"><i class="fa fa-fw fa-vcard"></i> Clients</a>
+            <a @click="hideSidebar()" class="text-right" data-toggle="tooltip" title="Hide sidebar"><i class="fa fa-fw fa-close"></i></a>
+            <a ><i class="fa fa-fw fa-vcard"></i> Clients</a>
             <div class="dropdown show">
                 <a href="#" class="btn dropdown-toggle" role="button" id="dropdownProductsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-fw fa-database"></i>
@@ -53,13 +53,17 @@
                     </router-link>
                 </div>
             </div>
-            <a href="#"><i class="fa fa-fw fa-envelope"></i> Orders</a>
+            <router-link to="/admin/orders" class="dropdown-item">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+                Orders
+            </router-link>
         </div>
         <!--<keep-alive>-->
             <!--<component-->
                 <!--v-bind:is="component"-->
             <!--&gt;</component>-->
         <!--</keep-alive>-->
+        <button class="btn btn-outline-dark btn-sm" @click="showSidebar()"><i class="fa fa-fw fa-home"></i>Show sidebar</button>
         <router-view></router-view>
     </div>
 </template>
@@ -88,8 +92,20 @@ import DashboardComponent from './DashboardComponent.vue';
                 component: 'dashboard',
             }
         },
+        mounted() {
 
+        },
         methods: {
+            hideSidebar() {
+                if($('.sidebar').css("width") === '200px'){
+                    $('.sidebar').animate({ "width": '10px'}, "slow");
+                }
+            },
+            showSidebar() {
+                if($('.sidebar').css("width") === '10px'){
+                    $('.sidebar').animate({ "width": '200px'}, "slow");
+                }
+            },
 
         }
     }
@@ -101,7 +117,7 @@ import DashboardComponent from './DashboardComponent.vue';
         height: 100%;
         width: 200px;
         position: fixed;
-        z-index: 1;
+        z-index: 1020;
         top: 0;
         left: 0;
         background-color: #111;

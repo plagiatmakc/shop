@@ -11,6 +11,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <router-link class="dropdown-item"
+                                 :class=" $router.currentRoute.query.pagination == 3 ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
                                         query:{ pagination: 3,
                                                 type: $router.currentRoute.query.type
@@ -18,6 +19,7 @@
                                  }"
                     >per 3</router-link>
                     <router-link class="dropdown-item"
+                                 :class=" $router.currentRoute.query.pagination == 5 ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
                                         query:{ pagination: 5,
                                                 type: $router.currentRoute.query.type
@@ -25,6 +27,7 @@
                                  }"
                     >per 5</router-link>
                     <router-link class="dropdown-item"
+                                 :class=" $router.currentRoute.query.pagination == 10 ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
                                         query:{ pagination: 10,
                                                 type: $router.currentRoute.query.type
@@ -40,21 +43,24 @@
                     Currency
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkCurrency">
-                    <router-link  :class=" $router.currentRoute.query.type === 'usd' ? 'text-danger dropdown-item' : 'dropdown-item' "
+                    <router-link class="dropdown-item"
+                                 :class=" $router.currentRoute.query.type == 'usd' ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
                                         query:{ type: 'usd',
                                                 pagination: $router.currentRoute.query.pagination
                                                }
                                  }"
                     >USD</router-link>
-                    <router-link :class="$router.currentRoute.query.type === 'eur' ? 'text-danger dropdown-item' : 'dropdown-item' "
+                    <router-link class="dropdown-item"
+                                 :class="$router.currentRoute.query.type == 'eur' ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
                                         query:{ type: 'eur',
                                                 pagination: $router.currentRoute.query.pagination
                                               }
                                  }"
                     >EUR</router-link>
-                    <router-link :class="$router.currentRoute.query.type === 'uah' ? 'text-danger dropdown-item' : 'dropdown-item' "
+                    <router-link class="dropdown-item"
+                                 :class="$router.currentRoute.query.type == 'uah' ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
                                         query:{ type: 'uah',
                                                 pagination: $router.currentRoute.query.pagination
@@ -114,6 +120,13 @@
             }
         },
         mounted() {
+            //remove active class from dropdown-item(s) by default
+            $(document).ready(function () {
+                $('.dropdown').on('show.bs.dropdown', function () {
+                    $('.dropdown-item').removeClass('active');
+                });
+            });
+
             this.getLastAddedProducts(
                 "/get-last-products?page=" + this.$router.currentRoute.query.page,
                 this.$router.currentRoute.query.pagination,

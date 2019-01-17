@@ -41,6 +41,8 @@ Vue.component('confirm-three-d-secure', require('./components/Confirm3DSomponent
 Vue.component('navbar-component', require('./components/NavbarComponent.vue'));
 Vue.component('login-component', require('./components/LoginComponent.vue'));
 Vue.component('register-component', require('./components/RegisterComponent.vue'));
+Vue.component('orders-index', require('./components/OrdersIndexComponent.vue'));
+Vue.component('order-show', require('./components/OrderShowComponent.vue'));
 
 Vue.component('categories-checkbox', require('./components/CategoriesCheckBox.vue'));
 Vue.component('card-element', require('./components/CardElement.vue'));

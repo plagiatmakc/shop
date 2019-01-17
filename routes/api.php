@@ -29,10 +29,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/users/{user}','UserController@show');
     Route::patch('/users/{user}','UserController@update');
     Route::get('/users/{user}/orders','UserController@showOrders');
+    Route::get('/orders', 'OrderController@index');
     Route::get('/order/{order_id}', 'OrderController@show');
     Route::post('/order', 'OrderController@store');
     Route::post('/charge', 'StripeController@charge');
-
+    Route::post('/change-order-status/{order_id}', 'OrderController@changeStatus')->middleware('admin');
 //    Route::patch('products/{product}/units/add','ProductController@updateUnits');
 //    Route::patch('orders/{order}/deliver','OrderController@deliverOrder');
 //    Route::resource('/orders', 'OrderController');
