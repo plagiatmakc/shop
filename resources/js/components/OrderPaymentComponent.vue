@@ -27,9 +27,9 @@
                     <div class="card-body">
                         <form v-on:submit.prevent="createStripeSource">
                             <div class="form-group">
-                                <label for="Amount"><strong>Amount (USD)</strong></label>
+                                <label for="Amount"><strong>Amount</strong></label>
                                 <div class="col-md-12">
-                                    <span id="amount" class="form-control" v-model="amount" required>{{amount}}</span>
+                                    <span id="amount" class="form-control" v-model="amount" >{{amount}}</span>
                                 </div>
                             </div><div class="form-group">
                                 <label for="email"><strong>Email</strong></label>
@@ -90,6 +90,7 @@
                 description: null,
                 card_token: null,
                 source: null,
+                currency: 'usd',
             }
         },
         mounted() {
@@ -213,7 +214,7 @@
             },
             createCharge(source_id) {
                 window.axios.post('/api/charge',
-                    {source_id: source_id, email: this.email, amount: this.amount, order_id: this.order_id, description: this.description},
+                    {source_id: source_id, email: this.email, amount: this.amount, currency: this.currency, order_id: this.order_id, description: this.description},
                     {headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')}}
                     )
                     .then(response => {

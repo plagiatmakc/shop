@@ -28,7 +28,7 @@
                 message: '',
                 email: null,
                 amount: null,
-                currency: null,
+                currency: 'usd',
                 description: null,
                 pollCount: 10,
                 isButtonVisible: false,
@@ -67,7 +67,7 @@
             createCharge(source_id) {
                 this.isSpinnerVisible = true;
                 window.axios.post('/api/charge',
-                    {source_id: source_id, email: this.email, amount: this.amount, order_id: this.order_id, description: this.description},
+                    {source_id: source_id, email: this.email, amount: this.amount, currency: this.currency, order_id: this.order_id, description: this.description},
                     {headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')}}
                 )
                     .then(response => {

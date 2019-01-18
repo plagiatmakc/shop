@@ -63524,7 +63524,8 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l"),
             email: null,
             description: null,
             card_token: null,
-            source: null
+            source: null,
+            currency: 'usd'
         };
     },
     mounted: function mounted() {
@@ -63640,7 +63641,7 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l"),
             });
         },
         createCharge: function createCharge(source_id) {
-            window.axios.post('/api/charge', { source_id: source_id, email: this.email, amount: this.amount, order_id: this.order_id, description: this.description }, { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bigStore.jwt') } }).then(function (response) {
+            window.axios.post('/api/charge', { source_id: source_id, email: this.email, amount: this.amount, currency: this.currency, order_id: this.order_id, description: this.description }, { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bigStore.jwt') } }).then(function (response) {
                 console.log(response.data);
             }).catch(function (error) {
                 console.log(error.response);
@@ -63703,7 +63704,7 @@ var render = function() {
                         "span",
                         {
                           staticClass: "form-control",
-                          attrs: { id: "amount", required: "" },
+                          attrs: { id: "amount" },
                           model: {
                             value: _vm.amount,
                             callback: function($$v) {
@@ -63844,7 +63845,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "Amount" } }, [
-      _c("strong", [_vm._v("Amount (USD)")])
+      _c("strong", [_vm._v("Amount")])
     ])
   },
   function() {
@@ -63957,7 +63958,7 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l");
             message: '',
             email: null,
             amount: null,
-            currency: null,
+            currency: 'usd',
             description: null,
             pollCount: 10,
             isButtonVisible: false,
@@ -63996,7 +63997,7 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l");
             var _this = this;
 
             this.isSpinnerVisible = true;
-            window.axios.post('/api/charge', { source_id: source_id, email: this.email, amount: this.amount, order_id: this.order_id, description: this.description }, { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bigStore.jwt') } }).then(function (response) {
+            window.axios.post('/api/charge', { source_id: source_id, email: this.email, amount: this.amount, currency: this.currency, order_id: this.order_id, description: this.description }, { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bigStore.jwt') } }).then(function (response) {
                 _this.isSpinnerVisible = false;
                 console.log(response.data);
                 _this.message = response.statusText;
@@ -65285,7 +65286,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65370,12 +65371,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "OrdersIndexComponent",
     data: function data() {
         return {
             orders: null,
+            isAdmin: JSON.parse(localStorage.getItem('bigStore.user')).roles && JSON.parse(localStorage.getItem('bigStore.user')).roles[0].name === 'Admin',
             pagination: [],
             statuses: [{ id: 1, value: 'PENDING_PAYMENT' }, { id: 2, value: 'AWAITING_FULFILLMENT' }, { id: 3, value: 'AWAITING_SHIPMENT' }],
             items_per_page: '',
@@ -65487,53 +65492,65 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", { attrs: { width: "1%" } }, [_vm._v("USD")]),
                     _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "select",
-                        {
-                          directives: [
+                    _vm.isAdmin
+                      ? _c("td", [
+                          _c(
+                            "select",
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: order.status_id,
-                              expression: "order.status_id"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          on: {
-                            change: [
-                              function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  order,
-                                  "status_id",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
-                              function($event) {
-                                _vm.onChange(order.id, order.status_id)
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: order.status_id,
+                                  expression: "order.status_id"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: [
+                                  function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      order,
+                                      "status_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
+                                  function($event) {
+                                    _vm.onChange(order.id, order.status_id)
+                                  }
+                                ]
                               }
-                            ]
-                          }
-                        },
-                        _vm._l(_vm.statuses, function(status) {
-                          return _c(
-                            "option",
-                            { key: status.id, domProps: { value: status.id } },
-                            [_vm._v(_vm._s(status.value))]
+                            },
+                            _vm._l(_vm.statuses, function(status) {
+                              return _c(
+                                "option",
+                                {
+                                  key: status.id,
+                                  domProps: { value: status.id }
+                                },
+                                [_vm._v(_vm._s(status.value))]
+                              )
+                            })
                           )
-                        })
-                      )
-                    ]),
+                        ])
+                      : _c("td", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.statuses[order.status_id - 1].value) +
+                              "\n                "
+                          )
+                        ]),
                     _vm._v(" "),
                     _c("td", { attrs: { width: "12%" } }, [
                       _vm._v(_vm._s(order.updated_at))

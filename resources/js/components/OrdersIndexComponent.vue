@@ -29,10 +29,13 @@
                     </td>
                     <td width="1%">{{JSON.parse(order.cart).totalPrice}}</td>
                     <td width="1%">USD</td>
-                    <td>
+                    <td v-if="isAdmin">
                         <select class="form-control"  v-model="order.status_id" @change="onChange(order.id, order.status_id)">
                             <option v-for="status in statuses" :key="status.id" :value="status.id">{{status.value}}</option>
                         </select>
+                    </td>
+                    <td v-else>
+                        {{statuses[order.status_id-1].value}}
                     </td>
                     <td width="12%">{{order.updated_at}}</td>
                     <td >
@@ -78,6 +81,7 @@
         data() {
             return {
                 orders: null,
+                isAdmin: JSON.parse(localStorage.getItem('bigStore.user')).roles && JSON.parse(localStorage.getItem('bigStore.user')).roles[0].name ==='Admin',
                 pagination: [],
                 statuses: [
                     {id: 1, value: 'PENDING_PAYMENT'},

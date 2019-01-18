@@ -35,7 +35,7 @@ class StripeController extends Controller
 
             $charge = Charge::create([
                 "amount" => $request->amount * 100,
-                "currency" => "usd",
+                "currency" => $request->currency,
                 "source" => $request->source_id, // obtained with Stripe.js
                 "description" => $request->description,
                 "receipt_email" => $request->email
