@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <form v-on:submit.prevent="createStripeSource">
                             <div class="form-group">
-                                <label for="Amount"><strong>Amount</strong></label>
+                                <label for="Amount"><strong>Amount ({{(currency).toUpperCase()}})</strong></label>
                                 <div class="col-md-12">
                                     <span id="amount" class="form-control" v-model="amount" >{{amount}}</span>
                                 </div>
@@ -91,6 +91,7 @@
                 card_token: null,
                 source: null,
                 currency: 'usd',
+                currencyTo: this.$route.query.currency_type || 'usd',
             }
         },
         mounted() {
@@ -99,6 +100,32 @@
             // this.paypalButtonRender();
         },
         methods: {
+            getCurrencyConverterApi() {
+                if(this.currencyTo === this.currency) {
+                    return this.amount;
+                }
+                let rate = ('usd_'+ this.currencyTo).toUpperCase();
+                var instance = axios.create();
+                delete instance.defaults.headers.common['X-CSRF-TOKEN'];
+                instance({
+                    method: 'get',
+                    url: 'http://free.currencyconverterapi.com/api/v5/convert?q=' + rate + '&compact=ultra',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                })
+                    .then(response => {
+                        // response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3333');
+                        console.log(response.data[rate]);
+                        this.currency = this.currencyTo;
+                        this.amount = (this.amount * response.data[rate]).toFixed(2);
+
+
+                    })
+                    .catch(error => {
+                        console.log(error.response);
+                    });
+            },
             getOrder() {
                 window.axios.get('/api/order/'+this.order_id, {
                     headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')}
@@ -110,10 +137,11 @@
                         this.order_recipient = JSON.parse(response.data.recipient);
                         this.order_address = JSON.parse(response.data.address);
 
+                        // this.currencyTo = 'uah';
                         this.amount = this.order_cart.totalPrice;
                         this.email = this.order_recipient.email;
                         this.description = "Pay for order "+this.order_id+" by "+this.email;
-
+                        this.getCurrencyConverterApi();
                         // for (let key in  this.order_cart.items)
                         // {
                         //     this.items.push({
@@ -181,7 +209,7 @@
                     stripe.createSource({
                         type: "three_d_secure",
                         amount: this.amount * 100,
-                        currency: "usd",
+                        currency: this.currency,
                         owner: {
                             email: this.email,
                             address: {

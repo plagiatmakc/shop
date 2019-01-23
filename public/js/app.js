@@ -63525,7 +63525,8 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l"),
             description: null,
             card_token: null,
             source: null,
-            currency: 'usd'
+            currency: 'usd',
+            currencyTo: this.$route.query.currency_type || 'usd'
         };
     },
     mounted: function mounted() {
@@ -63535,22 +63536,47 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l"),
     },
 
     methods: {
-        getOrder: function getOrder() {
+        getCurrencyConverterApi: function getCurrencyConverterApi() {
             var _this = this;
+
+            if (this.currencyTo === this.currency) {
+                return this.amount;
+            }
+            var rate = ('usd_' + this.currencyTo).toUpperCase();
+            var instance = axios.create();
+            delete instance.defaults.headers.common['X-CSRF-TOKEN'];
+            instance({
+                method: 'get',
+                url: 'http://free.currencyconverterapi.com/api/v5/convert?q=' + rate + '&compact=ultra',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(function (response) {
+                // response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3333');
+                console.log(response.data[rate]);
+                _this.currency = _this.currencyTo;
+                _this.amount = (_this.amount * response.data[rate]).toFixed(2);
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        },
+        getOrder: function getOrder() {
+            var _this2 = this;
 
             window.axios.get('/api/order/' + this.order_id, {
                 headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bigStore.jwt') }
             }).then(function (response) {
                 console.log(response.data);
-                _this.order = response.data;
-                _this.order_cart = JSON.parse(response.data.cart);
-                _this.order_recipient = JSON.parse(response.data.recipient);
-                _this.order_address = JSON.parse(response.data.address);
+                _this2.order = response.data;
+                _this2.order_cart = JSON.parse(response.data.cart);
+                _this2.order_recipient = JSON.parse(response.data.recipient);
+                _this2.order_address = JSON.parse(response.data.address);
 
-                _this.amount = _this.order_cart.totalPrice;
-                _this.email = _this.order_recipient.email;
-                _this.description = "Pay for order " + _this.order_id + " by " + _this.email;
-
+                // this.currencyTo = 'uah';
+                _this2.amount = _this2.order_cart.totalPrice;
+                _this2.email = _this2.order_recipient.email;
+                _this2.description = "Pay for order " + _this2.order_id + " by " + _this2.email;
+                _this2.getCurrencyConverterApi();
                 // for (let key in  this.order_cart.items)
                 // {
                 //     this.items.push({
@@ -63610,7 +63636,7 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l"),
             stripe.createSource({
                 type: "three_d_secure",
                 amount: this.amount * 100,
-                currency: "usd",
+                currency: this.currency,
                 owner: {
                     email: this.email,
                     address: {
@@ -63697,7 +63723,13 @@ var render = function() {
                 },
                 [
                   _c("div", { staticClass: "form-group" }, [
-                    _vm._m(1),
+                    _c("label", { attrs: { for: "Amount" } }, [
+                      _c("strong", [
+                        _vm._v(
+                          "Amount (" + _vm._s(_vm.currency.toUpperCase()) + ")"
+                        )
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
                       _c(
@@ -63718,7 +63750,7 @@ var render = function() {
                     ])
                   ]),
                   _c("div", { staticClass: "form-group" }, [
-                    _vm._m(2),
+                    _vm._m(1),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("input", {
@@ -63746,7 +63778,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group " }, [
-                    _vm._m(3),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("input", {
@@ -63778,7 +63810,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group " }, [
-                    _vm._m(4),
+                    _vm._m(3),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("div", {
@@ -63838,14 +63870,6 @@ var staticRenderFns = [
           })
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "Amount" } }, [
-      _c("strong", [_vm._v("Amount")])
     ])
   },
   function() {
@@ -63958,7 +63982,7 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l");
             message: '',
             email: null,
             amount: null,
-            currency: 'usd',
+            currency: null,
             description: null,
             pollCount: 10,
             isButtonVisible: false,

@@ -13,7 +13,7 @@ class StripeChargeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StripeChargeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'amount' => 'required|numeric',
+            'currency' => 'required|string',
+            'source_id' => 'required|string',
+            'description' => 'nullable|string',
+            'email' => 'required|email',
+            'order_id' => 'required|integer'
         ];
     }
 }

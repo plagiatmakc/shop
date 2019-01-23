@@ -8,6 +8,7 @@ use \Stripe\Token;
 use \Stripe\Charge;
 use App\Order;
 use App\Payment;
+use App\Http\Requests\StripeChargeRequest;
 
 class StripeController extends Controller
 {
@@ -18,7 +19,7 @@ class StripeController extends Controller
 
     }
 
-    public function charge(Request $request)
+    public function charge(StripeChargeRequest $request)
     {
         try {
             // Use Stripe's library to make requests...

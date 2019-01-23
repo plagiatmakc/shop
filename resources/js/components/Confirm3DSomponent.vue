@@ -28,7 +28,7 @@
                 message: '',
                 email: null,
                 amount: null,
-                currency: 'usd',
+                currency: null,
                 description: null,
                 pollCount: 10,
                 isButtonVisible: false,
