@@ -9,6 +9,7 @@ use \Stripe\Charge;
 use App\Order;
 use App\Payment;
 use App\Http\Requests\StripeChargeRequest;
+use Pusher\Pusher;
 
 class StripeController extends Controller
 {
@@ -73,6 +74,20 @@ class StripeController extends Controller
                 ['charge_id' => $charge->id, 'amount' => $charge->amount / 100, 'currency' => $charge->currency,
                     'source_id' => $charge->source->id, 'status' => $charge->status]
             );
+            $options = array(
+                'cluster' => env('PUSHER_APP_CLUSTER'),
+                'useTLS' => true
+            );
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                $options
+            );
+
+            $data['message'] = "Order #$request->order_id was payed!";
+            $data['name'] = $request->email;
+            $pusher->trigger('my-channel', 'my-event', $data);
         } catch (\Exception $e) {
             // Something else happened, completely unrelated to Stripe
             return response()->json($e->getJsonBody());

@@ -55194,7 +55194,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Style the sidebar - fixed full height */\n.sidebar[data-v-a603f2ce] {\n    height: 100%;\n    width: 200px;\n    position: fixed;\n    z-index: 1020;\n    top: 0;\n    left: 0;\n    background-color: #111;\n    overflow-x: hidden;\n    padding-top: 16px;\n}\n\n/* Style sidebar links */\n.sidebar a[data-v-a603f2ce] {\n    padding: 6px 8px 6px 16px;\n    text-decoration: none;\n    font-size: 20px;\n    color: #818181;\n    display: block;\n}\n\n/* Style links on mouse-over */\n.sidebar a[data-v-a603f2ce]:hover {\n    color: #f1f1f1;\n}\n\n/* Style the main content */\n.main[data-v-a603f2ce] {\n    margin-left: 160px; /* Same as the width of the sidenav */\n    padding: 0px 10px;\n}\n\n/* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */\n@media screen and (max-height: 450px) {\n.sidebar[data-v-a603f2ce] {padding-top: 15px;\n}\n.sidebar a[data-v-a603f2ce] {font-size: 18px;\n}\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Style the sidebar - fixed full height */\n.sidebar[data-v-a603f2ce] {\n    height: 100%;\n    width: 200px;\n    position: fixed;\n    z-index: 1020;\n    top: 0;\n    left: 0;\n    background-color: #111;\n    overflow-x: hidden;\n    padding-top: 16px;\n}\n\n/* Style sidebar links */\n.sidebar a[data-v-a603f2ce] {\n    padding: 6px 8px 6px 16px;\n    text-decoration: none;\n    font-size: 20px;\n    color: #818181;\n    display: block;\n}\n\n/* Style links on mouse-over */\n.sidebar a[data-v-a603f2ce]:hover {\n    color: #f1f1f1;\n}\n\n/* Style the main content */\n.main[data-v-a603f2ce] {\n    margin-left: 160px; /* Same as the width of the sidenav */\n    padding: 0px 10px;\n}\n\n/* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */\n@media screen and (max-height: 450px) {\n.sidebar[data-v-a603f2ce] {padding-top: 15px;\n}\n.sidebar a[data-v-a603f2ce] {font-size: 18px;\n}\n}\n", ""]);
 
 // exports
 
@@ -55318,6 +55318,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -55326,6 +55333,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+var pusher = new Pusher("826fc49ea873789c5025", {
+    cluster: "eu",
+    forceTLS: true
+});
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "AdminComponent",
@@ -55338,12 +55350,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            component: 'dashboard'
+            component: 'dashboard',
+            selectChannel: '',
+            channel: null
         };
     },
     mounted: function mounted() {},
 
+    watch: {
+        selectChannel: function selectChannel() {
+
+            this.prepareListner();
+        }
+    },
     methods: {
+        prepareListner: function prepareListner() {
+            if (this.channel !== null) {
+                this.channel.unbind();
+            }
+            this.channel = pusher.subscribe(this.selectChannel);
+
+            this.channel.bind('my-event', function (data) {
+                // alert(data.message);
+                var mess = '<li>' + data.message + '</li>';
+                $('#messages').append(mess);
+            });
+        },
         hideSidebar: function hideSidebar() {
             if ($('.sidebar').css("width") === '200px') {
                 $('.sidebar').animate({ "width": '10px' }, "slow");
@@ -59984,6 +60016,48 @@ var render = function() {
         },
         [_c("i", { staticClass: "fa fa-fw fa-home" }), _vm._v("Show sidebar")]
       ),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectChannel,
+              expression: "selectChannel"
+            }
+          ],
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.selectChannel = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        [
+          _c("option", { attrs: { value: "", disabled: "" } }, [
+            _vm._v("select channel")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "my-channel" } }, [
+            _vm._v("my-channel")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "channel2" } }, [_vm._v("channel2")])
+        ]
+      ),
+      _vm._v(" "),
+      _c("ul", { attrs: { id: "messages" } }),
       _vm._v(" "),
       _c("router-view")
     ],

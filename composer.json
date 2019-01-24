@@ -12,6 +12,7 @@
         "laravel/passport": "^7.0",
         "laravel/tinker": "^1.0",
         "propaganistas/laravel-phone": "^4.1",
+        "pusher/pusher-php-server": "^3.3",
         "stripe/stripe-php": "^6.28"
     },
     "require-dev": {

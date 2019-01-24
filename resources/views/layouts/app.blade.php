@@ -12,6 +12,7 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
     {{--<script src="https://www.paypalobjects.com/api/checkout.js"></script>--}}
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">

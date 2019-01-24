@@ -64,6 +64,13 @@
             <!--&gt;</component>-->
         <!--</keep-alive>-->
         <button class="btn btn-outline-dark btn-sm" @click="showSidebar()"><i class="fa fa-fw fa-home"></i>Show sidebar</button>
+        <select v-model="selectChannel">
+            <option value="" disabled>select channel</option>
+            <option value="my-channel">my-channel</option>
+            <option value="channel2">channel2</option>
+        </select>
+        <ul id="messages">
+        </ul>
         <router-view></router-view>
     </div>
 </template>
@@ -77,6 +84,10 @@ import ProductCreateComponent from './ProductCreateComponent.vue';
 
 import DashboardComponent from './DashboardComponent.vue';
 
+    var pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
+        cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+        forceTLS: true
+    });
 
     export default {
         name: "AdminComponent",
@@ -90,12 +101,32 @@ import DashboardComponent from './DashboardComponent.vue';
         data() {
             return {
                 component: 'dashboard',
+                selectChannel: '',
+                channel: null,
             }
         },
         mounted() {
 
         },
+        watch: {
+            selectChannel () {
+
+                this.prepareListner();
+            }
+        },
         methods: {
+            prepareListner() {
+                if(this.channel !== null){
+                    this.channel.unbind();
+                }
+                this.channel = pusher.subscribe(this.selectChannel);
+
+                this.channel.bind('my-event', function(data) {
+                    // alert(data.message);
+                    let mess = '<li>'+ data.message + '</li>';
+                    $('#messages').append(mess);
+                });
+            },
             hideSidebar() {
                 if($('.sidebar').css("width") === '200px'){
                     $('.sidebar').animate({ "width": '10px'}, "slow");
