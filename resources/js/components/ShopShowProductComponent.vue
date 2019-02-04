@@ -6,7 +6,7 @@
         <!--{{product}}<br/>-->
         <ul style="list-style-type:none;">
             <li style="display: inline-block;">&nbsp;
-                <router-link :to="{path: '/', query: {type: $router.currentRoute.query.type}}">
+                <router-link :to="{path: '/', query: {currency_type: $router.currentRoute.query.currency_type}}">
                     Main
                 </router-link>
             </li>
@@ -17,7 +17,7 @@
                 &raquo;&nbsp;
                 <router-link
                     :to="{ path: '/category/'+breadCrumb.id,
-                           query: { type: $router.currentRoute.query.type,}
+                           query: { currency_type: $router.currentRoute.query.currency_type,}
                           }"
                 >
                     {{breadCrumb.title}}
@@ -79,12 +79,12 @@
             }
         },
         mounted() {
-            this.getProductInfo(this.product_id, this.$router.currentRoute.query.type);
+            this.getProductInfo(this.product_id, this.$router.currentRoute.query.currency_type);
 
         },
         watch: {
             '$route'(to, from) {
-                this.getProductInfo(this.product_id, this.$router.currentRoute.query.type);
+                this.getProductInfo(this.product_id, this.$router.currentRoute.query.currency_type);
             }
         },
         methods: {
@@ -93,7 +93,7 @@
                 this.breadcrumbsCategory = [];
                 window.axios.get('/products/' + id, {
                     params: {
-                        type: currency,
+                        currency_type: currency,
                     }
                 }).then(response => {
                     this.product = response.data;

@@ -12,7 +12,7 @@
                         <img class="card-img-top" src="/images/No_Image.png" width="100%">
                     </div>
                     <div class="card-body">
-                        <router-link :to="{path: '/product/'+ product.id , query: {type: $router.currentRoute.query.type}}" class="card-title">{{product.name}}</router-link>
+                        <router-link :to="{path: '/product/'+ product.id , query: {currency_type: $router.currentRoute.query.currency_type}}" class="card-title">{{product.name}}</router-link>
                         <p class="card-text">{{product.price}} {{product.currency}}</p>
                     </div>
                 </div>
@@ -33,13 +33,13 @@
         mounted() {
             this.getProductsByCategory("/get-last-products?page=" + this.$router.currentRoute.query.page,
                 this.$router.currentRoute.query.pagination,
-                this.$router.currentRoute.query.type);
+                this.$router.currentRoute.query.currency_type);
         },
         watch: {
             '$route'(to, from) {
                 this.getProductsByCategory("/get-last-products?page=" + this.$router.currentRoute.query.page,
                     this.$router.currentRoute.query.pagination,
-                    this.$router.currentRoute.query.type
+                    this.$router.currentRoute.query.currency_type
                 );
             }
         },
@@ -49,7 +49,7 @@
                     params: {
                         category: this.category_id,
                         pagination: items,
-                        type: currency,
+                        currency_type: currency,
                     }
                 })
                     .then(response => {

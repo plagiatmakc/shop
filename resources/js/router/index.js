@@ -21,6 +21,7 @@ import OrderPaymentComponent from '../components/OrderPaymentComponent.vue';
 import Confirm3DSomponent from '../components/Confirm3DSomponent.vue';
 import OrdersIndexComponent from "../components/OrdersIndexComponent.vue";
 import OrderShowComponent from '../components/OrderShowComponent.vue';
+import ExampleComponent from '../components/ExampleComponent.vue';
 
 export default new Router({
     routes: [
@@ -121,6 +122,12 @@ export default new Router({
             path: '/register',
             name: 'register',
             component: RegisterComponent,
+            props: true
+        },
+        {
+            path: '/example',
+            name: 'example',
+            component: ExampleComponent,
             props: true
         },
         {

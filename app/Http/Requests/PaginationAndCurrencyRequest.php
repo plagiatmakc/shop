@@ -29,7 +29,7 @@ class PaginationAndCurrencyRequest extends FormRequest
     {
         return [
             'pagination' => 'integer|min:1|nullable',
-            'type' => [
+            'currency_type' => [
                 'string',
                 Rule::in($this->type_of_currency),
                 'nullable',

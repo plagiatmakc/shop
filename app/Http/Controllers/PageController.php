@@ -18,8 +18,8 @@ class PageController extends Controller
     public function index(Request $request, CategoryRepository $categoryRepository, CartImplementation $cart)
     {
         $response = ProductsRepository::getProductsByCategory($request->category ?? "all", $request->pagination ?? 5);
-        if ($request->type != null) {
-            $response = ProductsRepository::convert_to($request->type, $response);
+        if ($request->currency_type != null) {
+            $response = ProductsRepository::convert_to($request->currency_type, $response);
         }
 
         return view('welcome', [
@@ -32,8 +32,8 @@ class PageController extends Controller
     public function getLastProducts(PaginationAndCurrencyRequest $request, CategoryRepository $categoryRepository, CartImplementation $cart)
     {
         $response = ProductsRepository::getProductsByCategory($request->category ?? "all", $request->pagination ?? 5);
-        if ($request->type != null) {
-            $response = ProductsRepository::convert_to($request->type, $response);
+        if ($request->currency_type != null) {
+            $response = ProductsRepository::convert_to($request->currency_type, $response);
         }
         return response($response);
     }

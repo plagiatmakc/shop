@@ -64,13 +64,31 @@
             <!--&gt;</component>-->
         <!--</keep-alive>-->
         <button class="btn btn-outline-dark btn-sm" @click="showSidebar()"><i class="fa fa-fw fa-home"></i>Show sidebar</button>
-        <select v-model="selectChannel">
-            <option value="" disabled>select channel</option>
-            <option value="my-channel">my-channel</option>
-            <option value="channel2">channel2</option>
-        </select>
-        <ul id="messages">
-        </ul>
+        <div id="messageSection" class="small" style="">
+            <label class="form-check-label">Messages from channel: </label>
+            <select v-model="selectChannel" class="custom-select-sm btn">
+                <option value="" disabled>select channel</option>
+                <option value="my-channel">my-channel</option>
+                <option value="channel2">channel2</option>
+            </select>
+            <table class="table table-striped table-hover table-sm">
+                <tbody id="messages">
+
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <div class="dropdown">
+                <button class="btn btn-sm " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    :
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+        </div>
         <router-view></router-view>
     </div>
 </template>
@@ -106,7 +124,10 @@ import DashboardComponent from './DashboardComponent.vue';
             }
         },
         mounted() {
-
+            // $(document).on("click",".close", function(e){
+            //     $(e.target).closest("tr").hide();
+            //     // alert(e.target.innerHTML);
+            // });
         },
         watch: {
             selectChannel () {
@@ -123,7 +144,7 @@ import DashboardComponent from './DashboardComponent.vue';
 
                 this.channel.bind('my-event', function(data) {
                     // alert(data.message);
-                    let mess = '<li>'+ data.message + '</li>';
+                    let mess = "<tr class='row'><td>"+data.name+': '+data.message+"</td><td>"+Date()+"</td><td><button class='close'>x</button></td></tr>";
                     $('#messages').append(mess);
                 });
             },

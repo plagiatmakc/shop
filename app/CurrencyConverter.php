@@ -17,7 +17,7 @@ class CurrencyConverter
         $to_rate = $this->currencies[$need];
         $price = $price * $to_rate / $from_rate;
 
-        return $price;
+        return ceil($price*100)/100;
     }
 
 }

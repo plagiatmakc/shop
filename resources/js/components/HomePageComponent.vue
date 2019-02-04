@@ -14,7 +14,7 @@
                                  :class=" $router.currentRoute.query.pagination == 3 ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
                                         query:{ pagination: 3,
-                                                type: $router.currentRoute.query.type
+                                                currency_type: $router.currentRoute.query.currency_type
                                                }
                                  }"
                     >per 3</router-link>
@@ -22,7 +22,7 @@
                                  :class=" $router.currentRoute.query.pagination == 5 ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
                                         query:{ pagination: 5,
-                                                type: $router.currentRoute.query.type
+                                                currency_type: $router.currentRoute.query.currency_type
                                                }
                                  }"
                     >per 5</router-link>
@@ -30,7 +30,7 @@
                                  :class=" $router.currentRoute.query.pagination == 10 ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
                                         query:{ pagination: 10,
-                                                type: $router.currentRoute.query.type
+                                                currency_type: $router.currentRoute.query.currency_type
                                                }
                                  }"
                     >per 10</router-link>
@@ -44,25 +44,25 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkCurrency">
                     <router-link class="dropdown-item"
-                                 :class=" $router.currentRoute.query.type == 'usd' ? 'text-danger' : '' "
+                                 :class=" $router.currentRoute.query.currency_type == 'usd' ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
-                                        query:{ type: 'usd',
+                                        query:{ currency_type: 'usd',
                                                 pagination: $router.currentRoute.query.pagination
                                                }
                                  }"
                     >USD</router-link>
                     <router-link class="dropdown-item"
-                                 :class="$router.currentRoute.query.type == 'eur' ? 'text-danger' : '' "
+                                 :class="$router.currentRoute.query.currency_type == 'eur' ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
-                                        query:{ type: 'eur',
+                                        query:{ currency_type: 'eur',
                                                 pagination: $router.currentRoute.query.pagination
                                               }
                                  }"
                     >EUR</router-link>
                     <router-link class="dropdown-item"
-                                 :class="$router.currentRoute.query.type == 'uah' ? 'text-danger' : '' "
+                                 :class="$router.currentRoute.query.currency_type == 'uah' ? 'text-danger' : '' "
                                  :to="{ path: $router.path,
-                                        query:{ type: 'uah',
+                                        query:{ currency_type: 'uah',
                                                 pagination: $router.currentRoute.query.pagination
                                                }
                                  }"
@@ -91,7 +91,7 @@
                         <div class="card-body">
                             <router-link class="card-title"
                                          :to="{ path: '/product/'+ product.id ,
-                                                query: { type: $router.currentRoute.query.type }
+                                                query: { currency_type: $router.currentRoute.query.currency_type }
                                                }"
                             >
                                 <div class="text">
@@ -130,7 +130,7 @@
             this.getLastAddedProducts(
                 "/get-last-products?page=" + this.$router.currentRoute.query.page,
                 this.$router.currentRoute.query.pagination,
-                this.$router.currentRoute.query.type
+                this.$router.currentRoute.query.currency_type
             );
         },
         watch: {
@@ -138,7 +138,7 @@
                 this.getLastAddedProducts(
                     "/get-last-products?page=" + this.$router.currentRoute.query.page,
                     this.$router.currentRoute.query.pagination,
-                    this.$router.currentRoute.query.type
+                    this.$router.currentRoute.query.currency_type
                 );
             }
         },
@@ -147,7 +147,7 @@
                 window.axios.get(url,{
                     params: {
                         pagination: items,
-                        type: currency,
+                        currency_type: currency,
                     }
                 })
                     .then(response => {
@@ -159,7 +159,7 @@
                             query: {
                                 pagination: this.items_per_page,
                                 page: response.data.current_page,
-                                type: this.currency,
+                                currency_type: this.currency,
                             }
                         });
                         console.log(response.data);

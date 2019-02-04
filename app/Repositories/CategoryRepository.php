@@ -56,7 +56,7 @@ class CategoryRepository
             } else {
                 $result = Category::findOrFail($id)->delete();
             }
-            return $result;
+            return true;
 
         } catch (Exception $e) {
             report($e);

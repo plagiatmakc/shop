@@ -57,8 +57,9 @@ class ProductRepository
 
     public function updateRecord($request, $product_id)
     {
-        $product_to_update = Product::findOrFail($product_id);
+
         try {
+            $product_to_update = Product::findOrFail($product_id);
             $product_to_update->update($request);
         } catch (Exception $e) {
             report($e);
@@ -66,6 +67,7 @@ class ProductRepository
         }
         $product_to_update->categories()
             ->sync($request['categories'] ?? []);
+        return $product_to_update;
     }
 
     public function delete($product_id)
@@ -78,8 +80,9 @@ class ProductRepository
             report($e);
             return false;
         }
-        $product_to_delete = Product::findOrFail($product_id);
+
         try {
+            $product_to_delete = Product::findOrFail($product_id);
             $product_to_delete->categories()->detach();
             if ($product_to_delete->has('product_images')) {
                 $imageRepository->deleteImagesByProduct($product_id);
@@ -87,8 +90,9 @@ class ProductRepository
             $product_to_delete->delete();
         } catch (Exception $e) {
             report($e);
-            return false;
+            return response("Product is not found", 404);
         }
+        return response("Success", 200);
     }
 
     public function convert_to($type, $products)

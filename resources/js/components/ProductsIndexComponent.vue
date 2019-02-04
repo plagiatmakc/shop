@@ -5,7 +5,7 @@
         </div>
         <div v-else>
             <router-link :to="{path: $route.fullPath, query: {pagination: 3}}">Per 3</router-link>
-            <router-link :to="{path: $route.fullPath, query: {type: 'eur'}}">EUR</router-link>
+            <router-link :to="{path: $route.fullPath, query: {currency_type: 'eur'}}">EUR</router-link>
             <table class="table table-responsive table-sm">
                 <thead>
                 <tr >
@@ -114,7 +114,7 @@ overflow: hidden;">{{product.name}}</h5>
                 //                                 this.$router.currentRoute.query.type);
                 this.getProductsWithPagination("/products?page=" + this.$router.currentRoute.query.page,
                     this.$router.currentRoute.query.pagination,
-                    this.$router.currentRoute.query.type,
+                    this.$router.currentRoute.query.currency_type,
                 );
 
             }
@@ -123,7 +123,7 @@ overflow: hidden;">{{product.name}}</h5>
             // this.getProductsWithPagination(this.$router.currentRoute.query.pagination,this.$router.currentRoute.query.type);
             this.getProductsWithPagination("/products?page=" + this.$router.currentRoute.query.page,
                 this.$router.currentRoute.query.pagination,
-                this.$router.currentRoute.query.type,
+                this.$router.currentRoute.query.currency_type,
             );
         },
         created() {
@@ -131,7 +131,7 @@ overflow: hidden;">{{product.name}}</h5>
                  //this.getProductsWithPagination();
                  this.getProductsWithPagination("/products?page=" + this.$router.currentRoute.query.page,
                      this.$router.currentRoute.query.pagination,
-                     this.$router.currentRoute.query.type,
+                     this.$router.currentRoute.query.currency_type,
                  );
                  this.isModalVisible = false;
              });
@@ -142,7 +142,7 @@ overflow: hidden;">{{product.name}}</h5>
                 window.axios.get(url, {
                     params: {
                         pagination: items,
-                        type: currency,
+                        currency_type: currency,
                     }
                 })
                 .then(response => {
@@ -156,7 +156,7 @@ overflow: hidden;">{{product.name}}</h5>
                         query: {
                             pagination: this.items_per_page,
                             page: this.pagination.current_page,
-                            type: this.type_of_currency
+                            currency_type: this.type_of_currency
                         }
                     });
                     this.loading = false;
