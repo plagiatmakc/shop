@@ -73,7 +73,16 @@
             </select>
             <table class="table table-striped table-hover table-sm">
                 <tbody id="messages">
-
+                <tr class="row" v-for="message in messages" >
+                    <td>{{message.room}}: {{message.msg}}</td>
+                    <td>{{message.time}}</td>
+                    <td v-if="message.room !== null" >
+                        <router-link :to="{name: 'support', params: { room_id: message.room } , query: { role: 'admin'} }" target="_blank">Open Chat</router-link>
+                    </td>
+                    <td>
+                        <button class="close" onclick="alert()">x</button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -102,7 +111,7 @@ import ProductCreateComponent from './ProductCreateComponent.vue';
 
 import DashboardComponent from './DashboardComponent.vue';
 
-    var pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
+    let pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
         cluster: process.env.MIX_PUSHER_APP_CLUSTER,
         forceTLS: true
     });
@@ -121,6 +130,7 @@ import DashboardComponent from './DashboardComponent.vue';
                 component: 'dashboard',
                 selectChannel: '',
                 channel: null,
+                messages: [],
             }
         },
         mounted() {
@@ -132,20 +142,25 @@ import DashboardComponent from './DashboardComponent.vue';
         watch: {
             selectChannel () {
 
-                this.prepareListner();
+                this.prepareListener();
             }
         },
         methods: {
-            prepareListner() {
+            prepareListener() {
                 if(this.channel !== null){
                     this.channel.unbind();
                 }
                 this.channel = pusher.subscribe(this.selectChannel);
-
+                let vm = this;
                 this.channel.bind('my-event', function(data) {
                     // alert(data.message);
-                    let mess = "<tr class='row'><td>"+data.name+': '+data.message+"</td><td>"+Date()+"</td><td><button class='close'>x</button></td></tr>";
-                    $('#messages').append(mess);
+                    vm.messages.push({name: data.name, msg: data.message, room: data.room_id || null , time: data.time});
+                    // let mess = '<tr class="row">' +
+                    //            '<td>'+data.name+': '+data.message+'</td>' +
+                    //            '<td>'+Date()+'</td>' +
+                    //            '<td><button class="close" onclick="alert()">x</button></td>' +
+                    //            '</tr>';
+                    // $('#messages').append(mess);
                 });
             },
             hideSidebar() {

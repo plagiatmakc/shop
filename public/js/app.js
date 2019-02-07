@@ -55126,7 +55126,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.message-item[data-v-299e239e] {\n    display: block;\n    margin-right: 10px;\n    -webkit-transition: all .3s;\n    transition: all .3s;\n}\n.message-enter-active[data-v-299e239e], .message-leave-active[data-v-299e239e] {\n    -webkit-transition: all 1s;\n    transition: all 1s;\n    position: absolute;\n}\n.message-enter[data-v-299e239e], .message-leave-to[data-v-299e239e] {\n    opacity: 0;\n    -webkit-transform: translateY(30px);\n            transform: translateY(30px);\n    /*transform: scale3d(10,10,10);*/\n}\n.task-item[data-v-299e239e] {\n    display: block;\n    margin-right: 10px;\n    -webkit-transition: all .3s;\n    transition: all .3s;\n}\n.task-enter-active[data-v-299e239e], .task-leave-active[data-v-299e239e] {\n    -webkit-transition: all 1s;\n    transition: all 1s;\n    position: absolute;\n}\n.task-enter[data-v-299e239e], .task-leave-to[data-v-299e239e] {\n    opacity: 0;\n    /*transform: translateX(-30px);*/\n}\n.subtask-item[data-v-299e239e] {\n    display: block;\n    margin-right: 10px;\n    -webkit-transition: all .3s;\n    transition: all .3s;\n}\n.subtask-enter-active[data-v-299e239e], .subtask-leave-active[data-v-299e239e] {\n    -webkit-transition: all 1s;\n    transition: all 1s;\n    position: absolute;\n}\n.subtask-enter[data-v-299e239e], .subtask-leave-to[data-v-299e239e] {\n    opacity: 0;\n    -webkit-transform: translateX(-30px);\n            transform: translateX(-30px);\n}\n.icon-background[data-v-299e239e] {\n    color: white;\n}\n\n/*.message-item {*/\n    /*background-color: #f1f1f1;*/\n    /*box-shadow: rgb(0, 0, 0) 1px 1px,*/\n    /*rgb(20, 20, 20) 2px 2px,*/\n    /*rgb(35, 35, 35) 3px 3px,*/\n    /*rgb(40, 40, 40) 4px 4px,*/\n    /*rgb(45, 45, 45) 5px 5px,*/\n    /*rgb(50, 50, 50) 6px 6px,*/\n    /*rgb(60, 60, 60) 7px 7px,*/\n    /*rgb(60, 60, 60) 8px 8px,*/\n    /*rgb(70, 70, 70) 9px 9px,*/\n    /*rgb(90, 90, 90) 10px 10px;*/\n    /*text-align: center;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n.scrollable-wrapper[data-v-299e239e] {\n    height: 350px;\n    overflow-y: auto;\n    /*display: flex;*/\n    /*flex-direction: column-reverse;*/\n}\n.scrollable-display[data-v-299e239e] {\n\n    display: -webkit-box;\n\n    display: -ms-flexbox;\n\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: reverse;\n        -ms-flex-direction: column-reverse;\n            flex-direction: column-reverse;\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1;\n}\n.message-item[data-v-299e239e] {\n    display: block;\n    margin-right: 10px;\n    -webkit-transition: all .3s;\n    transition: all .3s;\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n.message-enter-active[data-v-299e239e], .message-leave-active[data-v-299e239e] {\n    -webkit-transition: all .1s;\n    transition: all .1s;\n    position: absolute;\n}\n.message-enter[data-v-299e239e], .message-leave-to[data-v-299e239e] {\n    opacity: 0;\n    -webkit-transform: translateY(30px);\n            transform: translateY(30px);\n    /*transform: scale3d(10,10,10);*/\n}\n.icon-background[data-v-299e239e] {\n    color: white;\n}\n\n/*.message-item {*/\n/*background-color: #f1f1f1;*/\n/*box-shadow: rgb(0, 0, 0) 1px 1px,*/\n/*rgb(20, 20, 20) 2px 2px,*/\n/*rgb(35, 35, 35) 3px 3px,*/\n/*rgb(40, 40, 40) 4px 4px,*/\n/*rgb(45, 45, 45) 5px 5px,*/\n/*rgb(50, 50, 50) 6px 6px,*/\n/*rgb(60, 60, 60) 7px 7px,*/\n/*rgb(60, 60, 60) 8px 8px,*/\n/*rgb(70, 70, 70) 9px 9px,*/\n/*rgb(90, 90, 90) 10px 10px;*/\n/*text-align: center;*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -55256,128 +55256,91 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
+var pusher = new Pusher("826fc49ea873789c5025", {
+    cluster: "eu",
+    forceTLS: true
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['room_id'],
     data: function data() {
         return {
             messages: [],
-            newTaskId: '',
-            newTaskValue: '',
             simpleMsg: '',
             msgCount: 0,
-            isModalVisible: false,
-            tasks: [{ id: 'Unteraufgaben1', value: ["Unteraufgabe 1", "Unteraufgabe 2", "Unteraufgabe 3"]
-            }, { id: 'Unteraufgaben2', value: ["Unteraufgabe 1"]
-            }]
+            selectChannel: null,
+            role: this.$router.currentRoute.query.role || null,
+            onAir: 'btn-danger',
+            btn_onAir: 'Please wait free operators...',
+            avatar: JSON.parse(localStorage.getItem('bigStore.user')).avatar
         };
     },
     mounted: function mounted() {
         console.log('Component mounted.');
+        this.sendInvite(this.room_id);
     },
 
     methods: {
-        appendTask: function appendTask() {
-            var vm = this;
-            var isIdExists = false;
-            this.tasks.forEach(function (item) {
-                console.log(item);
-                if (item.id === vm.newTaskId) {
-                    item.value.push(vm.newTaskValue);
-                    isIdExists = true;
-                }
-            });
-            if (!isIdExists) {
-                vm.tasks.push({ id: vm.newTaskId, value: [vm.newTaskValue] });
+        sendInvite: function sendInvite(room) {
+            var _this = this;
+
+            if (this.role === null) {
+                window.axios.post('/api/send-invite', {
+                    room_id: room,
+                    message: 'visit room to chat with me'
+                }).then(function (response) {
+                    _this.selectChannel = room;
+                    _this.prepareListener();
+                }).catch(function (error) {
+                    console.log(error.response);
+                });
+            } else {
+                this.selectChannel = room;
+                this.prepareListener();
+                this.simpleMsg = 'Support join to chat\n';
+                this.appendMessage();
+                this.simpleMsg = 'How can i help you?\n';
+                this.appendMessage();
             }
-            this.newTaskId = '';
-            this.newTaskValue = '';
         },
-        removeSubtask: function removeSubtask(key, subkey) {
-            Vue.delete(this.tasks[key].value, subkey);
+        prepareListener: function prepareListener() {
+
+            this.channel = pusher.subscribe(this.selectChannel);
+            var vm = this;
+            this.channel.bind('my-event', function (data) {
+                if (data.message === 'Support join to chat') {
+                    vm.onAir = 'btn-success';
+                    vm.btn_onAir = 'Support on-air';
+                }
+                vm.messages.push({ id: vm.msgCount++, name: data.name, msg: data.message, avatar: data.avatar });
+                vm.autoScrollDown();
+            });
         },
         appendMessage: function appendMessage() {
-            this.messages.push({ id: this.msgCount++, msg: this.simpleMsg.slice(0, -1) });
-            this.simpleMsg = '';
+            var _this2 = this;
+
+            if (this.simpleMsg.length > 1) {
+                window.axios.post('/api/messenger', {
+                    channel: this.selectChannel,
+                    message: this.simpleMsg.slice(0, -1),
+                    avatar: JSON.parse(localStorage.getItem('bigStore.user')).avatar
+                }).then(function (response) {
+                    _this2.simpleMsg = '';
+                }).catch(function (error) {
+                    console.log(error.response);
+                });
+            }
         },
         removeMsg: function removeMsg(index) {
             Vue.delete(this.messages, index);
         },
-        showModal: function showModal() {
-            this.isModalVisible = true;
-            $("#exampleModal").modal('show');
+        autoScrollDown: function autoScrollDown() {
+            // $('.scrollable-wrapper').scrollTop(10000000);
+            var objDiv = document.getElementById("scrollDisplay");
+            // objDiv.scrollTop = objDiv.scrollHeight - objDiv.clientHeight;
+            $('#scrollDisplay').animate({
+                scrollTop: objDiv.scrollHeight //- objDiv.clientHeight
+            }, 1000);
         }
     }
 });
@@ -55394,285 +55357,176 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card card-default" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("h3", [_vm._v("Wohnzimmer aufräumen")]),
-            _c("br"),
-            _vm._v(" "),
-            _c("div", { staticClass: "d-flex bd-highlight mb-3" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _vm._m(2),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-0 bd-highlight" }, [
-                _c("div", { staticClass: "dropdown" }, [
-                  _vm._m(4),
-                  _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "card-header m-0",
+              staticStyle: { height: "42px", "padding-top": "2px" }
+            },
+            [
+              _c("div", { staticClass: "d-flex bd-highlight mb-3" }, [
+                _c("div", { staticClass: "p-0 bd-highlight" }, [
                   _c(
-                    "div",
-                    {
-                      staticClass: "dropdown-menu",
-                      attrs: { "aria-labelledby": "dropdownTaskButton" }
-                    },
-                    [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "dropdown-item",
-                          on: {
-                            click: function($event) {
-                              _vm.showModal()
-                            }
-                          }
-                        },
-                        [_vm._v("New")]
-                      )
-                    ]
+                    "button",
+                    { class: "btn " + _vm.onAir, attrs: { disabled: "" } },
+                    [_vm._v(_vm._s(_vm.btn_onAir))]
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _vm._m(3)
               ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "ul",
-              { staticStyle: { "list-style": "none", "padding-left": "0px" } },
-              [
-                _c(
-                  "transition-group",
-                  { attrs: { name: "task" } },
-                  _vm._l(_vm.tasks, function(task, key) {
-                    return _c(
-                      "li",
-                      { key: task.id, staticClass: "task-item" },
-                      [
-                        _c("strong", [_vm._v(_vm._s(task.id))]),
-                        _vm._v(" "),
-                        _c(
-                          "ul",
-                          {
-                            staticStyle: {
-                              "list-style": "none",
-                              "padding-left": "0px"
-                            }
-                          },
-                          [
-                            _c(
-                              "transition-group",
-                              { attrs: { name: "subtask", tag: "p" } },
-                              _vm._l(task.value, function(subtask, subkey) {
-                                return _c(
-                                  "li",
-                                  {
-                                    key: subtask,
-                                    staticClass: "subtask-item",
-                                    staticStyle: { margin: "10px" }
-                                  },
-                                  [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "d-flex p-0",
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "card-body scrollable-wrapper",
+              attrs: { id: "scrollDisplay" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "scrollable-display" },
+                [
+                  _c(
+                    "transition-group",
+                    { attrs: { name: "message", tag: "p" } },
+                    _vm._l(_vm.messages, function(message, index) {
+                      return _c(
+                        "div",
+                        { key: message.id, staticClass: "message-item" },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "form-group d-flex mb-3 bd-highlight"
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticStyle: { "max-width": "50px" } },
+                                [
+                                  message.avatar != null
+                                    ? _c("img", {
                                         staticStyle: {
-                                          "background-color": "#f1f1f1",
-                                          "border-radius": "5px"
+                                          "border-radius": "25px"
+                                        },
+                                        attrs: {
+                                          src: "/storage/" + message.avatar
                                         }
-                                      },
-                                      [
+                                      })
+                                    : _vm._e()
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "d-flex",
+                                  staticStyle: {
+                                    "background-color": "lightgoldenrodyellow",
+                                    width: "300px"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "p-2 mr-auto bd-highlight",
+                                      staticStyle: { width: "280px" }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                            " +
+                                          _vm._s(message.msg) +
+                                          "\n                                        "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "p-2  bd-hightlight" },
+                                    [
+                                      _c("div", { staticClass: "dropdown" }, [
                                         _c(
-                                          "div",
-                                          { staticClass: "mr-auto p-0" },
+                                          "button",
+                                          {
+                                            staticClass: "btn",
+                                            attrs: {
+                                              type: "button",
+                                              id: "dropdownMsgButton",
+                                              "data-toggle": "dropdown",
+                                              "aria-haspopup": "true",
+                                              "aria-expanded": "false"
+                                            }
+                                          },
                                           [
                                             _c("i", {
-                                              staticClass: "fa fa-circle-o p-2",
+                                              staticClass: "fa fa-ellipsis-v",
                                               attrs: { "aria-hidden": "true" }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("strong", [
-                                              _vm._v(_vm._s(subtask))
-                                            ])
+                                            })
                                           ]
                                         ),
                                         _vm._v(" "),
-                                        _c("div", { staticClass: "p-0" }, [
-                                          _c(
-                                            "div",
-                                            { staticClass: "dropdown" },
-                                            [
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass: "btn",
-                                                  attrs: {
-                                                    type: "button",
-                                                    id: "dropdownMenuButton",
-                                                    "data-toggle": "dropdown",
-                                                    "aria-haspopup": "true",
-                                                    "aria-expanded": "false"
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "dropdown-menu",
+                                            attrs: {
+                                              "aria-labelledby":
+                                                "dropdownMsgButton"
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "dropdown-item",
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.removeMsg(index)
                                                   }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "fa fa-ellipsis-v",
-                                                    attrs: {
-                                                      "aria-hidden": "true"
-                                                    }
-                                                  })
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                {
-                                                  staticClass: "dropdown-menu",
-                                                  attrs: {
-                                                    "aria-labelledby":
-                                                      "dropdownMenuButton"
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "dropdown-item",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.removeSubtask(
-                                                            key,
-                                                            subkey
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [_vm._v("Delete")]
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          )
-                                        ])
-                                      ]
-                                    )
-                                  ]
-                                )
-                              })
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  })
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              [
-                _c(
-                  "transition-group",
-                  { attrs: { name: "message", tag: "p" } },
-                  _vm._l(_vm.messages, function(message, index) {
-                    return _c(
-                      "div",
-                      { key: message.id, staticClass: "message-item" },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "form-group d-flex mb-3 bd-highlight"
-                          },
-                          [
-                            _c("i", {
-                              staticClass:
-                                "fa fa-circle fa-3x p-2 bd-highlight",
-                              attrs: { "aria-hidden": "true" }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "p-2 mr-auto bd-highlight" },
-                              [
-                                _vm._v(
-                                  "\n                                        " +
-                                    _vm._s(message.msg) +
-                                    "\n                                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-2 bd-highlight" }, [
-                              _c("div", { staticClass: "dropdown" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn",
-                                    attrs: {
-                                      type: "button",
-                                      id: "dropdownMsgButton",
-                                      "data-toggle": "dropdown",
-                                      "aria-haspopup": "true",
-                                      "aria-expanded": "false"
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fa fa-ellipsis-v",
-                                      attrs: { "aria-hidden": "true" }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "dropdown-menu",
-                                    attrs: {
-                                      "aria-labelledby": "dropdownMsgButton"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "a",
-                                      {
-                                        staticClass: "dropdown-item",
-                                        on: {
-                                          click: function($event) {
-                                            _vm.removeMsg(index)
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Delete")]
-                                    )
-                                  ]
-                                )
-                              ])
-                            ])
-                          ]
-                        )
-                      ]
-                    )
-                  })
-                )
-              ],
-              1
-            )
-          ]),
+                                                }
+                                              },
+                                              [_vm._v("Delete")]
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    })
+                  )
+                ],
+                1
+              )
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "card-footer" }, [
             _c("div", { staticClass: "form-group d-flex bd-highlight" }, [
-              _c("i", {
-                staticClass: "fa fa-circle fa-3x p-2 bd-highlight",
-                attrs: { "aria-hidden": "true" }
-              }),
+              _c("div", { staticStyle: { "max-width": "50px" } }, [
+                _vm.avatar != null
+                  ? _c("img", {
+                      staticStyle: { "border-radius": "25px" },
+                      attrs: { src: "/storage/" + _vm.avatar }
+                    })
+                  : _vm._e()
+              ]),
               _vm._v(" "),
               _c("textarea", {
                 directives: [
@@ -55685,7 +55539,7 @@ var render = function() {
                 ],
                 staticClass: "form-control p-2 flex-grow-1 bd-highlight",
                 staticStyle: { resize: "none" },
-                attrs: { rows: "3", placeholder: "Ziele updaten..." },
+                attrs: { rows: "3", placeholder: "Message..." },
                 domProps: { value: _vm.simpleMsg },
                 on: {
                   keyup: function($event) {
@@ -55706,171 +55560,7 @@ var render = function() {
                 }
               })
             ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isModalVisible,
-                  expression: "isModalVisible"
-                }
-              ],
-              staticClass: "modal fade",
-              attrs: {
-                id: "exampleModal",
-                tabindex: "-1",
-                role: "dialog",
-                "aria-labelledby": "exampleModalLabel",
-                "aria-hidden": "true"
-              }
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "modal-dialog", attrs: { role: "document" } },
-                [
-                  _c("div", { staticClass: "modal-content" }, [
-                    _c("div", { staticClass: "modal-header" }, [
-                      _c(
-                        "h5",
-                        {
-                          staticClass: "modal-title",
-                          attrs: { id: "exampleModalLabel" }
-                        },
-                        [_vm._v("New task")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "close",
-                          attrs: {
-                            type: "button",
-                            "data-dismiss": "modal",
-                            "aria-label": "Close"
-                          },
-                          on: {
-                            click: function($event) {
-                              _vm.isModalVisible = false
-                            }
-                          }
-                        },
-                        [
-                          _c("span", { attrs: { "aria-hidden": "true" } }, [
-                            _vm._v("×")
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c("form", [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "col-form-label",
-                              attrs: { for: "recipient-name" }
-                            },
-                            [_vm._v("Task title:")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.newTaskId,
-                                expression: "newTaskId"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text", id: "recipient-name" },
-                            domProps: { value: _vm.newTaskId },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.newTaskId = $event.target.value
-                              }
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "col-form-label",
-                              attrs: { for: "message-text" }
-                            },
-                            [_vm._v("Subtask:")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.newTaskValue,
-                                expression: "newTaskValue"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { id: "message-text" },
-                            domProps: { value: _vm.newTaskValue },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.newTaskValue = $event.target.value
-                              }
-                            }
-                          })
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-footer" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary",
-                          attrs: { type: "button", "data-dismiss": "modal" },
-                          on: {
-                            click: function($event) {
-                              _vm.isModalVisible = false
-                            }
-                          }
-                        },
-                        [_vm._v("Close")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.appendTask()
-                            }
-                          }
-                        },
-                        [_vm._v("Create")]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]
-          )
+          ])
         ])
       ])
     ])
@@ -55881,80 +55571,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "card-header m-0",
-        staticStyle: { height: "42px", "padding-top": "2px" }
-      },
-      [
-        _c("div", { staticClass: "d-flex bd-highlight mb-3" }, [
-          _c("div", { staticClass: "p-0 bd-highlight" }, [
-            _c(
-              "button",
-              { staticClass: "btn btn-secondary", attrs: { disabled: "" } },
-              [_vm._v("Erledigt")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "pl-2 bd-highlight mr-auto" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn rounded-circle",
-                staticStyle: { "background-color": "black", padding: "3px" }
-              },
-              [
-                _c("span", { staticClass: "fa-stack " }, [
-                  _c("i", {
-                    staticClass: "fa fa-circle fa-stack-2x icon-background"
-                  }),
-                  _vm._v(" "),
-                  _c("i", { staticClass: "fa fa-play-circle-o fa-stack-2x" })
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-0 bd-highlight" }, [
-            _c("button", { staticClass: "btn", attrs: { disabled: "" } }, [
-              _c("i", {
-                staticClass: "fa fa-bars",
-                attrs: { "aria-hidden": "true" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-0 bd-highlight" }, [
-            _c("button", { staticClass: "btn ", attrs: { disabled: "" } }, [
-              _c("i", {
-                staticClass: "fa fa-paperclip ",
-                attrs: { "aria-hidden": "true" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-0 bd-highlight" }, [
-            _c("button", { staticClass: "btn ", attrs: { disabled: "" } }, [
-              _c("i", {
-                staticClass: "fa fa-ellipsis-v",
-                attrs: { "aria-hidden": "true" }
-              })
-            ])
+    return _c("div", { staticClass: "pl-2 bd-highlight mr-auto" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn rounded-circle",
+          staticStyle: { "background-color": "black", padding: "3px" }
+        },
+        [
+          _c("span", { staticClass: "fa-stack " }, [
+            _c("i", {
+              staticClass: "fa fa-circle fa-stack-2x icon-background"
+            }),
+            _vm._v(" "),
+            _c("i", { staticClass: "fa fa-play-circle-o fa-stack-2x" })
           ])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pr-2 bd-highlight" }, [
-      _c("i", {
-        staticClass: "fa fa-tag fa-lg fa-rotate-90",
-        attrs: { "aria-hidden": "true" }
-      })
+        ]
+      )
     ])
   },
   function() {
@@ -55962,56 +55595,36 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "p-0 bd-highlight" }, [
-      _c(
-        "span",
-        {
-          staticStyle: {
-            color: "white",
-            "background-color": "black",
-            "border-radius": "3px",
-            "padding-left": "5px",
-            "padding-right": "3px"
-          }
-        },
-        [_vm._v("PERSÖNLICH")]
-      )
+      _c("button", { staticClass: "btn", attrs: { disabled: "" } }, [
+        _c("i", { staticClass: "fa fa-bars", attrs: { "aria-hidden": "true" } })
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pl-2 bd-highlight mr-auto " }, [
-      _c(
-        "i",
-        { staticClass: "fa fa-clock-o", attrs: { "aria-hidden": "true" } },
-        [_vm._v(" 45 min")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn",
-        attrs: {
-          type: "button",
-          id: "dropdownTaskButton",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }
-      },
-      [
+    return _c("div", { staticClass: "p-0 bd-highlight" }, [
+      _c("button", { staticClass: "btn ", attrs: { disabled: "" } }, [
         _c("i", {
-          staticClass: "fa fa-angle-down",
+          staticClass: "fa fa-paperclip ",
           attrs: { "aria-hidden": "true" }
         })
-      ]
-    )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-0 bd-highlight" }, [
+      _c("button", { staticClass: "btn ", attrs: { disabled: "" } }, [
+        _c("i", {
+          staticClass: "fa fa-ellipsis-v",
+          attrs: { "aria-hidden": "true" }
+        })
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -56058,7 +55671,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Style the sidebar - fixed full height */\n.sidebar[data-v-a603f2ce] {\n    height: 100%;\n    width: 200px;\n    position: fixed;\n    z-index: 1020;\n    top: 0;\n    left: 0;\n    background-color: #111;\n    overflow-x: hidden;\n    padding-top: 16px;\n}\n\n/* Style sidebar links */\n.sidebar a[data-v-a603f2ce] {\n    padding: 6px 8px 6px 16px;\n    text-decoration: none;\n    font-size: 20px;\n    color: #818181;\n    display: block;\n}\n\n/* Style links on mouse-over */\n.sidebar a[data-v-a603f2ce]:hover {\n    color: #f1f1f1;\n}\n\n/* Style the main content */\n.main[data-v-a603f2ce] {\n    margin-left: 160px; /* Same as the width of the sidenav */\n    padding: 0px 10px;\n}\n\n/* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */\n@media screen and (max-height: 450px) {\n.sidebar[data-v-a603f2ce] {padding-top: 15px;\n}\n.sidebar a[data-v-a603f2ce] {font-size: 18px;\n}\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Style the sidebar - fixed full height */\n.sidebar[data-v-a603f2ce] {\n    height: 100%;\n    width: 200px;\n    position: fixed;\n    z-index: 1020;\n    top: 0;\n    left: 0;\n    background-color: #111;\n    overflow-x: hidden;\n    padding-top: 16px;\n}\n\n/* Style sidebar links */\n.sidebar a[data-v-a603f2ce] {\n    padding: 6px 8px 6px 16px;\n    text-decoration: none;\n    font-size: 20px;\n    color: #818181;\n    display: block;\n}\n\n/* Style links on mouse-over */\n.sidebar a[data-v-a603f2ce]:hover {\n    color: #f1f1f1;\n}\n\n/* Style the main content */\n.main[data-v-a603f2ce] {\n    margin-left: 160px; /* Same as the width of the sidenav */\n    padding: 0px 10px;\n}\n\n/* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */\n@media screen and (max-height: 450px) {\n.sidebar[data-v-a603f2ce] {padding-top: 15px;\n}\n.sidebar a[data-v-a603f2ce] {font-size: 18px;\n}\n}\n", ""]);
 
 // exports
 
@@ -56079,6 +55692,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ProductCreateComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ProductCreateComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__DashboardComponent_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__DashboardComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__DashboardComponent_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -56201,7 +55823,8 @@ var pusher = new Pusher("826fc49ea873789c5025", {
         return {
             component: 'dashboard',
             selectChannel: '',
-            channel: null
+            channel: null,
+            messages: []
         };
     },
     mounted: function mounted() {
@@ -56214,20 +55837,25 @@ var pusher = new Pusher("826fc49ea873789c5025", {
     watch: {
         selectChannel: function selectChannel() {
 
-            this.prepareListner();
+            this.prepareListener();
         }
     },
     methods: {
-        prepareListner: function prepareListner() {
+        prepareListener: function prepareListener() {
             if (this.channel !== null) {
                 this.channel.unbind();
             }
             this.channel = pusher.subscribe(this.selectChannel);
-
+            var vm = this;
             this.channel.bind('my-event', function (data) {
                 // alert(data.message);
-                var mess = "<tr class='row'><td>" + data.name + ': ' + data.message + "</td><td>" + Date() + "</td><td><button class='close'>x</button></td></tr>";
-                $('#messages').append(mess);
+                vm.messages.push({ name: data.name, msg: data.message, room: data.room_id || null, time: data.time });
+                // let mess = '<tr class="row">' +
+                //            '<td>'+data.name+': '+data.message+'</td>' +
+                //            '<td>'+Date()+'</td>' +
+                //            '<td><button class="close" onclick="alert()">x</button></td>' +
+                //            '</tr>';
+                // $('#messages').append(mess);
             });
         },
         hideSidebar: function hideSidebar() {
@@ -60920,7 +60548,50 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm._m(3)
+        _c(
+          "table",
+          { staticClass: "table table-striped table-hover table-sm" },
+          [
+            _c(
+              "tbody",
+              { attrs: { id: "messages" } },
+              _vm._l(_vm.messages, function(message) {
+                return _c("tr", { staticClass: "row" }, [
+                  _c("td", [
+                    _vm._v(_vm._s(message.room) + ": " + _vm._s(message.msg))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(message.time))]),
+                  _vm._v(" "),
+                  message.room !== null
+                    ? _c(
+                        "td",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              attrs: {
+                                to: {
+                                  name: "support",
+                                  params: { room_id: message.room },
+                                  query: { role: "admin" }
+                                },
+                                target: "_blank"
+                              }
+                            },
+                            [_vm._v("Open Chat")]
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._m(3, true)
+                ])
+              })
+            )
+          ]
+        )
       ]),
       _vm._v(" "),
       _vm._m(4),
@@ -60990,11 +60661,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "table",
-      { staticClass: "table table-striped table-hover table-sm" },
-      [_c("tbody", { attrs: { id: "messages" } })]
-    )
+    return _c("td", [
+      _c("button", { staticClass: "close", attrs: { onclick: "alert()" } }, [
+        _vm._v("x")
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -65239,6 +64910,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -65247,7 +64919,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             name: null,
             avatar: null,
             user_type: 0,
-            isLoggedIn: localStorage.getItem('bigStore.jwt') != null
+            isLoggedIn: localStorage.getItem('bigStore.jwt') != null,
+            room: null
         };
     },
     mounted: function mounted() {
@@ -65267,6 +64940,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.user_type = 0;
                 var user = JSON.parse(localStorage.getItem('bigStore.user'));
                 this.name = user.first_name;
+                this.room = 'room_' + user.email;
                 this.avatar = user.avatar;
                 if (user.roles) {
                     var roles = user.roles;
@@ -65400,7 +65074,21 @@ var render = function() {
                                   },
                                   [_vm._v(" Hi, " + _vm._s(_vm.name))]
                                 )
-                              : _vm._e()
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link",
+                                attrs: {
+                                  to: {
+                                    name: "support",
+                                    params: { room_id: "" + _vm.room + "" }
+                                  }
+                                }
+                              },
+                              [_vm._v(" Chat to support")]
+                            )
                           ],
                           1
                         )
@@ -67485,8 +67173,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vue_
         component: __WEBPACK_IMPORTED_MODULE_13__components_RegisterComponent_vue___default.a,
         props: true
     }, {
-        path: '/example',
-        name: 'example',
+        path: '/support/:room_id',
+        name: 'support',
         component: __WEBPACK_IMPORTED_MODULE_19__components_ExampleComponent_vue___default.a,
         props: true
     }, {

@@ -19,7 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('countries', function (\App\Country $country) {
     return response()->json($country->all());
 });
-
+Route::post('messenger', 'SupportController@sendMessage');
+Route::post('send-invite', 'SupportController@sendInvite');
 Route::post('login', 'UserController@login');
 Route::post('register', 'UserController@register');
 Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
@@ -34,6 +35,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/order', 'OrderController@store');
     Route::post('/charge', 'StripeController@charge');
     Route::post('/change-order-status/{order_id}', 'OrderController@changeStatus')->middleware('admin');
+
+
 //    Route::patch('products/{product}/units/add','ProductController@updateUnits');
 //    Route::patch('orders/{order}/deliver','OrderController@deliverOrder');
 //    Route::resource('/orders', 'OrderController');

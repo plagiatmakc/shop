@@ -125,8 +125,8 @@ export default new Router({
             props: true
         },
         {
-            path: '/example',
-            name: 'example',
+            path: '/support/:room_id',
+            name: 'support',
             component: ExampleComponent,
             props: true
         },

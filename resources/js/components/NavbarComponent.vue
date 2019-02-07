@@ -20,8 +20,9 @@
                         <router-link :to="{ name: 'register' }" class="nav-link" v-if="!isLoggedIn">Register</router-link>
                         <span v-if="isLoggedIn" class="custom-control-inline">
                             <img :src="'/storage/'+avatar" v-if="avatar != null">
-                                <router-link :to="{ name: 'dashboard' }" class="nav-link" v-if="user_type !== 'Admin'"> Hi, {{name}}</router-link>
-                                <router-link :to="{ name: 'admin' }" class="nav-link" v-if="user_type === 'Admin'"> Hi, {{name}}</router-link>
+                            <router-link :to="{ name: 'dashboard' }" class="nav-link" v-if="user_type !== 'Admin'"> Hi, {{name}}</router-link>
+                            <router-link :to="{ name: 'admin' }" class="nav-link" v-if="user_type === 'Admin'"> Hi, {{name}}</router-link>
+                            <router-link :to="{ name: 'support' , params: { room_id: ''+room+'' } }" class="nav-link" > Chat to support</router-link>
                         </span>
                         <li class="nav-link" v-if="isLoggedIn" @click="logout"> Logout</li>
                     </ul>
@@ -42,7 +43,8 @@
                 name: null,
                 avatar: null,
                 user_type: 0,
-                isLoggedIn: localStorage.getItem('bigStore.jwt') != null
+                isLoggedIn: localStorage.getItem('bigStore.jwt') != null,
+                room: null,
             }
         },
         mounted() {
@@ -59,6 +61,7 @@
                     this.user_type = 0;
                     let user = JSON.parse(localStorage.getItem('bigStore.user'));
                     this.name = user.first_name;
+                    this.room = 'room_'+ user.email;
                     this.avatar = user.avatar;
                     if(user.roles)
                     {
