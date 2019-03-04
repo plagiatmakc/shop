@@ -92,6 +92,7 @@ export default new Router({
         },
         {
             path: '/shop-cart',
+            name: 'shopCart',
             component: ShopCartComponent,
             props: true
         },
@@ -155,7 +156,7 @@ export default new Router({
      mode: 'history',
      hashbang: false,
      history: true,
-     base: '/vue/',
+     base: '/',
      linkActiveClass: 'active'
 
 })

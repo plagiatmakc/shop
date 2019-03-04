@@ -65008,7 +65008,7 @@ var render = function() {
                       "router-link",
                       {
                         staticClass: "navbar-brand",
-                        attrs: { to: { path: "/shop-cart" } }
+                        attrs: { to: { name: "shopCart" } }
                       },
                       [
                         _c("i", {
@@ -67146,6 +67146,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vue_
         props: true
     }, {
         path: '/shop-cart',
+        name: 'shopCart',
         component: __WEBPACK_IMPORTED_MODULE_10__components_ShopCartComponent_vue___default.a,
         props: true
     }, {
@@ -67195,7 +67196,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vue_
     mode: 'history',
     hashbang: false,
     history: true,
-    base: '/vue/',
+    base: '/',
     linkActiveClass: 'active'
 
 }));

@@ -11,7 +11,7 @@
                     <ul class="navbar-nav mr-auto"></ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <router-link :to="{path: '/shop-cart'}" class="navbar-brand">
+                        <router-link :to="{name: 'shopCart'}" class="navbar-brand">
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             Shopping cart
                         </router-link>

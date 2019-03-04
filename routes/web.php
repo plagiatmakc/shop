@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/compare','PageController@compare');
 Route::get('/', 'PageController@index');
 Route::get('/get-last-products', 'PageController@getLastProducts');
 
@@ -23,7 +23,7 @@ Route::resources([
     'products' => 'ProductController',
     'product_images' => 'ProductImagesController',
 ]);
-Route::get('/vue/{vue_capture?}', 'PageController@index')->where('vue_capture', '^(?!storage).*$');
+
 //Product attributes routes
 
 //Route::get('/products/{product_id}/attributes', 'ProductController@addAttr');
@@ -59,5 +59,8 @@ Route::get('/all-categories', 'CategoryController@allCategories');
 //Route::get('/products/{items}', 'ProductController@index');
 
 
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
 Route::get('/is-admin', 'HomeController@admin');
+
+//Vue router need place bottom of laravel routes(cause conflict)
+Route::get('/{vue_capture?}', 'PageController@index')->where('vue_capture', '^(?!storage).*$');
