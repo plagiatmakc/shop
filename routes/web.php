@@ -14,7 +14,11 @@ Route::get('/compare','PageController@compare');
 Route::get('/', 'PageController@index');
 Route::get('/get-last-products', 'PageController@getLastProducts');
 
-Auth::routes();
+Route::group(['prefix' => 'admin'], function () {
+
+    Auth::routes();
+
+});
 
 //Route::prefix('admin')->group(function () {});
 

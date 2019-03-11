@@ -141,7 +141,7 @@
 
                         let data = response.data;
                         console.log(data);
-                        localStorage.setItem('bigStore.user', JSON.stringify(data.user));
+                        // localStorage.setItem('bigStore.user', JSON.stringify(data.user));
                         localStorage.setItem('bigStore.jwt', data.token);
                         if (localStorage.getItem('bigStore.jwt') != null) {
                             bus.$emit('isLoggedIn');

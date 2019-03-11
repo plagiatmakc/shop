@@ -19,9 +19,11 @@
                         <router-link :to="{ name: 'login' }" class="nav-link" v-if="!isLoggedIn">Login</router-link>
                         <router-link :to="{ name: 'register' }" class="nav-link" v-if="!isLoggedIn">Register</router-link>
                         <span v-if="isLoggedIn" class="custom-control-inline">
-                            <img :src="'/storage/'+avatar" v-if="avatar != null">
-                            <router-link :to="{ name: 'dashboard' }" class="nav-link" v-if="user_type !== 'Admin'"> Hi, {{name}}</router-link>
-                            <router-link :to="{ name: 'admin' }" class="nav-link" v-if="user_type === 'Admin'"> Hi, {{name}}</router-link>
+
+                            <img :src="'/storage/'+avatar" v-if="avatar != null && isAvatarInLocalStorage">
+                            <img :src="avatar" v-if="avatar != null && !isAvatarInLocalStorage">
+                            <router-link :to="{ name: 'dashboard' }" class="nav-link" v-if="!user_type"> Hi, {{name}}</router-link>
+                            <router-link :to="{ name: 'admin' }" class="nav-link" v-if="user_type"> Hi, {{name}}</router-link>
                             <router-link :to="{ name: 'support' , params: { room_id: ''+room+'' } }" class="nav-link" > Chat to support</router-link>
                         </span>
                         <li class="nav-link" v-if="isLoggedIn" @click="logout"> Logout</li>
@@ -45,31 +47,42 @@
                 user_type: 0,
                 isLoggedIn: localStorage.getItem('bigStore.jwt') != null,
                 room: null,
+                watch_user: this.$store.state.user,
+                isAvatarInLocalStorage: true
             }
         },
-        mounted() {
-            this.setDefaults();
+        watch: {
+           watch_user() {
+               this.setDefaults();
+           }
         },
         created() {
             bus.$on('isLoggedIn', () => {
                 this.change();
             });
+            this.$store.dispatch('prepareUser');
         },
         methods : {
             setDefaults() {
                 if (this.isLoggedIn) {
                     this.user_type = 0;
-                    let user = JSON.parse(localStorage.getItem('bigStore.user'));
-                    this.name = user.first_name;
-                    this.room = 'room_'+ user.email;
-                    this.avatar = user.avatar;
-                    if(user.roles)
-                    {
-                        let roles = user.roles;
-                        this.user_type = roles[0].name;
+                    let user = this.$store.state.user;
+                    // let user = JSON.parse(localStorage.getItem('bigStore.user'));
+                    if (user) {
+                        this.name = user.first_name;
+                        this.room = 'room_'+ user.email;
+                        this.avatar = user.avatar;
+                        this.avatar.startsWith("http") ? this.isAvatarInLocalStorage = false : this.isAvatarInLocalStorage = true;
                     }
 
-                    console.log(this.user_type);
+                    this.user_type = this.$store.state.isAdmin;
+                    // if(user.roles)
+                    // {
+                    //     let roles = user.roles;
+                    //     this.user_type = roles[0].name;
+                    // }
+
+                    // console.log(this.user_type);
                 }
             },
             change() {
@@ -78,7 +91,8 @@
             },
             logout(){
                 localStorage.removeItem('bigStore.jwt');
-                localStorage.removeItem('bigStore.user');
+                // localStorage.removeItem('bigStore.user');
+                this.$store.commit('setLogout');
                 this.change();
                 this.$router.push('/');
             }

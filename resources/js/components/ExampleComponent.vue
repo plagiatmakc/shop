@@ -85,6 +85,7 @@
 </template>
 
 <script>
+    import {bus} from '../app'
     let pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
         cluster: process.env.MIX_PUSHER_APP_CLUSTER,
         forceTLS: true
@@ -100,10 +101,13 @@
                 role: this.$router.currentRoute.query.role || null,
                 onAir: 'btn-danger',
                 btn_onAir: 'Please wait free operators...',
-                avatar: JSON.parse(localStorage.getItem('bigStore.user')).avatar,
+                avatar: this.$store.state.user ? this.$store.state.user['avatar'] : null,
             }
         },
         mounted() {
+            bus.$on('isLoggedIn', () => {
+                this.avatar = this.$store.state.user['avatar'];
+            });
             console.log('Component mounted.');
             this.sendInvite(this.room_id);
         },
@@ -149,7 +153,7 @@
                     window.axios.post('/api/messenger', {
                         channel: this.selectChannel,
                         message: this.simpleMsg.slice(0, -1),
-                        avatar: JSON.parse(localStorage.getItem('bigStore.user')).avatar,
+                        avatar: this.avatar,
                     })
                         .then(response => {
                             this.simpleMsg = '';

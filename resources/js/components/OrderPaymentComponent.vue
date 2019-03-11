@@ -229,7 +229,7 @@
                             card: source.id
                         },
                         redirect: {
-                            return_url: 'http://shop.loc/vue/confirm-three-d-secure/' + vm.order_id,//window.location.href
+                            return_url: 'http://shop.loc/confirm-three-d-secure/' + vm.order_id,//window.location.href
                         }
                     }).then(function(result) {
                         if (result.error){

@@ -81,7 +81,7 @@
         data() {
             return {
                 orders: null,
-                isAdmin: JSON.parse(localStorage.getItem('bigStore.user')).roles && JSON.parse(localStorage.getItem('bigStore.user')).roles[0].name ==='Admin',
+                isAdmin: this.$store.state.isAdmin,
                 pagination: [],
                 statuses: [
                     {id: 1, value: 'PENDING_PAYMENT'},

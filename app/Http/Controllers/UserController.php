@@ -25,9 +25,9 @@ class UserController extends Controller
         if (Auth::attempt($request->only(['email', 'password']))) {
             $status = 200;
             $response = [
-                'user' => Auth::user(),
+//                'user' => Auth::user(),
                 'token' => Auth::user()->createToken('bigStore')->accessToken,
-                'role' => Auth::user()->hasRole('Admin')? Auth::user()->roles->first() : 0 ,
+//                'role' => Auth::user()->hasRole('Admin')? Auth::user()->roles->first() : 0 ,
             ];
         }
 
@@ -55,9 +55,9 @@ class UserController extends Controller
         $user->roles()->attach($role);
 
         return response()->json([
-            'user' => $user,
+//            'user' => $user,
             'token' => $user->createToken('bigStore')->accessToken,
-            'role' => 0,
+//            'role' => 0,
         ]);
     }
 

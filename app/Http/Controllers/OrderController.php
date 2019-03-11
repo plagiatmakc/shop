@@ -68,7 +68,7 @@ class OrderController extends Controller
 //        $notify =$order
 //                ->user
 //                ->notify(new ChangeOrderStatus('Hi, you order change status to ' . Order::getStatusesList()[$order->status_id],
-//            'http://shop.loc/vue/dashboard/order/' . $order_id
+//            'http://shop.loc/dashboard/order/' . $order_id
 //                ));
 //        return response()->json($notify);
     }

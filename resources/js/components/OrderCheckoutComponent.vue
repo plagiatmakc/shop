@@ -119,7 +119,7 @@
                 cart: [],
                 items: [],
                 countries: [],
-                code_country: '',
+                code_country: null,
                 // dial_code: '',
             }
         },
@@ -128,22 +128,27 @@
              this.getCartItems();
              // this.paypalButtonRender();
         },
+        watch: {
+          code_country() {
+              this.setSelectedCountry();
+          }
+        },
         methods: {
             checkAuthorize() {
                 window.axios.get('/api/user', {
                     headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')}
                 })
                     .then(response => {
-                        console.log(response.data);
+                        this.code_country = null;
                         this.phone = phoneUtil.parseAndKeepRawInput(response.data.phone, "").getNationalNumber();
                         // this.dial_code = '+'+phoneUtil.parseAndKeepRawInput(response.data.phone, "").getCountryCode();
-                        this.code_country = phoneUtil.getRegionCodeForNumber(phoneUtil.parseAndKeepRawInput(response.data.phone, ""));
+
                         this.user_id = response.data.id;
                         this.first_name = response.data.first_name;
                         this.last_name = response.data.last_name;
                         this.email = response.data.email;
-
-                        this.setSelectedCountry();
+                        this.code_country = phoneUtil.getRegionCodeForNumber(phoneUtil.parseAndKeepRawInput(response.data.phone, ""));
+                        // this.setSelectedCountry();
                     })
                     .catch(error => {
                         console.log(error.response);
@@ -212,7 +217,7 @@
                     .then(response => {
                         console.log(response.data);
                         console.log(response);
-                        var order_id = response.data.order_id;
+                        let order_id = response.data.order_id;
                         if (order_id) {
                             this.$router.push({ name: 'payOrder', params:  { order_id: order_id }  });
                         }
@@ -222,29 +227,30 @@
                     });
 
             },
-            getCartItems() {
+            getCartItems: function () {
                 this.loading = true;
                 window.axios.get('/cart')
                     .then(response => {
                         console.log(response.data);
                         this.cart = response.data;
 
-                        for (let key in response.data.items)
-                        {
-                            this.items.push({
-                                name: response.data.items[key].item.name,
-                                quantity: response.data.items[key].qty,
-                                price: response.data.items[key].price,
-                                sku: response.data.items[key].item.id,
-                                currency: response.data.items[key].item.currency.toUpperCase(),
-                            });
+                        for (let key in response.data.items) {
+                            if (response.data.items.hasOwnProperty(key)) {
+                                this.items.push({
+                                    name: response.data.items[key].item.name,
+                                    quantity: response.data.items[key].qty,
+                                    price: response.data.items[key].price,
+                                    sku: response.data.items[key].item.id,
+                                    currency: response.data.items[key].item.currency.toUpperCase(),
+                                });
+                            }
                         }
                         console.log(this.items);
 
 
                         this.loading = false;
                     })
-                    .catch( error => {
+                    .catch(error => {
                         console.log(error.response.statusText);
                         this.loading = false;
                     });

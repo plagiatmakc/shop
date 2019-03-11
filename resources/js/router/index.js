@@ -2,7 +2,7 @@ import Router from 'vue-router';
 import Vue from 'vue';
 Vue.use(Router);
 
-
+import { store } from '../app.js'
 
 import AdminComponent from '../components/AdminComponent.vue';
 import ProductsIndexComponent from '../components/ProductsIndexComponent.vue';
@@ -29,11 +29,11 @@ export default new Router({
             meta: {requiresAuth: true},
             beforeEnter: (to, from, next) => {
             console.log(to);
-                let user = JSON.parse(localStorage.getItem('bigStore.user'));
+                // let user = JSON.parse(localStorage.getItem('bigStore.user'));
                 // if(user.roles){
                 //     var user_type = user.roles[0].name;
                 // }
-            if(user.roles && user.roles[0].name === 'Admin') {
+            if(store.state.isAdmin) {
                 next();
             }
                 // window.axios.get('/is-admin')

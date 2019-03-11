@@ -32,7 +32,7 @@ class HomeController extends Controller
             if (Auth::check() && Auth::user()->authorizeRoles(['admin'])) {
                 return response('true');
             }else {
-                return response('This action is unauthorized.');
+                return response('false');
             }
 
         }

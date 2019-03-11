@@ -53,15 +53,35 @@
                         let user = response.data.user;
                         // let is_admin = user.is_admin;
 
-                        localStorage.setItem('bigStore.user', JSON.stringify(user));
+
+                        // localStorage.setItem('bigStore.user', JSON.stringify(user));
                         localStorage.setItem('bigStore.jwt', response.data.token);
 
                         if (localStorage.getItem('bigStore.jwt') != null) {
-                            bus.$emit('isLoggedIn');
-                            this.$router.push('/');
+                            this.$store.commit('setIsUserLogin', true);
+                            this.setUserToStore();
+                            // bus.$emit('isLoggedIn');
+                            // this.$router.push('/');
                         }
                     });
                 }
+            },
+            setUserToStore () {
+                window.axios.get('http://shop.loc/api/user', {
+                    headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')}
+                })
+                    .then(response => {
+                        console.log(response.data);
+                        let user = response.data;
+                        this.$store.commit('setUser', user);
+                        bus.$emit('isLoggedIn');
+                        this.$router.push('/');
+                    })
+                    .catch(error => {
+                        // console.log(error.response);
+                        // console.log(localStorage.getItem('bigStore.jwt'));
+                    });
+
             }
         }
     }
