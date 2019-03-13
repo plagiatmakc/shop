@@ -65446,7 +65446,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l"),
-    elements = stripe.elements(),
+    elements = undefined,
     card = undefined;
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -65477,6 +65477,8 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l"),
     },
     mounted: function mounted() {
         this.getOrder();
+        elements = stripe.elements();
+        card = undefined;
         this.drawStripeCardFields();
         // this.paypalButtonRender();
     },
@@ -65493,7 +65495,7 @@ var stripe = Stripe("pk_test_wEFBkJ4pzBO2zPiP0mSL9E1l"),
             delete instance.defaults.headers.common['X-CSRF-TOKEN'];
             instance({
                 method: 'get',
-                url: 'http://free.currencyconverterapi.com/api/v5/convert?q=' + rate + '&compact=ultra',
+                url: 'http://free.currencyconverterapi.com/api/v5/convert?q=' + rate + '&compact=ultra&apiKey=' + "16b73f717a866cc146b8",
                 headers: {
                     'Accept': 'application/json'
                 }

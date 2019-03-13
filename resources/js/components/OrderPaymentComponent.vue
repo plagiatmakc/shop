@@ -65,7 +65,7 @@
 
 <script>
     let stripe = Stripe(process.env.MIX_STRIPE_KEY),
-        elements = stripe.elements(),
+        elements = undefined,
         card = undefined;
 
     export default {
@@ -96,6 +96,8 @@
         },
         mounted() {
             this.getOrder();
+            elements = stripe.elements();
+            card = undefined;
             this.drawStripeCardFields();
             // this.paypalButtonRender();
         },
@@ -109,7 +111,7 @@
                 delete instance.defaults.headers.common['X-CSRF-TOKEN'];
                 instance({
                     method: 'get',
-                    url: 'http://free.currencyconverterapi.com/api/v5/convert?q=' + rate + '&compact=ultra',
+                    url: 'http://free.currencyconverterapi.com/api/v5/convert?q=' + rate + '&compact=ultra&apiKey='+process.env.MIX_FREE_CURRENCY_CONVERTER_KEY,
                     headers: {
                         'Accept': 'application/json',
                     }

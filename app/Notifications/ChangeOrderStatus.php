@@ -46,6 +46,7 @@ class ChangeOrderStatus extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->subject('Change status order')
                     ->line($this->msg)
                     ->action('Check order', url($this->url))
                     ->line('Thank you!');
