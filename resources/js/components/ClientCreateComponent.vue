@@ -6,7 +6,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card card-default">
-                    <div class="card-header">Register</div>
+                    <div class="card-header">Create client</div>
                     <div class="card-body">
                         <form enctype="multipart/form-data">
                             <div class="form-group row">
@@ -138,17 +138,10 @@
 
                 axios.post('/api/register', formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(response => {
-                        this.$router.push('/login');
-                    //     let data = response.data;
-                    //     // console.log(data);
-                    //     // localStorage.setItem('bigStore.user', JSON.stringify(data.user));
-                    //     localStorage.setItem('bigStore.jwt', data.token);
-                    //     if (localStorage.getItem('bigStore.jwt') != null) {
-                    //         bus.$emit('isLoggedIn');
-                    //
-                    //     this.$router.push('/login');
-                    // }
-                })
+                        if (response.status == 200) {
+                            alert("OK");
+                        }
+                    })
                     .catch(error => {
                         this.errors = error.response.data.errors;
                         console.log(error.response);

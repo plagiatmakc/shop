@@ -3,9 +3,24 @@
         <div class="sidebar wrapper" @mouseover="showSidebar()">
 
             <a @click="hideSidebar()" class="text-right" data-toggle="tooltip" title="Hide sidebar"><i class="fa fa-fw fa-close"></i></a>
-            <a ><i class="fa fa-fw fa-vcard"></i> Clients</a>
             <div class="dropdown show">
-                <a href="#" class="btn dropdown-toggle" role="button" id="dropdownProductsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a href="#" class="btn dropdown-toggle text-left" role="button" id="dropdownClientsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-fw fa-vcard"></i>
+                    Clients
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownClientsMenuLink">
+                    <router-link :to="{path:'/admin_section/clients'}" class="dropdown-item">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                        Index
+                    </router-link>
+                    <router-link to="/admin_section/create_client" class="dropdown-item">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Create
+                    </router-link>
+                </div>
+            </div>
+            <div class="dropdown show">
+                <a href="#" class="btn dropdown-toggle text-left" role="button" id="dropdownProductsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-fw fa-database"></i>
                     Products
                 </a>
@@ -14,7 +29,7 @@
                         <!--<i class="fa fa-bars" aria-hidden="true"></i>-->
                         <!--Index-->
                     <!--</a>-->
-                    <router-link :to="{path:'/admin/products'}" class="dropdown-item">
+                    <router-link :to="{path:'/admin_section/products'}" class="dropdown-item">
                         <i class="fa fa-bars" aria-hidden="true"></i>
                         Index
                     </router-link>
@@ -22,14 +37,14 @@
                         <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
                         <!--Create-->
                     <!--</a>-->
-                    <router-link to="/admin/create_product" class="dropdown-item">
+                    <router-link to="/admin_section/create_product" class="dropdown-item">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         Create
                     </router-link>
                 </div>
             </div>
             <div class="dropdown show">
-                <a href="#" class="btn dropdown-toggle" role="button" id="dropdownCategoriesMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a href="#" class="btn dropdown-toggle text-left" role="button" id="dropdownCategoriesMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-fw fa-database"></i>
                     Categories
                 </a>
@@ -39,7 +54,7 @@
                         <!--<i class="fa fa-bars" aria-hidden="true"></i>-->
                         <!--Index-->
                     <!--</a>-->
-                    <router-link to="/admin/categories" class="dropdown-item">
+                    <router-link to="/admin_section/categories" class="dropdown-item">
                         <i class="fa fa-bars" aria-hidden="true"></i>
                         Index
                     </router-link>
@@ -47,13 +62,13 @@
                         <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
                         <!--Create-->
                     <!--</a>-->
-                    <router-link to="/admin/create_category" class="dropdown-item">
+                    <router-link to="/admin_section/create_category" class="dropdown-item">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         Create
                     </router-link>
                 </div>
             </div>
-            <router-link to="/admin/orders" class="dropdown-item">
+            <router-link to="/admin_section/orders" class="dropdown-item text-left">
                 <i class="fa fa-bars" aria-hidden="true"></i>
                 Orders
             </router-link>

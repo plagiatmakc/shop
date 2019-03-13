@@ -1,10 +1,12 @@
-import Router from 'vue-router';
 import Vue from 'vue';
+import Router from 'vue-router';
+import store from '../store.js'
+import {bus} from "../app";
 Vue.use(Router);
 
-import { store } from '../app.js'
-
 import AdminComponent from '../components/AdminComponent.vue';
+import ClientsIndexComponent from '../components/ClientsIndexComponent.vue';
+import ClientCreateComponent from '../components/ClientCreateComponent.vue';
 import ProductsIndexComponent from '../components/ProductsIndexComponent.vue';
 import ProductCreateComponent from '../components/ProductCreateComponent.vue';
 import CategoriesIndexComponent from '../components/CategoriesIndexComponent.vue';
@@ -23,33 +25,61 @@ import OrdersIndexComponent from "../components/OrdersIndexComponent.vue";
 import OrderShowComponent from '../components/OrderShowComponent.vue';
 import ExampleComponent from '../components/ExampleComponent.vue';
 
+
 export default new Router({
     routes: [
-        { path: '/admin', component: AdminComponent, name: 'admin',
+        { path: '/admin_section', component: AdminComponent, name: 'admin',
             meta: {requiresAuth: true},
             beforeEnter: (to, from, next) => {
-            console.log(to);
+            // console.log(to);
+            // console.log(store.getters.getIsAdmin);
                 // let user = JSON.parse(localStorage.getItem('bigStore.user'));
                 // if(user.roles){
                 //     var user_type = user.roles[0].name;
                 // }
-            if(store.state.isAdmin) {
-                next();
-            }
-                // window.axios.get('/is-admin')
-                //     .then(response => {
-                //         console.log(response.data);
-                //         if(response.data === true) {
-                //            next();
-                //         }else {
-                //             from();
-                //         }
-                //     }).catch(error => {
-                //         if(error) return from();
-                // });
+          if(localStorage.getItem('bigStore.jwt')) {
+              window.axios.get('/api/is-admin', {
+                  headers: {
+                      'Accept': 'application/json',
+                      'Authorization': 'Bearer ' + localStorage.getItem('bigStore.jwt')
+                  }
+              })
+                  .then(response => {
+                      if(response.data === true) {
+                          window.axios.get('/is-admin', {
+                              headers: {
+                                  'Accept': 'application/json',
+                                  'Authorization': 'Bearer ' + localStorage.getItem('bigStore.jwt')
+                              }
+                          })
+                              .then(response => {
+                                  store.commit('setIsAdmin', response.data);
+                                  bus.$emit('isLoggedIn');
+                                  if(response.data === true) {
+                                      next();
+                                  }else {
+                                      window.location.replace('/admin/login');
+                                  }
+                              })
+                              .catch(error => {
+                                  window.location.replace('/admin/login');
+                              });
+                      }
+                  });
+
+                }
             }
             ,
             children: [
+                {
+                    path: 'clients',
+                    component: ClientsIndexComponent,
+                    props: true
+                },
+                {
+                    path: 'create_client',
+                    component: ClientCreateComponent
+                },
                 {
                     path: 'products',
                     component: ProductsIndexComponent,

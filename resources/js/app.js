@@ -10,7 +10,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 // Vue.config.devtools = true; //access devtools default true in dev mode and false in production
 import Vuex from 'vuex';
-Vue.use(Vuex);
+// Vue.use(Vuex);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -53,79 +53,10 @@ Vue.component('card-element', require('./components/CardElement.vue'));
 
 
 export const bus = new Vue();
-
 import router from './router';
+import store from './store';
+store.dispatch('prepareUser');
 
-export const store = new Vuex.Store({
-    // devtools: false,  //permission devtools
-    state: {
-        isUserLogin: localStorage.getItem('bigStore.jwt') != null,
-        user: null,
-        token: localStorage.getItem('bigStore.jwt') || null,
-        isAdmin: false
-    },
-    mutations: {
-        setUser (state, user) {
-            state.user = user;
-        },
-        setIsUserLogin(state, status) {
-            state.isUserLogin = status;
-            state.token = localStorage.getItem('bigStore.jwt') || null ;
-            this.dispatch('prepareUser');
-        },
-        setLogout(state) {
-            state.isUserLogin = false;
-            state.user = null;
-            state.token = null;
-            state.isAdmin = false;
-        },
-        setIsAdmin(state, value) {
-            state.isAdmin = value;
-        }
-    },
-    computed() {
-        this.dispatch('prepareUser');
-    },
-    watch: {
-        token() {
-            if (this.state.token !=null) {
-                this.dispatch('prepareUser');
-            }
-        }
-    },
-    actions: {
-        prepareUser() {
-            if (this.state.token !=null) {
-                window.axios.get('/api/user', {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + this.state.token
-                    }
-                })
-                    .then(response => {
-                        let user = response.data;
-                        this.commit('setUser', user);
-                        bus.$emit('isLoggedIn');
-                        this.dispatch('checkIsAdmin');
-
-                    });
-            }
-        },
-        checkIsAdmin() {
-            window.axios.get('/api/is-admin', {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + this.state.token
-                }
-            })
-                .then(response => {
-                    this.commit('setIsAdmin', response.data);
-                    bus.$emit('isLoggedIn');
-                });
-        }
-    }
-});
-// store.dispatch('prepareUser');
 
 const app = new Vue({
     router,

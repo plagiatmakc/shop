@@ -60,7 +60,7 @@
             bus.$on('isLoggedIn', () => {
                 this.change();
             });
-            this.$store.dispatch('prepareUser');
+            // this.$store.dispatch('prepareUser');
         },
         methods : {
             setDefaults() {
@@ -91,6 +91,7 @@
             },
             logout(){
                 localStorage.removeItem('bigStore.jwt');
+                document.cookie = "laravel_session=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 // localStorage.removeItem('bigStore.user');
                 this.$store.commit('setLogout');
                 this.change();

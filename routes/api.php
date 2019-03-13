@@ -27,8 +27,10 @@ Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenContro
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/users','UserController@index')->middleware('admin');
-    Route::get('/users/{user}','UserController@show');
-    Route::patch('/users/{user}','UserController@update');
+    Route::post('/users','UserController@store')->middleware('admin');
+    Route::get('/user/{user}','UserController@show');
+    Route::post('/user/{user}','UserController@update');
+    Route::delete('/user/{user}', 'UserController@destroy')->middleware('admin');
     Route::get('/users/{user}/orders','UserController@showOrders');
     Route::get('/orders', 'OrderController@index');
     Route::get('/order/{order_id}', 'OrderController@show');

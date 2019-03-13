@@ -401,7 +401,8 @@
                         "in": "formData",
                         "description": "request can attempt array images[i]:{file} /mimes:jpeg,bmp,png/max size:2Mb",
                         "required": false,
-                        "type": "file"
+                        "type": "file",
+                        "collectionFormat": "multi"
                     },
                     {
                         "name": "images[1]",

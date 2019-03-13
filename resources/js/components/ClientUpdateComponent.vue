@@ -4,9 +4,9 @@
             <li v-for="error in errors" class="alert-danger"> {{error.toString()}}</li>
         </ul>
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card card-default">
-                    <div class="card-header">Register</div>
+                    <div class="card-header">Update client</div>
                     <div class="card-body">
                         <form enctype="multipart/form-data">
                             <div class="form-group row">
@@ -46,22 +46,10 @@
                                     <input id="avatar" type="file" ref="avatar" class="form-control" @change="onFileChanged($event)">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" v-model="password" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" v-model="password_confirmation" required>
-                                </div>
-                            </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary" @click="handleSubmit">
-                                        Register
+                                    <button id="create_client" type="submit" class="btn btn-primary" @click="handleSubmit">
+                                        Update
                                     </button>
                                 </div>
                             </div>
@@ -78,6 +66,7 @@
     import {phoneUtil} from '../app'
     import {PNF} from '../app'
     export default {
+        props: ['client_id'],
         data() {
             return {
                 first_name : "",
@@ -85,11 +74,10 @@
                 phone: "",
                 avatar: "",
                 email : "",
-                password : "",
-                password_confirmation : "",
                 errors: [],
                 countries: [],
                 country_code: '',
+                new_avatar: ''
             }
         },
         mounted() {
@@ -98,8 +86,33 @@
                 $(this).attr("data-original-title", $('[value='+$(this).val()+']').attr('title'));
                 $('#dial_code').tooltip('show');
             });
+            this.getClientInfo();
         },
         methods : {
+            getClientInfo() {
+              window.axios.get('/api/user/'+ this.client_id, {
+                  headers: {
+                      'Accept': 'application/json',
+                      'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')
+                  }
+              })
+                  .then(response => {
+                      this.first_name = response.data.first_name;
+                      this.last_name = response.data.last_name;
+                      this.phone = response.data.phone;
+                      this.avatar = response.data.avatar;
+                      this.email = response.data.email;
+                      try {
+                          this.country_code = phoneUtil.getRegionCodeForNumber(phoneUtil.parseAndKeepRawInput(response.data.phone, ""));
+                      }catch (e) {
+                          this.errors.push(e);
+                          this.country_code = 'unknown';
+                      }
+                  })
+                  .catch(error => {
+                      this.errors = error.response.errors;
+                  })
+            },
             getCountries() {
                 window.axios.get('/api/countries')
                     .then(response => {
@@ -122,43 +135,34 @@
                 }
 
                 e.preventDefault();
-                if (this.password !== this.password_confirmation || this.password.length <= 0) {
-                    this.password = "";
-                    this.password_confirmation = "";
-                    return alert('Passwords do not match');
-                }
+
                 let formData = new FormData();
                 formData.append('first_name', this.first_name);
                 formData.append('last_name', this.last_name);
                 formData.append('phone', phoneUtil.format(number, PNF.E164));
                 formData.append('email', this.email);
-                formData.append('password', this.password);
-                formData.append('c_password', this.password_confirmation);
-                formData.append('avatar', this.avatar);
+                formData.append('avatar', this.new_avatar);
+                formData.append('id', this.client_id);
 
-                axios.post('/api/register', formData, {headers: {'Content-Type': 'multipart/form-data'}})
-                    .then(response => {
-                        this.$router.push('/login');
-                    //     let data = response.data;
-                    //     // console.log(data);
-                    //     // localStorage.setItem('bigStore.user', JSON.stringify(data.user));
-                    //     localStorage.setItem('bigStore.jwt', data.token);
-                    //     if (localStorage.getItem('bigStore.jwt') != null) {
-                    //         bus.$emit('isLoggedIn');
-                    //
-                    //     this.$router.push('/login');
-                    // }
+                axios.post('/api/user/' + this.client_id, formData, {
+                    headers: {'Content-Type': 'multipart/form-data',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')
+                    }
                 })
+                    .then(response => {
+                        if (response.status === 200) {
+                            bus.$emit("refreshPage");
+                        }
+                    })
                     .catch(error => {
                         this.errors = error.response.data.errors;
-                        console.log(error.response);
                     })
             },
             onFileChanged(e) {
-                this.avatar = "";
-                var files = e.target.files || e.dataTransfer.files;
-                this.avatar = files[0];
-                console.log(this.avatar);
+                this.new_avatar = "";
+                let files = e.target.files || e.dataTransfer.files;
+                this.new_avatar = files[0];
             }
         }
     }
