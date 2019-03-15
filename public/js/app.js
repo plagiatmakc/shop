@@ -63093,7 +63093,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deleteComment: function deleteComment(comment_id) {
             var _this2 = this;
 
-            if (this.$store.state.isAdmin) {
+            if (this.$store.state.isAdmin && confirm('A you sure?')) {
                 window.axios.delete('/api/comment/' + comment_id, {
                     headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.$store.state.token }
                 }).then(function (response) {
@@ -69411,7 +69411,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         deleteComment: function deleteComment(comment_id) {
-            if (this.$store.state.isAdmin) {
+            if (this.$store.state.isAdmin && confirm('A you sure?')) {
                 window.axios.delete('/api/comment/' + comment_id, {
                     headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.$store.state.token }
                 }).then(function (response) {

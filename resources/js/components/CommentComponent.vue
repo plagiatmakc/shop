@@ -65,7 +65,7 @@
         },
         methods: {
             deleteComment(comment_id) {
-                if(this.$store.state.isAdmin) {
+                if(this.$store.state.isAdmin && confirm('A you sure?')) {
                     window.axios.delete('/api/comment/'+comment_id, {
                         headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+ this.$store.state.token}
                     })
