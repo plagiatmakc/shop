@@ -66592,6 +66592,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            app_name: "Shop.loc",
             name: null,
             avatar: null,
             user_type: 0,
@@ -66677,7 +66678,7 @@ var render = function() {
             _c(
               "router-link",
               { staticClass: "navbar-brand", attrs: { to: { path: "/" } } },
-              [_vm._v("Shop")]
+              [_vm._v(_vm._s(_vm.app_name))]
             ),
             _vm._v(" "),
             _vm._m(0),

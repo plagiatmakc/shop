@@ -2,7 +2,7 @@
     <div>
         <nav class="navbar sticky-top navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <router-link :to="{path: '/'}" class="navbar-brand">Shop</router-link>
+                <router-link :to="{path: '/'}" class="navbar-brand">{{app_name}}</router-link>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -42,6 +42,7 @@
     export default {
         data() {
             return {
+                app_name: process.env.MIX_APP_NAME,
                 name: null,
                 avatar: null,
                 user_type: 0,
