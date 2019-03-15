@@ -48,11 +48,16 @@
                         this.price = response.data.price;
                         this.currency = response.data.currency;
                         for(let index in response.data.categories) {
-                            this.categories_of_product.push(response.data.categories[index]);
-                        };
+                            if (response.data.categories.hasOwnProperty(index)) {
+                                this.categories_of_product.push(response.data.categories[index]);
+                            }
+                        }
+
                         for(let index in response.data.product_images) {
-                            this.images_of_product.push(response.data.product_images[index]);
-                        };
+                            if (response.data.product_images.hasOwnProperty(index)) {
+                                this.images_of_product.push(response.data.product_images[index]);
+                            }
+                        }
                         console.log(response.data.categories);
                         this.loading = false;
 

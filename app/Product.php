@@ -48,9 +48,14 @@ class Product extends Model
         return $this->belongsToMany('App\Category');
     }
 
-    public function  product_images()
+    public function product_images()
     {
         return $this->hasMany('App\ProductImage');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->with('commentsRecursive', 'user');
     }
 
 

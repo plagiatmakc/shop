@@ -38,7 +38,7 @@ class ProductRepository
 
     public function getById($product_id)
     {
-        return Product::with('categories', 'product_images')
+        return Product::with('categories', 'product_images', 'comments')
             ->findOrFail($product_id);
     }
 

@@ -38,6 +38,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/charge', 'StripeController@charge');
     Route::post('/change-order-status/{order_id}', 'OrderController@changeStatus')->middleware('admin');
 
+    Route::post('/product-comments/{product}', 'CommentController@storeComment');
+    Route::post('/comment/{comment}', 'CommentController@replyComment');
+    Route::delete('/comment/{comment}', 'CommentController@deleteComment')->middleware('admin');
+
+
     Route::get('/is-admin', 'HomeController@admin');
 //    Route::patch('products/{product}/units/add','ProductController@updateUnits');
 //    Route::patch('orders/{order}/deliver','OrderController@deliverOrder');

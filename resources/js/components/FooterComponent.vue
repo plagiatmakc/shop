@@ -27,7 +27,7 @@
                     <div class="col-md-3 mx-auto">
 
                         <!-- Links -->
-                        <div class="row">
+                        <div class="row justify-content-center">
                             <ul class="list-unstyled list-inline pt-4">
                                 <li class="list-inline-item pr-1 pt-1">
                                     <a href="javascript:void(0)">
