@@ -55,7 +55,13 @@ class Product extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable')->with('commentsRecursive', 'user');
+        return $this->morphMany(Comment::class, 'commentable')
+                    ->with([
+                        'commentsRecursive',
+                        'user' => function ($query) {
+                            $query->select('id', 'first_name', 'last_name', 'avatar');
+                        }
+                    ]);
     }
 
 

@@ -20,7 +20,10 @@ class Comment extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable')->with('user');
+        return $this->morphMany(Comment::class, 'commentable')
+                    ->with(['user' => function ($query) {
+                             $query->select('id', 'first_name', 'last_name', 'avatar');
+                    }]);
     }
 
     public function commentsRecursive()
