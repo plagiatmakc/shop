@@ -20,9 +20,10 @@
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary" @click="handleSubmit">
+                                    <button type="submit" class="btn btn-primary mr-5" @click="handleSubmit">
                                         Login
                                     </button>
+                                    <router-link :to="{name: 'register'}">Forgot Your Password?</router-link>
                                 </div>
                             </div>
                         </form>

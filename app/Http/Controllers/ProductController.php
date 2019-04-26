@@ -129,7 +129,7 @@ class ProductController extends Controller
     /**
      * @SWG\Get(
      *     path="/products/{product}",
-     *     summary="Get list of products with images and pagination",
+     *     summary="Get product with images and category and comments",
      *     tags={"Products"},
      *     @SWG\Parameter(
      *         name="product",
@@ -177,6 +177,59 @@ class ProductController extends Controller
      *                          property="product_images",
      *                          type="array",
      *                          @SWG\Items(ref="#/definitions/ProductImage"),
+     *                      ),
+     *                      @SWG\Property(
+     *                          property="comments",
+     *                          type="array",
+     *                          @SWG\Items(
+     *                              allOf={
+     *                                  @SWG\Schema(ref="#/definitions/Comment"),
+     *                                  @SWG\Schema(
+     *                                      type="object",
+     *                                      @SWG\Property(
+     *                                          property="comments_recursive",
+     *                                          type="array",
+     *                                          @SWG\Items(
+     *                                              allOf={
+     *                                                  @SWG\Schema(ref="#/definitions/Comment"),
+     *                                                  @SWG\Schema(
+     *                                                      type="object",
+     *                                                      @SWG\Property(
+     *                                                          property="user",
+     *                                                          type="object",
+     *                                                          @SWG\Property(property="id", type="integer"),
+     *                                                          @SWG\Property(property="first_name", type="string"),
+     *                                                          @SWG\Property(property="last_name", type="string"),
+     *                                                          @SWG\Property(property="avatar", type="string")
+     *                                                      )
+     *                                                  ),
+     *                                                  @SWG\Schema(
+     *                                                      type="object",
+     *                                                      @SWG\Property(
+     *                                                          property="comments_recursive",
+     *                                                          type="array",
+     *                                                          @SWG\Items(
+     *
+     *                                                          )
+     *                                                      )
+     *                                                  )
+     *                                              }
+     *                                          ),
+     *                                      )
+     *                                  ),
+     *                                  @SWG\Schema(
+     *                                      type="object",
+     *                                      @SWG\Property(
+     *                                          property="user",
+     *                                          type="object",
+     *                                          @SWG\Property(property="id", type="integer"),
+     *                                          @SWG\Property(property="first_name", type="string"),
+     *                                          @SWG\Property(property="last_name", type="string"),
+     *                                          @SWG\Property(property="avatar", type="string")
+     *                                      )
+     *                                  )
+     *                              }
+     *                          ),
      *                      ),
      *                  ),
      *             }

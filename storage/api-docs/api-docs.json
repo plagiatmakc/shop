@@ -401,8 +401,7 @@
                         "in": "formData",
                         "description": "request can attempt array images[i]:{file} /mimes:jpeg,bmp,png/max size:2Mb",
                         "required": false,
-                        "type": "file",
-                        "collectionFormat": "multi"
+                        "type": "file"
                     },
                     {
                         "name": "images[1]",
@@ -439,7 +438,7 @@
                 "tags": [
                     "Products"
                 ],
-                "summary": "Get list of products with images and pagination",
+                "summary": "Get product with images and category and comments",
                 "parameters": [
                     {
                         "name": "product",
@@ -502,6 +501,84 @@
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/definitions/ProductImage"
+                                            }
+                                        },
+                                        "comments": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/definitions/Comment"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "comments_recursive": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "allOf": [
+                                                                        {
+                                                                            "$ref": "#/definitions/Comment"
+                                                                        },
+                                                                        {
+                                                                            "properties": {
+                                                                                "user": {
+                                                                                    "properties": {
+                                                                                        "id": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "first_name": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "last_name": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "avatar": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    },
+                                                                                    "type": "object"
+                                                                                }
+                                                                            },
+                                                                            "type": "object"
+                                                                        },
+                                                                        {
+                                                                            "properties": {
+                                                                                "comments_recursive": {
+                                                                                    "type": "array",
+                                                                                    "items": {}
+                                                                                }
+                                                                            },
+                                                                            "type": "object"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "user": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "first_name": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "last_name": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "avatar": {
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                ]
                                             }
                                         }
                                     },
@@ -624,6 +701,32 @@
                 },
                 "parent_id": {
                     "type": "integer"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Comment": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "commentable_id": {
+                    "type": "integer"
+                },
+                "commentable_type": {
+                    "type": "string"
                 },
                 "create_at": {
                     "type": "string"
