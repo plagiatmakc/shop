@@ -50,6 +50,7 @@ Vue.component('order-show', require('./components/OrderShowComponent.vue'));
 Vue.component('comment-component', require('./components/CommentComponent.vue'));
 Vue.component('categories-checkbox', require('./components/CategoriesCheckBox.vue'));
 Vue.component('card-element', require('./components/CardElement.vue'));
+Vue.component('slider', require('./components/Slider.vue'));
 
 
 

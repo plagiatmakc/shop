@@ -1,9 +1,15 @@
 <template>
 
    <div>
-       <shop-menu-categories></shop-menu-categories>
+       <div >
+           <slider></slider>
+       </div>
+
 
         <div class="form-inline">
+            <div>
+                <shop-menu-categories></shop-menu-categories>
+            </div>
             <div class="dropdown show">
                 <a href="#" class="btn dropdown-toggle" role="button"
                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

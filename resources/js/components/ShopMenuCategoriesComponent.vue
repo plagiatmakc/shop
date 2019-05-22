@@ -1,8 +1,5 @@
 <template>
     <div class=" ">
-        <div class="sidebar-header ">
-            <h3>Filters</h3>
-        </div>
 
         <div class="show dropdown">
             <a href="#" class="btn dropdown-toggle" role="button" id="dropdownMenuLinkCategories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -29,4 +29,11 @@ class ImageRequest extends FormRequest
             'images.*' => 'image|mimes:jpeg,bmp,png|max:2000',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'images.*.uploaded' => ":attribute must be less 2MB",
+        ];
+    }
 }
