@@ -47,7 +47,7 @@ class ExampleTest extends TestCase
             ->withHeaders(['X-Requested-With' => 'XMLHttpRequest'])
             ->get('/is-admin');
 
-        $response ->assertSee('Sorry, you are not authorized to access this page.');
+        $response ->assertSee('false');
         $user->delete();
     }
 
@@ -80,20 +80,9 @@ class ExampleTest extends TestCase
             'password' => $password,
             ]);
 
-        $response->assertJsonFragment(
+        $response->assertJsonStructure(
             [
-                'role' => 0,
-                'user'=> [
-                    'id' => $user->id,
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'phone' => $user->phone,
-                    'email' => $user->email,
-                    'email_verified_at' => $user->email_verified_at,
-                    'avatar' => $user->avatar,
-                    'created_at' => $user->created_at->toDateTimeString(),
-                    'updated_at' => $user->updated_at->toDateTimeString(),
-                ]
+                'token'
         ]
         );
         $user->delete();

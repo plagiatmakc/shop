@@ -24,16 +24,24 @@ class ImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'image|mimes:jpeg,bmp,png|max:2000',
+            'image' => 'image|mimes:jpeg,bmp,png|max:2048',
             'images' => 'array',
-            'images.*' => 'image|mimes:jpeg,bmp,png|max:2000',
+            'images.*' => 'image|mimes:jpeg,bmp,png|max:2048',
         ];
     }
 
     public function messages()
     {
-        return [
-            'images.*.uploaded' => ":attribute must be less 2MB",
-        ];
+        $validationArray = [];
+        foreach ($this->file('images') as $key => $file) {
+            $validationArray['images.'.$key.'.uploaded'] = 'The ' .  $file->getClientOriginalName() . ' must be less than 2048 kilobytes.';
+            $validationArray['images.'.$key.'.image'] = 'The ' .  $file->getClientOriginalName() . ' must be image.';
+            $validationArray['images.'.$key.'.mimes'] = 'The ' .  $file->getClientOriginalName() . ' must be a file of type: jpeg, bmp, png.';
+        }
+
+        return $validationArray;
+//        return [
+//            'images.*.uploaded' => ":attribute must be less 2MB",
+//        ];
     }
 }
