@@ -12,15 +12,15 @@
             <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100"
-                     :src="'https://picsum.photos/800/300/?random&img=' + Math.random()"
-                     alt="First slide">
+            <div class="carousel-item active parallax1" :style="'background-image: url('+'https://picsum.photos/800/300/?random&img=' + Math.random()+')'">
+<!--                <img class="d-block w-100"-->
+<!--                     :src="'https://picsum.photos/800/300/?random&img=' + Math.random()"-->
+<!--                     alt="First slide">-->
             </div>
-            <div class="carousel-item">
-                <img class="d-block w-100"
-                     :src="'https://picsum.photos/800/300/?random&img=' + Math.random()"
-                     alt="Second slide">
+            <div class="carousel-item parallax1" :style="'background-image: url('+'https://picsum.photos/800/300/?random&img=' + Math.random()+')'">
+<!--                <img class="d-block w-100"-->
+<!--                     :src="'https://picsum.photos/800/300/?random&img=' + Math.random()"-->
+<!--                     alt="Second slide">-->
             </div>
             <div class="carousel-item">
                 <img class="d-block w-100"
@@ -58,6 +58,14 @@
                      alt="Ninth slide">
             </div>
         </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 
 </template>
@@ -104,5 +112,17 @@
         background: white;
         opacity: 0.9;
     }
+    .parallax1 {
+        /* The image used */
+        /*background-image: url("https://picsum.photos/800/500/?random&img= + Math.random()");*/
 
+        /* Set a specific height */
+        min-height: 500px;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 </style>

@@ -5,80 +5,81 @@
            <slider></slider>
        </div>
 
+       <div class="parallax1"></div>
 
-        <div class="form-inline">
-            <div>
-                <shop-menu-categories></shop-menu-categories>
-            </div>
-            <div class="dropdown show">
-                <a href="#" class="btn dropdown-toggle" role="button"
-                   id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Pagination
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <router-link class="dropdown-item"
-                                 :class=" $router.currentRoute.query.pagination == 3 ? 'text-danger' : '' "
-                                 :to="{ path: $router.path,
+        <div class="container">
+            <!--Home page-->
+            <div class="form-inline">
+                <div>
+                    <shop-menu-categories></shop-menu-categories>
+                </div>
+                <div class="dropdown show">
+                    <a href="#" class="btn dropdown-toggle" role="button"
+                       id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Pagination
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <router-link class="dropdown-item"
+                                     :class=" $router.currentRoute.query.pagination == 3 ? 'text-danger' : '' "
+                                     :to="{ path: $router.path,
                                         query:{ pagination: 3,
                                                 currency_type: $router.currentRoute.query.currency_type
                                                }
                                  }"
-                    >per 3</router-link>
-                    <router-link class="dropdown-item"
-                                 :class=" $router.currentRoute.query.pagination == 5 ? 'text-danger' : '' "
-                                 :to="{ path: $router.path,
+                        >per 3</router-link>
+                        <router-link class="dropdown-item"
+                                     :class=" $router.currentRoute.query.pagination == 5 ? 'text-danger' : '' "
+                                     :to="{ path: $router.path,
                                         query:{ pagination: 5,
                                                 currency_type: $router.currentRoute.query.currency_type
                                                }
                                  }"
-                    >per 5</router-link>
-                    <router-link class="dropdown-item"
-                                 :class=" $router.currentRoute.query.pagination == 10 ? 'text-danger' : '' "
-                                 :to="{ path: $router.path,
+                        >per 5</router-link>
+                        <router-link class="dropdown-item"
+                                     :class=" $router.currentRoute.query.pagination == 10 ? 'text-danger' : '' "
+                                     :to="{ path: $router.path,
                                         query:{ pagination: 10,
                                                 currency_type: $router.currentRoute.query.currency_type
                                                }
                                  }"
-                    >per 10</router-link>
+                        >per 10</router-link>
+                    </div>
                 </div>
-            </div>
 
-            <div class="dropdown show">
-                <a href="#" class="btn dropdown-toggle" role="button" data-display="static"
-                   id="dropdownMenuLinkCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Currency
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkCurrency">
-                    <router-link class="dropdown-item"
-                                 :class=" $router.currentRoute.query.currency_type == 'usd' ? 'text-danger' : '' "
-                                 :to="{ path: $router.path,
+                <div class="dropdown show">
+                    <a href="#" class="btn dropdown-toggle" role="button" data-display="static"
+                       id="dropdownMenuLinkCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Currency
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkCurrency">
+                        <router-link class="dropdown-item"
+                                     :class=" $router.currentRoute.query.currency_type == 'usd' ? 'text-danger' : '' "
+                                     :to="{ path: $router.path,
                                         query:{ currency_type: 'usd',
                                                 pagination: $router.currentRoute.query.pagination
                                                }
                                  }"
-                    >USD</router-link>
-                    <router-link class="dropdown-item"
-                                 :class="$router.currentRoute.query.currency_type == 'eur' ? 'text-danger' : '' "
-                                 :to="{ path: $router.path,
+                        >USD</router-link>
+                        <router-link class="dropdown-item"
+                                     :class="$router.currentRoute.query.currency_type == 'eur' ? 'text-danger' : '' "
+                                     :to="{ path: $router.path,
                                         query:{ currency_type: 'eur',
                                                 pagination: $router.currentRoute.query.pagination
                                               }
                                  }"
-                    >EUR</router-link>
-                    <router-link class="dropdown-item"
-                                 :class="$router.currentRoute.query.currency_type == 'uah' ? 'text-danger' : '' "
-                                 :to="{ path: $router.path,
+                        >EUR</router-link>
+                        <router-link class="dropdown-item"
+                                     :class="$router.currentRoute.query.currency_type == 'uah' ? 'text-danger' : '' "
+                                     :to="{ path: $router.path,
                                         query:{ currency_type: 'uah',
                                                 pagination: $router.currentRoute.query.pagination
                                                }
                                  }"
-                    >UAH</router-link>
+                        >UAH</router-link>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="container">
-            <!--Home page-->
             <!--{{last_added_products}}-->
 
             <div id="last_added" style="border: solid 1px ">
@@ -110,6 +111,7 @@
                 </div>
             </div>
         </div>
+       <div class="parallax2"></div>
    </div>
 
 
@@ -134,18 +136,21 @@
             });
 
             this.getLastAddedProducts(
-                "/get-last-products?page=" + this.$router.currentRoute.query.page,
+                "/get-last-products?page=" + this.$router.currentRoute.query.page || 1,
                 this.$router.currentRoute.query.pagination,
                 this.$router.currentRoute.query.currency_type
             );
         },
         watch: {
             '$route'(to, from) {
-                this.getLastAddedProducts(
-                    "/get-last-products?page=" + this.$router.currentRoute.query.page,
-                    this.$router.currentRoute.query.pagination,
-                    this.$router.currentRoute.query.currency_type
-                );
+                if (!this.$router.currentRoute.query.page) {
+                    this.getLastAddedProducts(
+                        "/get-last-products?page=" + this.$router.currentRoute.query.page || 1,
+                        this.$router.currentRoute.query.pagination,
+                        this.$router.currentRoute.query.currency_type
+                    );
+                }
+
             }
         },
         methods: {
@@ -191,5 +196,31 @@
         white-space: pre-line;
         text-overflow: ellipsis;
     }
+    .parallax1 {
+        /* The image used */
+        background-image: url("https://picsum.photos/800/500/?random&img= + Math.random()");
 
+        /* Set a specific height */
+        min-height: 500px;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .parallax2 {
+        /* The image used */
+        background-image: url("https://picsum.photos/1920/500/?random&img= + Math.random()");
+
+        /* Set a specific height */
+        min-height: 500px;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 </style>

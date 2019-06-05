@@ -249,7 +249,8 @@
                     this.productImages = response.data.product_images;
                     if (response.data.categories.length > 0) {
                         this.breadcrumbsCategory.push(response.data.categories[0]);
-                        this.getBreadcrumbsCategory(this.product.categories[0].parent_id);
+                        if(this.product.categories[0].parent_id != null)
+                            this.getBreadcrumbsCategory(this.product.categories[0].parent_id);
                     }
                     this.product_comments = response.data.comments;
                     this.loading = false;
