@@ -61,6 +61,12 @@ export default new Vuex.Store({
                         bus.$emit('isLoggedIn');
                         this.dispatch('checkIsAdmin');
 
+                    }).catch(error => {
+                    localStorage.removeItem('bigStore.jwt');
+                    document.cookie = "laravel_session=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    this.commit('setLogout');
+                    bus.$emit('isLoggedIn');
+                    this.$router.push('/');
                     });
             }
         },
