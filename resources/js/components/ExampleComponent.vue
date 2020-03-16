@@ -38,7 +38,7 @@
                         <div class="scrollable-display">
                             <transition-group name="message" tag="p">
                                 <div v-for="(message, index) in messages" v-bind:key="message.id" class="message-item">
-                                    <div class="form-group d-flex mb-3 bd-highlight">
+                                    <div :class=" checkAlign(message) +' form-group d-flex mb-3 bd-highlight'">
                                         <div style="max-width: 50px">
                                             <img :src="'/storage/'+message.avatar" v-if="message.avatar != null"
                                                  style="border-radius: 25px">
@@ -81,6 +81,31 @@
                 </div>
             </div>
         </div>
+
+        <hr class="m-0">
+        <div class="card-body">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modals-fill-in">Show</button>
+
+            <!-- Modal template -->
+            <div class="modal modal-fill-in fade" id="modals-fill-in">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-body">
+                            <p class="text-white text-large font-weight-light mb-3">Subscribe to our newsletter</p>
+                            <div class="input-group input-group-lg mb-3">
+                                <input type="text" class="form-control bg-white border-0" placeholder="Your email">
+                                <span class="input-group-append">
+                                    <button class="btn btn-primary" type="button">Subscribe</button>
+                                </span>
+                            </div>
+                            <div class="text-center text-right text-white opacity-50">We will not sell/rent your email address</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -102,16 +127,21 @@
                 onAir: 'btn-danger',
                 btn_onAir: 'Please wait free operators...',
                 avatar: this.$store.state.user ? this.$store.state.user['avatar'] : null,
+                user_id: this.$store.state.user ? this.$store.state.user['id'] : null,
             }
         },
         mounted() {
             bus.$on('isLoggedIn', () => {
                 this.avatar = this.$store.state.user['avatar'];
+                this.user_id = this.$store.state.user['id'];
             });
             console.log('Component mounted.');
             this.sendInvite(this.room_id);
         },
         methods: {
+            checkAlign(message) {
+                return message.user_id === this.user_id ? 'pull-right' : '';
+            },
             sendInvite(room) {
                 if (this.role === null) {
                     window.axios.post('/api/send-invite', {
@@ -144,16 +174,17 @@
                         vm.onAir = 'btn-success';
                         vm.btn_onAir = 'Support on-air';
                     }
-                    vm.messages.push({id: vm.msgCount++, name: data.name, msg: data.message, avatar: data.avatar});
+                    vm.messages.push({id: vm.msgCount++, name: data.name, msg: data.message, avatar: data.avatar, user_id: data.user_id});
                     vm.autoScrollDown();
                 });
             },
-            appendMessage() {
+            appendMessage(isBot = false) {
                 if (this.simpleMsg.length > 1) {
                     window.axios.post('/api/messenger', {
                         channel: this.selectChannel,
                         message: this.simpleMsg.slice(0, -1),
                         avatar: this.avatar,
+                        user_id: isBot ? 'chatBot' : this.user_id
                     })
                         .then(response => {
                             this.simpleMsg = '';
@@ -232,5 +263,37 @@
     /*rgb(70, 70, 70) 9px 9px,*/
     /*rgb(90, 90, 90) 10px 10px;*/
     /*text-align: center;*/
+    /*}*/
+
+    .modal-content {
+        margin: auto;
+        width: 90%;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    /*   .modal-fill-in {*/
+    /*.modal-dialog {*/
+    /*    display: flex;*/
+    /*    margin: 0 auto;*/
+    /*    padding-top: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;*/
+    /*    padding-bottom: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;*/
+    /*    min-height: 100vh;*/
+    /*}*/
+
+
+    /*.close {*/
+    /*    position: absolute;*/
+    /*    top: -2rem;*/
+    /*    right: $modal-header-padding-x;*/
+    /*    font-size: 2rem;*/
+    /*    transform: none;*/
+
+    /*@include rtl-style {*/
+    /*    right: auto;*/
+    /*    left: $modal-header-padding-x;*/
+    /*}*/
+    /*}*/
     /*}*/
 </style>

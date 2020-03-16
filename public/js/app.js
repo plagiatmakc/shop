@@ -1826,7 +1826,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var pusher = new Pusher("826fc49ea873789c5025", {
+var pusher = new Pusher("b8f6222e23d235114faf", {
   cluster: "eu",
   forceTLS: true
 });
@@ -3805,8 +3805,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-var pusher = new Pusher("826fc49ea873789c5025", {
+var pusher = new Pusher("b8f6222e23d235114faf", {
   cluster: "eu",
   forceTLS: true
 });
@@ -3821,7 +3847,8 @@ var pusher = new Pusher("826fc49ea873789c5025", {
       role: this.$router.currentRoute.query.role || null,
       onAir: 'btn-danger',
       btn_onAir: 'Please wait free operators...',
-      avatar: this.$store.state.user ? this.$store.state.user['avatar'] : null
+      avatar: this.$store.state.user ? this.$store.state.user['avatar'] : null,
+      user_id: this.$store.state.user ? this.$store.state.user['id'] : null
     };
   },
   mounted: function mounted() {
@@ -3829,11 +3856,15 @@ var pusher = new Pusher("826fc49ea873789c5025", {
 
     _app__WEBPACK_IMPORTED_MODULE_0__["bus"].$on('isLoggedIn', function () {
       _this.avatar = _this.$store.state.user['avatar'];
+      _this.user_id = _this.$store.state.user['id'];
     });
     console.log('Component mounted.');
     this.sendInvite(this.room_id);
   },
   methods: {
+    checkAlign: function checkAlign(message) {
+      return message.user_id === this.user_id ? 'pull-right' : '';
+    },
     sendInvite: function sendInvite(room) {
       var _this2 = this;
 
@@ -3870,7 +3901,8 @@ var pusher = new Pusher("826fc49ea873789c5025", {
           id: vm.msgCount++,
           name: data.name,
           msg: data.message,
-          avatar: data.avatar
+          avatar: data.avatar,
+          user_id: data.user_id
         });
         vm.autoScrollDown();
       });
@@ -3878,11 +3910,14 @@ var pusher = new Pusher("826fc49ea873789c5025", {
     appendMessage: function appendMessage() {
       var _this3 = this;
 
+      var isBot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
       if (this.simpleMsg.length > 1) {
         window.axios.post('/api/messenger', {
           channel: this.selectChannel,
           message: this.simpleMsg.slice(0, -1),
-          avatar: this.avatar
+          avatar: this.avatar,
+          user_id: isBot ? 'chatBot' : this.user_id
         }).then(function (response) {
           _this3.simpleMsg = '';
         })["catch"](function (error) {
@@ -12145,7 +12180,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.scrollable-wrapper[data-v-299e239e] {\n    height: 350px;\n    overflow-y: auto;\n    /*display: flex;*/\n    /*flex-direction: column-reverse;*/\n}\n.scrollable-display[data-v-299e239e] {\n\n    display: flex;\n    flex-direction: column-reverse;\n    flex-grow: 1;\n}\n.message-item[data-v-299e239e] {\n    display: block;\n    margin-right: 10px;\n    transition: all .3s;\n    flex: 1;\n}\n.message-enter-active[data-v-299e239e], .message-leave-active[data-v-299e239e] {\n    transition: all .1s;\n    position: absolute;\n}\n.message-enter[data-v-299e239e], .message-leave-to[data-v-299e239e] {\n    opacity: 0;\n    -webkit-transform: translateY(30px);\n            transform: translateY(30px);\n    /*transform: scale3d(10,10,10);*/\n}\n.icon-background[data-v-299e239e] {\n    color: white;\n}\n\n/*.message-item {*/\n/*background-color: #f1f1f1;*/\n/*box-shadow: rgb(0, 0, 0) 1px 1px,*/\n/*rgb(20, 20, 20) 2px 2px,*/\n/*rgb(35, 35, 35) 3px 3px,*/\n/*rgb(40, 40, 40) 4px 4px,*/\n/*rgb(45, 45, 45) 5px 5px,*/\n/*rgb(50, 50, 50) 6px 6px,*/\n/*rgb(60, 60, 60) 7px 7px,*/\n/*rgb(60, 60, 60) 8px 8px,*/\n/*rgb(70, 70, 70) 9px 9px,*/\n/*rgb(90, 90, 90) 10px 10px;*/\n/*text-align: center;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n.scrollable-wrapper[data-v-299e239e] {\n    height: 350px;\n    overflow-y: auto;\n    /*display: flex;*/\n    /*flex-direction: column-reverse;*/\n}\n.scrollable-display[data-v-299e239e] {\n\n    display: flex;\n    flex-direction: column-reverse;\n    flex-grow: 1;\n}\n.message-item[data-v-299e239e] {\n    display: block;\n    margin-right: 10px;\n    transition: all .3s;\n    flex: 1;\n}\n.message-enter-active[data-v-299e239e], .message-leave-active[data-v-299e239e] {\n    transition: all .1s;\n    position: absolute;\n}\n.message-enter[data-v-299e239e], .message-leave-to[data-v-299e239e] {\n    opacity: 0;\n    -webkit-transform: translateY(30px);\n            transform: translateY(30px);\n    /*transform: scale3d(10,10,10);*/\n}\n.icon-background[data-v-299e239e] {\n    color: white;\n}\n\n/*.message-item {*/\n/*background-color: #f1f1f1;*/\n/*box-shadow: rgb(0, 0, 0) 1px 1px,*/\n/*rgb(20, 20, 20) 2px 2px,*/\n/*rgb(35, 35, 35) 3px 3px,*/\n/*rgb(40, 40, 40) 4px 4px,*/\n/*rgb(45, 45, 45) 5px 5px,*/\n/*rgb(50, 50, 50) 6px 6px,*/\n/*rgb(60, 60, 60) 7px 7px,*/\n/*rgb(60, 60, 60) 8px 8px,*/\n/*rgb(70, 70, 70) 9px 9px,*/\n/*rgb(90, 90, 90) 10px 10px;*/\n/*text-align: center;*/\n/*}*/\n.modal-content[data-v-299e239e] {\n    margin: auto;\n    width: 90%;\n    border: 0;\n    background: transparent;\n    box-shadow: none;\n}\n\n/*   .modal-fill-in {*/\n/*.modal-dialog {*/\n/*    display: flex;*/\n/*    margin: 0 auto;*/\n/*    padding-top: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;*/\n/*    padding-bottom: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;*/\n/*    min-height: 100vh;*/\n/*}*/\n\n\n/*.close {*/\n/*    position: absolute;*/\n/*    top: -2rem;*/\n/*    right: $modal-header-padding-x;*/\n/*    font-size: 2rem;*/\n/*    transform: none;*/\n\n/*@include rtl-style {*/\n/*    right: auto;*/\n/*    left: $modal-header-padding-x;*/\n/*}*/\n/*}*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -53243,7 +53278,9 @@ var render = function() {
                           _c(
                             "div",
                             {
-                              staticClass: "form-group d-flex mb-3 bd-highlight"
+                              class:
+                                _vm.checkAlign(message) +
+                                " form-group d-flex mb-3 bd-highlight"
                             },
                             [
                               _c(
@@ -53401,7 +53438,11 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("hr", { staticClass: "m-0" }),
+    _vm._v(" "),
+    _vm._m(4)
   ])
 }
 var staticRenderFns = [
@@ -53462,6 +53503,87 @@ var staticRenderFns = [
           attrs: { "aria-hidden": "true" }
         })
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#modals-fill-in"
+          }
+        },
+        [_vm._v("Show")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal modal-fill-in fade",
+          attrs: { id: "modals-fill-in" }
+        },
+        [
+          _c("div", { staticClass: "modal-dialog" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close text-white",
+                  attrs: {
+                    type: "button",
+                    "data-dismiss": "modal",
+                    "aria-label": "Close"
+                  }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "p",
+                  {
+                    staticClass: "text-white text-large font-weight-light mb-3"
+                  },
+                  [_vm._v("Subscribe to our newsletter")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group input-group-lg mb-3" }, [
+                  _c("input", {
+                    staticClass: "form-control bg-white border-0",
+                    attrs: { type: "text", placeholder: "Your email" }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "input-group-append" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" }
+                      },
+                      [_vm._v("Subscribe")]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "text-center text-right text-white opacity-50"
+                  },
+                  [_vm._v("We will not sell/rent your email address")]
+                )
+              ])
+            ])
+          ])
+        ]
+      )
     ])
   }
 ]
@@ -78513,6 +78635,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           _app__WEBPACK_IMPORTED_MODULE_2__["bus"].$emit('isLoggedIn');
 
           _this.dispatch('checkIsAdmin');
+        })["catch"](function (error) {
+          localStorage.removeItem('bigStore.jwt');
+          document.cookie = "laravel_session=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+          _this.commit('setLogout');
+
+          _app__WEBPACK_IMPORTED_MODULE_2__["bus"].$emit('isLoggedIn');
+
+          _this.$router.push('/');
         });
       }
     },

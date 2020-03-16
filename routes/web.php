@@ -65,6 +65,6 @@ Route::get('/all-categories', 'CategoryController@allCategories');
 
 //Route::get('/home', 'HomeController@index');
 Route::get('/is-admin', 'HomeController@admin');
-
+Route::get('/api/test-pdf', 'HomeController@storePdf');
 //Vue router need place bottom of laravel routes(cause conflict)
 Route::get('/{vue_capture?}', 'PageController@index')->where('vue_capture', '^(?!storage).*$');

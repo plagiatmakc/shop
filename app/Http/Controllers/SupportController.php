@@ -28,6 +28,7 @@ class SupportController extends Controller
         $channel = $request->channel;
         $data['message'] = $request->message;
         $data['avatar'] = $request->avatar;
+        $data['user_id'] = $request->user_id;
         try{
             $this->pusher->trigger($channel, 'my-event', $data);
         } catch (\Pusher\PusherException $e) {

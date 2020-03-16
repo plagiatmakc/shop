@@ -33,11 +33,14 @@ class ImageRequest extends FormRequest
     public function messages()
     {
         $validationArray = [];
-        foreach ($this->file('images') as $key => $file) {
-            $validationArray['images.'.$key.'.uploaded'] = 'The ' .  $file->getClientOriginalName() . ' must be less than 2048 kilobytes.';
-            $validationArray['images.'.$key.'.image'] = 'The ' .  $file->getClientOriginalName() . ' must be image.';
-            $validationArray['images.'.$key.'.mimes'] = 'The ' .  $file->getClientOriginalName() . ' must be a file of type: jpeg, bmp, png.';
+        if ($this->file('images')){
+            foreach ($this->file('images') as $key => $file) {
+                $validationArray['images.'.$key.'.uploaded'] = 'The ' .  $file->getClientOriginalName() . ' must be less than 2048 kilobytes.';
+                $validationArray['images.'.$key.'.image'] = 'The ' .  $file->getClientOriginalName() . ' must be image.';
+                $validationArray['images.'.$key.'.mimes'] = 'The ' .  $file->getClientOriginalName() . ' must be a file of type: jpeg, bmp, png.';
+            }
         }
+
 
         return $validationArray;
 //        return [
