@@ -140,7 +140,7 @@
         },
         methods: {
             checkAlign(message) {
-                return message.user_id === this.user_id ? 'pull-right' : '';
+                return message.user_id === this.user_id ? 'offset-6' : '';
             },
             sendInvite(room) {
                 if (this.role === null) {
