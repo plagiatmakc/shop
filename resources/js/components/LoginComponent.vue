@@ -68,7 +68,7 @@
                 }
             },
             setUserToStore () {
-                window.axios.get('http://shop.loc/api/user', {
+                window.axios.get('/api/user', {
                     headers: {'Accept': 'application/json' , 'Authorization': 'Bearer '+localStorage.getItem('bigStore.jwt')}
                 })
                     .then(response => {
